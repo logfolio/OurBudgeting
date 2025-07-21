@@ -3,14 +3,19 @@ package com.fintern.ourbudgeting.ui.statistics.chart
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.statistics.chart.components.MonthSelector
 import com.fintern.ourbudgeting.ui.theme.OurBudgetingTheme
 
@@ -29,6 +34,17 @@ fun StatisticsScreen(statisticsViewModel: StatisticsViewModel = viewModel()) {
                         onPreviousMonth = {},
                         onNextMonth = {}
                     )
+                }, actions = {
+                    IconButton(
+                        onClick = {
+                            // TODO: AI 패턴 분석 화면 이동
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_ai_analysis),
+                            contentDescription = stringResource(R.string.ai_analysis)
+                        )
+                    }
                 }
             )
         }

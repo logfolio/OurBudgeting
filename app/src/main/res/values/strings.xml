@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">OurBudgeting</string>
+
+    <!--  Statistics Screen  -->
     <string name="previous_month">이전 달</string>
     <string name="next_month">다음 달</string>
+
+    <!--  AI Analysis Screen  -->
+    <string name="ai_analysis">AI 패턴 분석</string>
 </resources>
