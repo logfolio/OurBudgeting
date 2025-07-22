@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.di
+package com.fintern.ourbudgeting
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
