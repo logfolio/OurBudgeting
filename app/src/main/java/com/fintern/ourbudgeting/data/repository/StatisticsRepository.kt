@@ -2,6 +2,7 @@ package com.fintern.ourbudgeting.data.repository
 
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 import java.util.Calendar
 
 class StatisticsRepository(
@@ -17,7 +18,22 @@ class StatisticsRepository(
         val startTimestamp = getStartTimestamp(year, month)
         val endTimestamp = getEndTimestamp(year, month)
 
-        return mapOf()
+        val query = firestore.collection("households")
+            .document(householdId)
+            .collection("transactions")
+            .whereEqualTo("type", type)
+            .whereEqualTo("createdBy", uid)
+            .whereGreaterThanOrEqualTo("date", startTimestamp)
+            .whereLessThan("date", endTimestamp)
+
+        val snapshot = query.get().await()
+
+        return snapshot.documents
+            .mapNotNull { it.data }
+            .groupBy { it["category"] as? String ?: "Uncategorized" }
+            .mapValues { (_, docs) ->
+                docs.sumOf { (it["amount"] as? Number)?.toDouble() ?: 0.0 }
+            }
     }
 
     private fun getStartTimestamp(year: Int, month: Int): Timestamp {
