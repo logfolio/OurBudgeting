@@ -50,6 +50,12 @@ class StatisticsViewModel @Inject constructor(
                         pieColor = getColorForCategory(category)
                     )
                 }
+
+                _uiState.value = _uiState.value.copy(
+                    chartData = entries,
+                    isLoading = false,
+                    errorMessage = null
+                )
             } catch (e: Exception) {
 
             }
