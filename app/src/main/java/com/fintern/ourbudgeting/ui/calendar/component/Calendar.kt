@@ -10,10 +10,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.minus
-import kotlinx.datetime.plus
+import java.time.LocalDate
 
 @Composable
 fun Calendar(
@@ -34,10 +31,7 @@ fun CalendarContent(
 ) {
     var currentMonth by remember {
         mutableStateOf(
-            selectedDate.minus(
-                selectedDate.day - 1,
-                DateTimeUnit.DAY
-            )
+            selectedDate.withDayOfMonth(1)
         )
     }
 
@@ -49,8 +43,8 @@ fun CalendarContent(
             month = currentMonth.month,
             year = currentMonth.year,
             modifier = Modifier,
-            onPreviousClick = { currentMonth = currentMonth.minus(1, DateTimeUnit.MONTH) },
-            onNextClick = { currentMonth = currentMonth.plus(1, DateTimeUnit.MONTH) }
+            onPreviousClick = { currentMonth = currentMonth.minusMonths(1) },
+            onNextClick = { currentMonth = currentMonth.plusMonths(1) }
         )
     }
 }

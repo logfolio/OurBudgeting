@@ -7,9 +7,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -31,8 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarHeaderConfig
-import kotlinx.datetime.Month
-import kotlinx.datetime.number
+import java.time.Month
 
 @Composable
 fun CalendarHeader(
@@ -112,7 +109,7 @@ fun HeaderContent(
 }
 
 fun getTitleText(year: Int, month: Month): String {
-    val monthValue = month.number
+    val monthValue = month.value
 
     val yearValue = year.toString()
     return "${yearValue}년${monthValue}월"
