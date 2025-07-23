@@ -21,5 +21,11 @@ class StatisticsViewModel @Inject constructor(
         uid: String,
         householdId: String
     ) {
+        _uiState.value = _uiState.value.copy(
+            isLoading = true,
+            errorMessage = null,
+            currentYear = year,
+            currentMonth = month
+        )
     }
 }
