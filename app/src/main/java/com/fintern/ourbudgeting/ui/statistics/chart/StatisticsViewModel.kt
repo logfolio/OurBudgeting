@@ -57,7 +57,10 @@ class StatisticsViewModel @Inject constructor(
                     errorMessage = null
                 )
             } catch (e: Exception) {
-
+                _uiState.value = _uiState.value.copy(
+                    errorMessage = e.message ?: "알 수 없는 오류가 발생했습니다.",
+                    isLoading = false
+                )
             }
         }
     }
