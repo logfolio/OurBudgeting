@@ -52,8 +52,12 @@ fun StatisticsScreen(
                     MonthSelector(
                         year = uiState.currentYear,
                         month = uiState.currentMonth,
-                        onPreviousMonth = {},
-                        onNextMonth = {}
+                        onPreviousMonth = {
+                            statisticsViewModel.updateMonthAndFetchData(-1, uid, householdId)
+                        },
+                        onNextMonth = {
+                            statisticsViewModel.updateMonthAndFetchData(1, uid, householdId)
+                        }
                     )
                 }, actions = {
                     IconButton(
