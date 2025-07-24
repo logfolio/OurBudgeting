@@ -14,14 +14,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.statistics.chart.components.MonthSelector
 import com.fintern.ourbudgeting.ui.theme.OurBudgetingTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StatisticsScreen(statisticsViewModel: StatisticsViewModel = viewModel()) {
+fun StatisticsScreen(
+    uid: String,
+    householdId: String,
+    statisticsViewModel: StatisticsViewModel = hiltViewModel()
+) {
     val uiState by statisticsViewModel.uiState.collectAsState()
 
     Scaffold(
@@ -61,6 +65,9 @@ fun StatisticsScreen(statisticsViewModel: StatisticsViewModel = viewModel()) {
 @Composable
 fun StatisticsScreenPreview() {
     OurBudgetingTheme {
-        StatisticsScreen()
+        StatisticsScreen(
+            uid = "",
+            householdId = ""
+        )
     }
 }
