@@ -84,6 +84,12 @@ fun StatisticsScreen(
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.align(Alignment.Center)
                 )
+
+                uiState.chartData.isEmpty() -> Text(
+                    text = stringResource(R.string.statistics_empty_transaction_message),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.align(Alignment.Center)
+                )
             }
         }
     }

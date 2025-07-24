@@ -7,6 +7,7 @@
     <!--  Statistics Screen  -->
     <string name="previous_month">이전 달</string>
     <string name="next_month">다음 달</string>
+    <string name="statistics_empty_transaction_message">지출/수입을 입력해주세요!</string>
 
     <!--  AI Analysis Screen  -->
     <string name="ai_analysis">AI 패턴 분석</string>
