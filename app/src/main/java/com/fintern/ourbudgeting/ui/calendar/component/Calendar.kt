@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.fintern.ourbudgeting.ui.calendar.CalendarScaffold
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarConfig
+import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayConfig
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayLabelConfig
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -29,7 +30,8 @@ fun Calendar(
         selectedDate = selectedDate,
         modifier = modifier,
         startDayOfWeek = startDayOfWeek,
-        dayConfig = calendarConfig.calendarDayLabelConfig
+        dayLabelConfig = calendarConfig.calendarDayLabelConfig,
+        dayConfig = calendarConfig.calendarDayConfig
     )
 }
 
@@ -38,7 +40,8 @@ fun CalendarContent(
     selectedDate: LocalDate,
     modifier: Modifier = Modifier,
     startDayOfWeek: DayOfWeek,
-    dayConfig: CalendarDayLabelConfig,
+    dayLabelConfig: CalendarDayLabelConfig,
+    dayConfig: CalendarDayConfig,
 ) {
     var currentMonth by remember {
         mutableStateOf(
@@ -48,6 +51,10 @@ fun CalendarContent(
 
     val daysOfWeek = DayOfWeek.entries.let {
         it.drop(startDayOfWeek.ordinal) + it.take(startDayOfWeek.ordinal)
+    }
+
+    val displayDates by remember(currentMonth, startDayOfWeek) {
+        mutableStateOf(getMonthDates(currentMonth, startDayOfWeek))
     }
 
     Column(
@@ -64,7 +71,48 @@ fun CalendarContent(
         CalendarScaffold(
             modifier = Modifier.fillMaxWidth(),
             dayOfWeek = { daysOfWeek },
-            calendarDayLabelConfig = dayConfig,
-        )
+            calendarDayLabelConfig = dayLabelConfig,
+            dates = { displayDates },
+        ) { date ->
+            if (date.month == currentMonth.month) {
+                CalendarDay(
+                    date = date,
+                    dayConfig = if (date.dayOfWeek == DayOfWeek.SUNDAY) {
+                        dayConfig.copy(
+                            textStyle = dayConfig.textStyle.copy(
+                                color = Color.Red
+                            )
+                        )
+                    } else {
+                        dayConfig.copy(
+                            textStyle = dayConfig.textStyle
+                        )
+                    }
+                )
+            } else {
+                CalendarDay(
+                    date = date,
+                    dayConfig = dayConfig.copy(
+                        textStyle = dayConfig.textStyle
+                            .copy(color = Color.LightGray)
+                    )
+                )
+            }
+        }
+    }
+}
+
+
+fun getMonthDates(
+    currentMonth: LocalDate,
+    startDayOfWeek: DayOfWeek
+): List<LocalDate> {
+    val firstDayOfMonth = currentMonth.withDayOfMonth(1)
+
+    val firstDayOffset = (firstDayOfMonth.dayOfWeek.ordinal - startDayOfWeek.ordinal + 7) % 7
+    val calendarStartDate = firstDayOfMonth.minusDays(firstDayOffset.toLong())
+
+    return (0 until 42).map { i ->
+        calendarStartDate.plusDays(i.toLong())
     }
 }

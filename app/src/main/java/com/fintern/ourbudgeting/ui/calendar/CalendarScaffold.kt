@@ -11,13 +11,17 @@ import androidx.compose.ui.graphics.Color
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayLabelConfig
 import com.fintern.ourbudgeting.ui.calendar.extensions.toKoreanString
 import java.time.DayOfWeek
+import java.time.LocalDate
 
 @Composable
 fun CalendarScaffold(
     dayOfWeek: () -> List<DayOfWeek>,
     calendarDayLabelConfig: CalendarDayLabelConfig,
     modifier: Modifier = Modifier,
+    dates: () -> List<LocalDate>,
+    content: @Composable (LocalDate) -> Unit,
 ) {
+    val displayDates = dates()
     val displayDayOfWeek = dayOfWeek()
 
     LazyVerticalGrid(
@@ -31,6 +35,9 @@ fun CalendarScaffold(
                     color = if (dayOfWeek == DayOfWeek.SUNDAY) Color.Red else Color.Black,
                     style = calendarDayLabelConfig.textStyle
                 )
+            }
+            items(items = displayDates) { date ->
+                content(date)
             }
         }
     )
