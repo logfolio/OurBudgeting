@@ -19,6 +19,26 @@ class StatisticsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(StatisticsUiState())
     val uiState: StateFlow<StatisticsUiState> = _uiState.asStateFlow()
 
+    fun updateMonthAndFetchData(
+        offset: Int,
+        uid: String,
+        householdId: String
+    ) {
+        val currentMonth = _uiState.value.currentMonth
+        val currentYear = _uiState.value.currentYear
+
+        var newMonth = currentMonth + offset
+        var newYear = currentYear
+
+        if (newMonth > 12) {
+            newMonth = 1
+            newYear += 1
+        } else if (newMonth < 1) {
+            newMonth = 12
+            newYear -= 1
+        }
+    }
+
     fun fetchMonthlyCategoryTotals(
         year: Int,
         month: Int,
