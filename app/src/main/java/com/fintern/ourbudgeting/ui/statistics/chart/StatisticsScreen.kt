@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.statistics.chart.components.MonthSelector
+import com.fintern.ourbudgeting.ui.statistics.chart.components.PieChart
 import com.fintern.ourbudgeting.ui.theme.OurBudgetingTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -88,6 +89,11 @@ fun StatisticsScreen(
                 uiState.chartData.isEmpty() -> Text(
                     text = stringResource(R.string.statistics_empty_transaction_message),
                     style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+
+                else -> PieChart(
+                    data = uiState.chartData,
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
