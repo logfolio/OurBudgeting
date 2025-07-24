@@ -46,7 +46,7 @@ class StatisticsViewModel @Inject constructor(
         )
     }
 
-    fun fetchMonthlyCategoryTotals(
+    private fun fetchMonthlyCategoryTotals(
         year: Int,
         month: Int,
         uid: String,
