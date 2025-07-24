@@ -37,6 +37,13 @@ class StatisticsViewModel @Inject constructor(
             newMonth = 12
             newYear -= 1
         }
+
+        fetchMonthlyCategoryTotals(
+            year = newYear,
+            month = newMonth,
+            uid = uid,
+            householdId = householdId
+        )
     }
 
     fun fetchMonthlyCategoryTotals(
