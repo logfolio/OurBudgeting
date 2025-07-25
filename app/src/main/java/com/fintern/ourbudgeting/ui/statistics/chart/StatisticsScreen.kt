@@ -74,10 +74,12 @@ fun StatisticsScreen(
             )
         }
     ) { innerPadding ->
-        Column {
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+        ) {
             PrimaryTabRow(
                 selectedTabIndex = selectedTabIndex,
-                modifier = Modifier.padding(innerPadding)
             ) {
                 StatisticsTab.entries.forEachIndexed { index, destination ->
                     Tab(
@@ -102,7 +104,7 @@ fun StatisticsScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp)
+                    .padding(horizontal = 16.dp)
             ) {
                 when {
                     uiState.isLoading -> CircularProgressIndicator(
@@ -126,7 +128,7 @@ fun StatisticsScreen(
 
                     else -> PieChart(
                         data = uiState.chartData,
-                        modifier = Modifier.align(Alignment.Center)
+                        modifier = Modifier.align(Alignment.TopCenter)
                     )
                 }
             }
