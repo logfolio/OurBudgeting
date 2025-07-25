@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fintern.ourbudgeting.data.chart.PieEntry
 import com.fintern.ourbudgeting.data.repository.StatisticsRepository
+import com.fintern.ourbudgeting.ui.statistics.chart.model.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,8 +25,10 @@ class StatisticsViewModel @Inject constructor(
         uid: String,
         householdId: String
     ) {
-        val currentMonth = _uiState.value.currentMonth
-        val currentYear = _uiState.value.currentYear
+        val current = _uiState.value
+        val currentMonth = current.currentMonth
+        val currentYear = current.currentYear
+        val currentType = current.currentType
 
         var newMonth = currentMonth + offset
         var newYear = currentYear
@@ -42,7 +45,8 @@ class StatisticsViewModel @Inject constructor(
             year = newYear,
             month = newMonth,
             uid = uid,
-            householdId = householdId
+            householdId = householdId,
+            type = currentType,
         )
     }
 
@@ -50,20 +54,21 @@ class StatisticsViewModel @Inject constructor(
         year: Int,
         month: Int,
         uid: String,
-        householdId: String
+        householdId: String,
+        type: TransactionType,
     ) {
         _uiState.value = _uiState.value.copy(
             isLoading = true,
             errorMessage = null,
             currentYear = year,
-            currentMonth = month
+            currentMonth = month,
+            currentType = type,
         )
 
         viewModelScope.launch {
             try {
                 val categorySums = repository.fetchMonthlyCategoryTotals(
-                    // TODO : type 변경
-                    type = "expense",
+                    type = type.name.lowercase(),
                     year = year,
                     month = month,
                     uid = uid,
