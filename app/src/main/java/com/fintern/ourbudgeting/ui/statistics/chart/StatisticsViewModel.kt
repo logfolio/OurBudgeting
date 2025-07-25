@@ -50,6 +50,22 @@ class StatisticsViewModel @Inject constructor(
         )
     }
 
+    fun updateTypeAndFetchData(
+        type: TransactionType,
+        uid: String,
+        householdId: String,
+    ) {
+        val current = _uiState.value.copy(currentType = type)
+
+        fetchMonthlyCategoryTotals(
+            year = current.currentYear,
+            month = current.currentMonth,
+            uid = uid,
+            householdId = householdId,
+            type = type,
+        )
+    }
+
     private fun fetchMonthlyCategoryTotals(
         year: Int,
         month: Int,
