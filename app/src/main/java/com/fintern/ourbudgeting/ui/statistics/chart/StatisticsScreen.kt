@@ -1,6 +1,7 @@
 package com.fintern.ourbudgeting.ui.statistics.chart
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
@@ -73,57 +74,61 @@ fun StatisticsScreen(
             )
         }
     ) { innerPadding ->
-        PrimaryTabRow(
-            selectedTabIndex = selectedTabIndex,
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            StatisticsTab.entries.forEachIndexed { index, destination ->
-                Tab(
-                    selected = selectedTabIndex == index,
-                    onClick = {
-                        selectedTabIndex = index
-                        statisticsViewModel.updateTypeAndFetchData(
-                            type = destination.type,
-                            uid = uid,
-                            householdId = householdId
-                        )
-                    },
-                    text = {
-                        Text(
-                            text = destination.label,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                )
+        Column {
+            PrimaryTabRow(
+                selectedTabIndex = selectedTabIndex,
+                modifier = Modifier.padding(innerPadding)
+            ) {
+                StatisticsTab.entries.forEachIndexed { index, destination ->
+                    Tab(
+                        selected = selectedTabIndex == index,
+                        onClick = {
+                            selectedTabIndex = index
+                            statisticsViewModel.updateTypeAndFetchData(
+                                type = destination.type,
+                                uid = uid,
+                                householdId = householdId
+                            )
+                        },
+                        text = {
+                            Text(
+                                text = destination.label,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    )
+                }
             }
-        }
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+            ) {
+                when {
+                    uiState.isLoading -> CircularProgressIndicator(
+                        modifier = Modifier.align(
+                            Alignment.Center
+                        )
+                    )
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(16.dp)
-        ) {
-            when {
-                uiState.isLoading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    uiState.errorMessage != null -> Text(
+                        text = uiState.errorMessage ?: stringResource(R.string.error_message),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
 
-                uiState.errorMessage != null -> Text(
-                    text = uiState.errorMessage ?: stringResource(R.string.error_message),
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.align(Alignment.Center)
-                )
+                    uiState.chartData.isEmpty() -> Text(
+                        text = stringResource(R.string.statistics_empty_transaction_message),
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
 
-                uiState.chartData.isEmpty() -> Text(
-                    text = stringResource(R.string.statistics_empty_transaction_message),
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.align(Alignment.Center)
-                )
-
-                else -> PieChart(
-                    data = uiState.chartData,
-                    modifier = Modifier.align(Alignment.Center)
-                )
+                    else -> PieChart(
+                        data = uiState.chartData,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
             }
         }
     }
