@@ -26,27 +26,18 @@ class StatisticsViewModel @Inject constructor(
         householdId: String
     ) {
         val current = _uiState.value
-        val currentMonth = current.currentMonth
-        val currentYear = current.currentYear
-        val currentType = current.currentType
-
-        var newMonth = currentMonth + offset
-        var newYear = currentYear
-
-        if (newMonth > 12) {
-            newMonth = 1
-            newYear += 1
-        } else if (newMonth < 1) {
-            newMonth = 12
-            newYear -= 1
-        }
+        val (newYear, newMonth) = calculateNewYearMonth(
+            current.currentYear,
+            current.currentMonth,
+            offset
+        )
 
         fetchMonthlyCategoryTotals(
             year = newYear,
             month = newMonth,
             uid = uid,
             householdId = householdId,
-            type = currentType,
+            type = current.currentType,
         )
     }
 
@@ -93,8 +84,8 @@ class StatisticsViewModel @Inject constructor(
 
                 val entries = categorySums.map { (category, amount) ->
                     PieEntry(
-                        amount.toFloat(),
-                        category,
+                        value = amount.toFloat(),
+                        pieLabel = category,
                         pieColor = getColorForCategory(category)
                     )
                 }
@@ -111,6 +102,17 @@ class StatisticsViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    private fun calculateNewYearMonth(
+        currentYear: Int,
+        currentMonth: Int,
+        offset: Int
+    ): Pair<Int, Int> {
+        val newMonth = currentMonth + offset
+        val newYear = currentYear + (newMonth - 1) / 12
+        val adjustedMonth = (newMonth - 1).mod(12) + 1
+        return Pair(newYear, adjustedMonth)
     }
 
     private fun getColorForCategory(category: String) = when (category) {
