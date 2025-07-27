@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -14,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.calendar.component.Calendar
+import com.fintern.ourbudgeting.ui.calendar.component.CalendarAccountAndUser
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarTopAppbar
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import java.time.DayOfWeek
@@ -49,6 +52,9 @@ fun CalendarScreen() {
         )
     )
 
+    val selectedAccount = remember { mutableStateOf("가계부") }
+    val selectedUser = remember { mutableStateOf("조민환") }
+
     Scaffold(
         topBar = {
             CalendarTopAppbar(
@@ -65,6 +71,12 @@ fun CalendarScreen() {
                     .padding(innerPadding)
                     .background(Color.White)
             ) {
+                CalendarAccountAndUser(
+                    selectedAccount = selectedAccount.value,
+                    selectedUser = selectedUser.value,
+                    onAccountClick = { },
+                    onUserClick = { }
+                )
                 Calendar(
                     startDayOfWeek = DayOfWeek.SUNDAY,
                     selectedDate = LocalDate.now(),
