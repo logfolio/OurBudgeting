@@ -11,7 +11,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import com.fintern.ourbudgeting.ui.calendar.CalendarScaffold
+import com.fintern.ourbudgeting.ui.calendar.CalendarTransactions
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarConfig
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayConfig
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayLabelConfig
@@ -23,7 +25,8 @@ fun Calendar(
     selectedDate: LocalDate,
     modifier: Modifier = Modifier,
     calendarConfig: CalendarConfig = CalendarConfig(),
-    startDayOfWeek: DayOfWeek = DayOfWeek.SUNDAY
+    startDayOfWeek: DayOfWeek = DayOfWeek.SUNDAY,
+    transactions: CalendarTransactions,
 ) {
 
     CalendarContent(
@@ -31,7 +34,8 @@ fun Calendar(
         modifier = modifier,
         startDayOfWeek = startDayOfWeek,
         dayLabelConfig = calendarConfig.calendarDayLabelConfig,
-        dayConfig = calendarConfig.calendarDayConfig
+        dayConfig = calendarConfig.calendarDayConfig,
+        transactions = transactions
     )
 }
 
@@ -42,6 +46,7 @@ fun CalendarContent(
     startDayOfWeek: DayOfWeek,
     dayLabelConfig: CalendarDayLabelConfig,
     dayConfig: CalendarDayConfig,
+    transactions: CalendarTransactions
 ) {
     var currentMonth by remember {
         mutableStateOf(
@@ -74,9 +79,18 @@ fun CalendarContent(
             calendarDayLabelConfig = dayLabelConfig,
             dates = { displayDates },
         ) { date ->
+
+            val filteredTransactions = CalendarTransactions(
+                transactionList = transactions.transactionList.filter {
+                    it.date == date
+                }
+            )
+
             if (date.month == currentMonth.month) {
+
                 CalendarDay(
                     date = date,
+                    transactions = filteredTransactions,
                     dayConfig = if (date.dayOfWeek == DayOfWeek.SUNDAY) {
                         dayConfig.copy(
                             textStyle = dayConfig.textStyle.copy(
@@ -92,6 +106,7 @@ fun CalendarContent(
             } else {
                 CalendarDay(
                     date = date,
+                    transactions = filteredTransactions,
                     dayConfig = dayConfig.copy(
                         textStyle = dayConfig.textStyle
                             .copy(color = Color.LightGray)
