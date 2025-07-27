@@ -17,18 +17,19 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fintern.ourbudgeting.ui.assetmanagement.data.Point
 
 @Composable
 fun TwoLineChart(
     modifier: Modifier = Modifier,
-    data1: List<Pair<Int, Double>> = emptyList(),
+    data1: List<Point> = emptyList(),
     graphLineColor1: Color = Color.Red,
     pointColor1: Color = Color.Red,
     fillBrush1: Boolean = false,
     drawCircleOnTop1: Boolean = true,
     drawTextOnTop1: Boolean = true,
     pointRadius1: Dp = 4.dp,
-    data2: List<Pair<Int, Double>>? = null,
+    data2: List<Point>? = null,
     graphLineColor2: Color = Color.Blue,
     pointColor2: Color = Color.Blue,
     fillBrush2: Boolean = false,
@@ -59,10 +60,10 @@ fun TwoLineChart(
     val allYValues = remember(data1, data2) {
         val values = mutableListOf<Double>()
         if (data1.isNotEmpty()) {
-            values.addAll(data1.map { it.second })
+            values.addAll(data1.map { it.y })
         }
         if (!data2.isNullOrEmpty()) {
-            values.addAll(data2.map { it.second })
+            values.addAll(data2.map { it.y })
         }
         values
     }
@@ -169,32 +170,32 @@ fun TwoLineChartPreview() {
         color = Color.White,
     ) {
         val sampleData1 = listOf(
-            Pair(1, 10.0),
-            Pair(2, 15.0),
-            Pair(3, 7.0),
-            Pair(4, 20.0),
-            Pair(5, 12.0),
-            Pair(6, 25.0),
-            Pair(7, 18.0),
-            Pair(8, 10.0),
-            Pair(9, 15.0),
-            Pair(10, 7.0),
-            Pair(11, 20.0),
-            Pair(12, 12.0)
+            Point(1, 10.0),
+            Point(2, 15.0),
+            Point(3, 7.0),
+            Point(4, 20.0),
+            Point(5, 12.0),
+            Point(6, 25.0),
+            Point(7, 18.0),
+            Point(8, 10.0),
+            Point(9, 15.0),
+            Point(10, 7.0),
+            Point(11, 20.0),
+            Point(12, 12.0)
         )
         val sampleData2 = listOf(
-            Pair(1, 12.0),
-            Pair(2, 14.0),
-            Pair(3, 10.0),
-            Pair(4, 25.0),
-            Pair(5, 21.0),
-            Pair(6, 20.0),
-            Pair(7, 15.0),
-            Pair(8, 18.0),
-            Pair(9, 8.0),
-            Pair(10, 12.0),
-            Pair(11, 15.0),
-            Pair(12, 17.0)
+            Point(1, 12.0),
+            Point(2, 14.0),
+            Point(3, 10.0),
+            Point(4, 25.0),
+            Point(5, 21.0),
+            Point(6, 20.0),
+            Point(7, 15.0),
+            Point(8, 18.0),
+            Point(9, 8.0),
+            Point(10, 12.0),
+            Point(11, 15.0),
+            Point(12, 17.0)
         )
         TwoLineChart(
             modifier = Modifier

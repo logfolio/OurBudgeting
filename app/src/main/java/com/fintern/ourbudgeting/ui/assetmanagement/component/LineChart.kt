@@ -24,10 +24,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fintern.ourbudgeting.ui.assetmanagement.data.Point
 import kotlin.math.roundToInt
 
 fun DrawScope.drawSingleLineChart(
-    data: List<Pair<Int, Double>>,
+    data: List<Point>,
     lineColor: Color,
     pointColor: Color,
     fillBrush: Boolean,
@@ -49,7 +50,7 @@ fun DrawScope.drawSingleLineChart(
 
         data.indices.forEach { i ->
             val info = data[i]
-            val ratio = (info.second - lowerValue).toFloat() / (upperValue - lowerValue).toFloat()
+            val ratio = (info.y - lowerValue).toFloat() / (upperValue - lowerValue).toFloat()
             val x = spacing + i * spacePerXLabel
             val y = graphDrawingHeight - (ratio * graphDrawingHeight)
             if (i == 0) {
@@ -93,7 +94,7 @@ fun DrawScope.drawSingleLineChart(
 
     data.indices.forEach { i ->
         val info = data[i]
-        val ratio = (info.second - lowerValue).toFloat() / (upperValue - lowerValue).toFloat()
+        val ratio = (info.y - lowerValue).toFloat() / (upperValue - lowerValue).toFloat()
         val xPos = spacing + i * spacePerXLabel
         val yPos = graphDrawingHeight - (ratio * graphDrawingHeight)
 
@@ -108,7 +109,7 @@ fun DrawScope.drawSingleLineChart(
         if (drawText) {
             drawContext.canvas.nativeCanvas.apply {
                 drawText(
-                    info.second.roundToInt().toString(),
+                    info.y.roundToInt().toString(),
                     xPos,
                     yPos - pointRadiusPx - 15f,
                     dataValueTextPaint
@@ -119,13 +120,13 @@ fun DrawScope.drawSingleLineChart(
 }
 
 fun DrawScope.drawXAxisLabels(
-    data: List<Pair<Int, Double>>,
+    data: List<Point>,
     spacing: Float,
     spacer: Float,
     paint: Paint
 ) {
     data.indices.forEach { i ->
-        val hour = data[i].first
+        val hour = data[i].x
         drawContext.canvas.nativeCanvas.apply {
             drawText(
                 hour.toString(),
@@ -203,7 +204,7 @@ fun DrawScope.drawVerticalGridLines(
 @Composable
 fun LineChart(
     modifier: Modifier = Modifier,
-    data: List<Pair<Int, Double>> = emptyList(),
+    data: List<Point> = emptyList(),
     spacing: Float = 50f,
     xAxisLabelColor: Color = Color.Black,
     xAxisLabelTextSize: TextUnit = 11.sp,
@@ -229,8 +230,8 @@ fun LineChart(
     val pointRadiusPx = with(density) { pointRadius.toPx() }
     val graphStrokeWidthPx = with(density) { graphStrokeWidth.toPx() }
 
-    val upperValue = remember { (data.maxOfOrNull { it.second }?.plus(1))?.toInt() ?: 0 }
-    val lowerValue = remember { (data.minOfOrNull { it.second }?.minus(1)?.toInt() ?: 0) }
+    val upperValue = remember { (data.maxOfOrNull { it.y }?.plus(1))?.toInt() ?: 0 }
+    val lowerValue = remember { (data.minOfOrNull { it.y }?.minus(1)?.toInt() ?: 0) }
 
     val xAxisLabelPaint = remember(density, xAxisLabelColor, xAxisLabelTextSize) {
         Paint().apply {
@@ -322,18 +323,18 @@ fun LineChartPreview() {
         color = Color.White,
     ) {
         val sampleData = listOf(
-            Pair(1, 10.0),
-            Pair(2, 15.0),
-            Pair(3, 7.0),
-            Pair(4, 20.0),
-            Pair(5, 12.0),
-            Pair(6, 25.0),
-            Pair(7, 18.0),
-            Pair(8, 10.0),
-            Pair(9, 15.0),
-            Pair(10, 7.0),
-            Pair(11, 20.0),
-            Pair(12, 12.0)
+            Point(1, 10.0),
+            Point(2, 15.0),
+            Point(3, 7.0),
+            Point(4, 20.0),
+            Point(5, 12.0),
+            Point(6, 25.0),
+            Point(7, 18.0),
+            Point(8, 10.0),
+            Point(9, 15.0),
+            Point(10, 7.0),
+            Point(11, 20.0),
+            Point(12, 12.0)
         )
         LineChart(
             modifier = Modifier
