@@ -8,10 +8,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
@@ -63,7 +61,7 @@ fun TwoLineChart(
         if (data1.isNotEmpty()) {
             values.addAll(data1.map { it.second })
         }
-        if (data2 != null && data2.isNotEmpty()) {
+        if (!data2.isNullOrEmpty()) {
             values.addAll(data2.map { it.second })
         }
         values
@@ -97,59 +95,30 @@ fun TwoLineChart(
             textSize = density.run { dataValueTextSize.toPx() }
         }
     }
+    val baseData = listOfNotNull(data1, data2).maxByOrNull { it.size } ?: emptyList()
 
     Canvas(modifier = modifier) {
         val maxDataSize = maxOf(data1.size, data2?.size ?: 0)
         val spacePerXLabel = if (maxDataSize > 0) (size.width - spacing) / maxDataSize else 0f
 
-        (data1.indices step 1).forEach { i ->
-            val hour = data1[i].first
-            drawContext.canvas.nativeCanvas.apply {
-                drawText(
-                    hour.toString(),
-                    spacing + i * spacePerXLabel,
-                    size.height - xAxisLabelPaint.descent(),
-                    xAxisLabelPaint
-                )
-            }
-        }
-
-        for (value in lowerValue..upperValue step yAxisStep) {
-            val ratio = (value - lowerValue).toFloat() / (upperValue - lowerValue).toFloat()
-            val yPos = (size.height - spacing) - (ratio * (size.height - spacing))
-
-            drawContext.canvas.nativeCanvas.apply {
-                drawText(
-                    value.toString(),
-                    spacing - 10.dp.toPx(),
-                    yPos + yAxisLabelPaint.textSize / 2,
-                    yAxisLabelPaint
-                )
-            }
-        }
+        drawXAxisLabels(baseData, spacing, spacePerXLabel, xAxisLabelPaint)
+        drawYAxisLabels(lowerValue, upperValue, yAxisStep, size.height, spacing, yAxisLabelPaint)
 
         if (showGridLines) {
-            for (value in lowerValue..upperValue step yAxisStep) {
-                val ratio = (value - lowerValue).toFloat() / (upperValue - lowerValue).toFloat()
-                val yPos = size.height - spacing - (ratio * (size.height - spacing))
-
-                drawLine(
-                    color = gridLineColor,
-                    start = Offset(spacing, yPos),
-                    end = Offset(size.width, yPos),
-                    strokeWidth = gridStrokeWidth.toPx()
-                )
-            }
-
-            (data1.indices step 1).forEach { i ->
-                val xPos = spacing + i * spacePerXLabel
-                drawLine(
-                    color = gridLineColor,
-                    start = Offset(xPos, 0f),
-                    end = Offset(xPos, size.height - spacing),
-                    strokeWidth = gridStrokeWidth.toPx()
-                )
-            }
+            drawHorizontalGridLines(
+                lowerValue,
+                upperValue,
+                spacing,
+                gridLineColor,
+                gridStrokeWidth.toPx()
+            )
+            drawVerticalGridLines(
+                baseData.size,
+                spacing,
+                spacePerXLabel,
+                gridLineColor,
+                gridStrokeWidth.toPx()
+            )
         }
 
         drawSingleLineChart(

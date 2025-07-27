@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlin.math.roundToInt
 
-
 fun DrawScope.drawSingleLineChart(
     data: List<Pair<Int, Double>>,
     lineColor: Color,
@@ -46,7 +45,7 @@ fun DrawScope.drawSingleLineChart(
     val graphDrawingHeight = size.height - spacing
 
     val strokePath = Path().apply {
-        if (data.isEmpty()) return // 데이터가 없으면 그리지 않음
+        if (data.isEmpty()) return
 
         data.indices.forEach { i ->
             val info = data[i]
@@ -109,13 +108,95 @@ fun DrawScope.drawSingleLineChart(
         if (drawText) {
             drawContext.canvas.nativeCanvas.apply {
                 drawText(
-                    info.second.roundToInt().toString(), // 값을 정수로 반올림하여 표시
+                    info.second.roundToInt().toString(),
                     xPos,
-                    yPos - pointRadiusPx - 15f, // 원 위쪽에 표시 + 여유 공간
+                    yPos - pointRadiusPx - 15f,
                     dataValueTextPaint
                 )
             }
         }
+    }
+}
+
+fun DrawScope.drawXAxisLabels(
+    data: List<Pair<Int, Double>>,
+    spacing: Float,
+    spacer: Float,
+    paint: Paint
+) {
+    data.indices.forEach { i ->
+        val hour = data[i].first
+        drawContext.canvas.nativeCanvas.apply {
+            drawText(
+                hour.toString(),
+                spacing + i * spacer,
+                size.height,
+                paint
+            )
+        }
+    }
+}
+
+
+fun DrawScope.drawYAxisLabels(
+    lowerValue: Int,
+    upperValue: Int,
+    yAxisStep: Int,
+    sizeHeight: Float,
+    spacing: Float,
+    paint: Paint
+) {
+    (lowerValue..upperValue step yAxisStep).forEach { value ->
+        val ratio = (value - lowerValue).toFloat() / (upperValue - lowerValue).toFloat()
+        val yPos = (sizeHeight - spacing) - (ratio * (sizeHeight - spacing))
+
+        drawContext.canvas.nativeCanvas.apply {
+            drawText(
+                value.toString(),
+                spacing - 10.dp.toPx(),
+                yPos + paint.textSize / 2,
+                paint
+            )
+        }
+    }
+}
+
+fun DrawScope.drawHorizontalGridLines(
+    lowerValue: Int,
+    upperValue: Int,
+    spacing: Float,
+    gridLineColor: Color,
+    gridStrokeWidthPx: Float
+) {
+    for (value in lowerValue..upperValue) {
+        val ratio = (value - lowerValue).toFloat() / (upperValue - lowerValue).toFloat()
+        val yPos = size.height - spacing - (ratio * (size.height - spacing))
+
+        drawLine(
+            color = gridLineColor,
+            start = Offset(spacing, yPos),
+            end = Offset(size.width, yPos),
+            strokeWidth = gridStrokeWidthPx
+        )
+    }
+}
+
+fun DrawScope.drawVerticalGridLines(
+    dataSize: Int,
+    spacing: Float,
+    spacePerXLabel: Float,
+    gridLineColor: Color,
+    gridStrokeWidthPx: Float
+) {
+    for (i in 0 until dataSize) {
+        val xPos = spacing + i * spacePerXLabel
+
+        drawLine(
+            color = gridLineColor,
+            start = Offset(xPos, 0f),
+            end = Offset(xPos, size.height - spacing),
+            strokeWidth = gridStrokeWidthPx
+        )
     }
 }
 
@@ -178,55 +259,38 @@ fun LineChart(
     Canvas(modifier = modifier) {
         val spacePerXLabel = (size.width - spacing) / data.size
 
-        (data.indices step 1).forEach { i ->
-            val hour = data[i].first
-            drawContext.canvas.nativeCanvas.apply {
-                drawText(
-                    hour.toString(),
-                    spacing + i * spacePerXLabel,
-                    size.height, // ??
-                    xAxisLabelPaint
-                )
-            }
-        }
+        drawXAxisLabels(
+            data = data,
+            spacing = spacing,
+            spacer = spacePerXLabel,
+            paint = xAxisLabelPaint
+        )
 
-        (lowerValue..upperValue step yAxisStep).forEach { value ->
-            val ratio = (value - lowerValue).toFloat() / (upperValue - lowerValue).toFloat()
-            val yPos = (size.height - spacing) - (ratio * (size.height - spacing))
-
-            drawContext.canvas.nativeCanvas.apply {
-                drawText(
-                    value.toString(),
-                    spacing - 10.dp.toPx(),
-                    yPos + yAxisLabelPaint.textSize / 2,
-                    yAxisLabelPaint
-                )
-            }
-        }
+        drawYAxisLabels(
+            lowerValue = lowerValue,
+            upperValue = upperValue,
+            yAxisStep = yAxisStep,
+            sizeHeight = size.height,
+            paint = yAxisLabelPaint,
+            spacing = spacing
+        )
 
         if (showGridLines) {
-            (lowerValue..upperValue).forEach { value ->
-                val ratio = (value - lowerValue).toFloat() / (upperValue - lowerValue).toFloat()
-                val yPos = size.height - spacing - (ratio * (size.height - spacing))
+            drawHorizontalGridLines(
+                lowerValue = lowerValue,
+                upperValue = upperValue,
+                spacing = spacing,
+                gridLineColor = gridLineColor,
+                gridStrokeWidthPx = gridStrokeWidth.toPx()
+            )
 
-                drawLine(
-                    color = gridLineColor,
-                    start = Offset(spacing, yPos),
-                    end = Offset(size.width, yPos),
-                    strokeWidth = gridStrokeWidth.toPx()
-                )
-            }
-
-            (data.indices step 1).forEach { i ->
-                val xPos = spacing + i * spacePerXLabel
-                drawLine(
-                    color = gridLineColor,
-                    start = Offset(xPos, 0f),
-                    end = Offset(xPos, size.height - spacing),
-                    strokeWidth = gridStrokeWidth.toPx()
-                )
-            }
-
+            drawVerticalGridLines(
+                dataSize = data.size,
+                spacing = spacing,
+                spacePerXLabel = spacePerXLabel,
+                gridLineColor = gridLineColor,
+                gridStrokeWidthPx = gridStrokeWidth.toPx()
+            )
         }
 
         drawSingleLineChart(
