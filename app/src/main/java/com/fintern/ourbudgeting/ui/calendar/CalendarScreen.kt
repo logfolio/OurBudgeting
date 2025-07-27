@@ -2,15 +2,19 @@ package com.fintern.ourbudgeting.ui.calendar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.calendar.component.Calendar
+import com.fintern.ourbudgeting.ui.calendar.component.CalendarTopAppbar
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -45,13 +49,31 @@ fun CalendarScreen() {
         )
     )
 
-    Column(modifier = Modifier.wrapContentSize().background(Color.White)) {
-        Calendar(
-            startDayOfWeek = DayOfWeek.SUNDAY,
-            selectedDate = LocalDate.now(),
-            modifier = Modifier.fillMaxWidth()
-                .padding(horizontal = 24.dp),
-            transactions = sampleTransactions,
-        )
-    }
+    Scaffold(
+        topBar = {
+            CalendarTopAppbar(
+                title = stringResource(R.string.calendar_label_app_name),
+                onNotificationClick = {
+
+                },
+            )
+        },
+        content = { innerPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .background(Color.White)
+            ) {
+                Calendar(
+                    startDayOfWeek = DayOfWeek.SUNDAY,
+                    selectedDate = LocalDate.now(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp),
+                    transactions = sampleTransactions,
+                )
+            }
+        }
+    )
 }

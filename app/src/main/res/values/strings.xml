@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">OurBudgeting</string>
+    <string name="calendar_label_app_name">가계부 쓰고 가게</string>
 </resources>
