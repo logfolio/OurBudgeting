@@ -20,20 +20,14 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.fintern.ourbudgeting.ui.assetmanagement.data.LineChartConfig
+import com.fintern.ourbudgeting.ui.assetmanagement.data.LineChartStyleConfig
 import com.fintern.ourbudgeting.ui.assetmanagement.data.Point
 import kotlin.math.roundToInt
 
 fun DrawScope.drawSingleLineChart(
-    data: List<Point>,
-    lineColor: Color,
-    pointColor: Color,
-    fillBrush: Boolean,
-    drawCircle: Boolean,
-    drawText: Boolean,
+    line: LineChartConfig,
     spacing: Float,
     spacePerXLabel: Float,
     lowerValue: Int,
@@ -46,10 +40,10 @@ fun DrawScope.drawSingleLineChart(
     val graphDrawingHeight = size.height - spacing
 
     val strokePath = Path().apply {
-        if (data.isEmpty()) return
+        if (line.data.isEmpty()) return
 
-        data.indices.forEach { i ->
-            val info = data[i]
+        line.data.indices.forEach { i ->
+            val info = line.data[i]
             val ratio = (info.y - lowerValue).toFloat() / (upperValue - lowerValue).toFloat()
             val x = spacing + i * spacePerXLabel
             val y = graphDrawingHeight - (ratio * graphDrawingHeight)
@@ -62,18 +56,18 @@ fun DrawScope.drawSingleLineChart(
 
     drawPath(
         path = strokePath,
-        color = lineColor,
+        color = line.graphLineColor,
         style = Stroke(
             width = graphStrokeWidthPx,
             cap = graphStrokeCap
         )
     )
 
-    if (fillBrush) {
+    if (line.fillBrush) {
         val fillPath = Path().apply {
             addPath(strokePath)
-            if (data.isNotEmpty()) {
-                val lastX = spacing + (data.size - 1) * spacePerXLabel
+            if (line.data.isNotEmpty()) {
+                val lastX = spacing + (line.data.size - 1) * spacePerXLabel
                 lineTo(lastX, size.height - spacing)
                 lineTo(spacing, size.height - spacing)
             }
@@ -82,7 +76,7 @@ fun DrawScope.drawSingleLineChart(
 
         val areaFillBrush = Brush.verticalGradient(
             colors = listOf(
-                lineColor.copy(alpha = 0.5f),
+                line.graphLineColor.copy(alpha = 0.5f),
                 Color.Transparent
             )
         )
@@ -92,21 +86,21 @@ fun DrawScope.drawSingleLineChart(
         )
     }
 
-    data.indices.forEach { i ->
-        val info = data[i]
+    line.data.indices.forEach { i ->
+        val info = line.data[i]
         val ratio = (info.y - lowerValue).toFloat() / (upperValue - lowerValue).toFloat()
         val xPos = spacing + i * spacePerXLabel
         val yPos = graphDrawingHeight - (ratio * graphDrawingHeight)
 
-        if (drawCircle) {
+        if (line.drawCircleOnTop) {
             drawCircle(
-                color = pointColor,
+                color = line.pointColor,
                 center = Offset(xPos, yPos),
                 radius = pointRadiusPx
             )
         }
 
-        if (drawText) {
+        if (line.drawTextOnTop) {
             drawContext.canvas.nativeCanvas.apply {
                 drawText(
                     info.y.roundToInt().toString(),
@@ -204,65 +198,50 @@ fun DrawScope.drawVerticalGridLines(
 @Composable
 fun LineChart(
     modifier: Modifier = Modifier,
-    data: List<Point> = emptyList(),
-    spacing: Float = 50f,
-    xAxisLabelColor: Color = Color.Black,
-    xAxisLabelTextSize: TextUnit = 11.sp,
-    yAxisLabelColor: Color = Color.Black,
-    yAxisLabelTextSize: TextUnit = 11.sp,
-    yAxisStep: Int = 1,
-    gridLineColor: Color = Color.LightGray.copy(alpha = 0.5f),
-    gridStrokeWidth: Dp = 1.dp,
-    graphStrokeWidth: Dp = 2.dp,
-    graphStrokeCap: StrokeCap = StrokeCap.Butt,
-    dataValueTextColor: Color = Color.Gray,
-    dataValueTextSize: TextUnit = 10.sp,
-    showGridLines: Boolean = true,
-    graphLineColor: Color = Color.Black,
-    pointColor: Color = Color.Gray,
-    pointRadius: Dp = 4.dp,
-    fillBrush: Boolean = false,
-    drawCircleOnTop: Boolean = true,
-    drawTextOnTop: Boolean = true
+    line: LineChartConfig,
+    lineChartStyle: LineChartStyleConfig = LineChartStyleConfig()
 ) {
     val density = LocalDensity.current
 
-    val pointRadiusPx = with(density) { pointRadius.toPx() }
-    val graphStrokeWidthPx = with(density) { graphStrokeWidth.toPx() }
+    val pointRadiusPx = with(density) { line.pointRadius.toPx() }
+    val graphStrokeWidthPx = with(density) { lineChartStyle.graphStrokeWidth.toPx() }
 
-    val upperValue = remember { (data.maxOfOrNull { it.y }?.plus(1))?.toInt() ?: 0 }
-    val lowerValue = remember { (data.minOfOrNull { it.y }?.minus(1)?.toInt() ?: 0) }
+    val upperValue = remember { (line.data.maxOfOrNull { it.y }?.plus(1))?.toInt() ?: 0 }
+    val lowerValue = remember { (line.data.minOfOrNull { it.y }?.minus(1)?.toInt() ?: 0) }
 
-    val xAxisLabelPaint = remember(density, xAxisLabelColor, xAxisLabelTextSize) {
-        Paint().apply {
-            color = xAxisLabelColor.toArgb()
-            textAlign = Paint.Align.CENTER
-            textSize = density.run { xAxisLabelTextSize.toPx() }
+    val xAxisLabelPaint =
+        remember(density, lineChartStyle.xAxisLabelColor, lineChartStyle.xAxisLabelTextSize) {
+            Paint().apply {
+                color = lineChartStyle.xAxisLabelColor.toArgb()
+                textAlign = Paint.Align.CENTER
+                textSize = density.run { lineChartStyle.xAxisLabelTextSize.toPx() }
+            }
         }
-    }
 
-    val yAxisLabelPaint = remember(density, yAxisLabelColor, yAxisLabelTextSize) {
-        Paint().apply {
-            color = yAxisLabelColor.toArgb()
-            textAlign = Paint.Align.CENTER
-            textSize = density.run { yAxisLabelTextSize.toPx() }
+    val yAxisLabelPaint =
+        remember(density, lineChartStyle.yAxisLabelColor, lineChartStyle.yAxisLabelTextSize) {
+            Paint().apply {
+                color = lineChartStyle.yAxisLabelColor.toArgb()
+                textAlign = Paint.Align.CENTER
+                textSize = density.run { lineChartStyle.yAxisLabelTextSize.toPx() }
+            }
         }
-    }
 
-    val dataValueTextPaint = remember(density, dataValueTextColor, dataValueTextSize) {
-        Paint().apply {
-            color = dataValueTextColor.toArgb()
-            textAlign = Paint.Align.CENTER
-            textSize = density.run { dataValueTextSize.toPx() }
+    val dataValueTextPaint =
+        remember(density, lineChartStyle.dataValueTextColor, lineChartStyle.dataValueTextSize) {
+            Paint().apply {
+                color = lineChartStyle.dataValueTextColor.toArgb()
+                textAlign = Paint.Align.CENTER
+                textSize = density.run { lineChartStyle.dataValueTextSize.toPx() }
+            }
         }
-    }
 
     Canvas(modifier = modifier) {
-        val spacePerXLabel = (size.width - spacing) / data.size
+        val spacePerXLabel = (size.width - lineChartStyle.spacing) / line.data.size
 
         drawXAxisLabels(
-            data = data,
-            spacing = spacing,
+            data = line.data,
+            spacing = lineChartStyle.spacing,
             spacer = spacePerXLabel,
             paint = xAxisLabelPaint
         )
@@ -270,44 +249,39 @@ fun LineChart(
         drawYAxisLabels(
             lowerValue = lowerValue,
             upperValue = upperValue,
-            yAxisStep = yAxisStep,
+            yAxisStep = lineChartStyle.yAxisStep,
             sizeHeight = size.height,
             paint = yAxisLabelPaint,
-            spacing = spacing
+            spacing = lineChartStyle.spacing
         )
 
-        if (showGridLines) {
+        if (lineChartStyle.showGridLines) {
             drawHorizontalGridLines(
                 lowerValue = lowerValue,
                 upperValue = upperValue,
-                spacing = spacing,
-                gridLineColor = gridLineColor,
-                gridStrokeWidthPx = gridStrokeWidth.toPx()
+                spacing = lineChartStyle.spacing,
+                gridLineColor = lineChartStyle.gridLineColor,
+                gridStrokeWidthPx = lineChartStyle.gridStrokeWidth.toPx()
             )
 
             drawVerticalGridLines(
-                dataSize = data.size,
-                spacing = spacing,
+                dataSize = line.data.size,
+                spacing = lineChartStyle.spacing,
                 spacePerXLabel = spacePerXLabel,
-                gridLineColor = gridLineColor,
-                gridStrokeWidthPx = gridStrokeWidth.toPx()
+                gridLineColor = lineChartStyle.gridLineColor,
+                gridStrokeWidthPx = lineChartStyle.gridStrokeWidth.toPx()
             )
         }
 
         drawSingleLineChart(
-            data = data,
-            lineColor = graphLineColor,
-            pointColor = pointColor,
-            fillBrush = fillBrush,
-            drawCircle = drawCircleOnTop,
-            drawText = drawTextOnTop,
-            spacing = spacing,
+            line = line,
+            spacing = lineChartStyle.spacing,
             spacePerXLabel = spacePerXLabel,
             lowerValue = lowerValue,
             upperValue = upperValue,
             pointRadiusPx = pointRadiusPx,
             graphStrokeWidthPx = graphStrokeWidthPx,
-            graphStrokeCap = graphStrokeCap,
+            graphStrokeCap = lineChartStyle.graphStrokeCap,
             dataValueTextPaint = dataValueTextPaint
         )
     }
@@ -322,29 +296,29 @@ fun LineChartPreview() {
             .fillMaxHeight(),
         color = Color.White,
     ) {
-        val sampleData = listOf(
-            Point(1, 10.0),
-            Point(2, 15.0),
-            Point(3, 7.0),
-            Point(4, 20.0),
-            Point(5, 12.0),
-            Point(6, 25.0),
-            Point(7, 18.0),
-            Point(8, 10.0),
-            Point(9, 15.0),
-            Point(10, 7.0),
-            Point(11, 20.0),
-            Point(12, 12.0)
+        val sampleLine = LineChartConfig(
+            data = listOf(
+                Point(1, 10.0),
+                Point(2, 15.0),
+                Point(3, 7.0),
+                Point(4, 20.0),
+                Point(5, 12.0),
+                Point(6, 25.0),
+                Point(7, 18.0),
+                Point(8, 10.0),
+                Point(9, 15.0),
+                Point(10, 7.0),
+                Point(11, 20.0),
+                Point(12, 12.0)
+            ),
+            graphLineColor = Color.Blue,
+            pointColor = Color.Blue,
         )
         LineChart(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(250.dp),
-            data = sampleData,
-            graphLineColor = Color.Blue,
-            pointColor = Color.Blue,
-            fillBrush = true,
-            drawTextOnTop = true
+            line = sampleLine
         )
     }
 }
