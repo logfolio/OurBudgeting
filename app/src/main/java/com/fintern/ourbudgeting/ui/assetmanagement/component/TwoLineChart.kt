@@ -22,14 +22,14 @@ import com.fintern.ourbudgeting.ui.assetmanagement.data.Point
 @Composable
 fun TwoLineChart(
     modifier: Modifier = Modifier,
-    data1: List<Point> = emptyList(),
+    firstData: List<Point> = emptyList(),
     graphLineColor1: Color = Color.Red,
     pointColor1: Color = Color.Red,
     fillBrush1: Boolean = false,
     drawCircleOnTop1: Boolean = true,
     drawTextOnTop1: Boolean = true,
     pointRadius1: Dp = 4.dp,
-    data2: List<Point>? = null,
+    secondData: List<Point>? = null,
     graphLineColor2: Color = Color.Blue,
     pointColor2: Color = Color.Blue,
     fillBrush2: Boolean = false,
@@ -43,7 +43,7 @@ fun TwoLineChart(
     yAxisLabelTextSize: TextUnit = 11.sp,
     dataValueTextColor: Color = Color.DarkGray,
     dataValueTextSize: TextUnit = 10.sp,
-    yAxisStep: Int = 1, // Y축 라벨 간격
+    yAxisStep: Int = 1,
     gridLineColor: Color = Color.LightGray.copy(alpha = 0.5f),
     gridStrokeWidth: Dp = 1.dp,
     graphStrokeWidth: Dp = 2.dp,
@@ -57,13 +57,13 @@ fun TwoLineChart(
 
     val graphStrokeWidthPx = with(density) { graphStrokeWidth.toPx() }
 
-    val allYValues = remember(data1, data2) {
+    val allYValues = remember(firstData, secondData) {
         val values = mutableListOf<Double>()
-        if (data1.isNotEmpty()) {
-            values.addAll(data1.map { it.y })
+        if (firstData.isNotEmpty()) {
+            values.addAll(firstData.map { it.y })
         }
-        if (!data2.isNullOrEmpty()) {
-            values.addAll(data2.map { it.y })
+        if (!secondData.isNullOrEmpty()) {
+            values.addAll(secondData.map { it.y })
         }
         values
     }
@@ -96,10 +96,10 @@ fun TwoLineChart(
             textSize = density.run { dataValueTextSize.toPx() }
         }
     }
-    val baseData = listOfNotNull(data1, data2).maxByOrNull { it.size } ?: emptyList()
+    val baseData = listOfNotNull(firstData, secondData).maxByOrNull { it.size } ?: emptyList()
 
     Canvas(modifier = modifier) {
-        val maxDataSize = maxOf(data1.size, data2?.size ?: 0)
+        val maxDataSize = maxOf(firstData.size, secondData?.size ?: 0)
         val spacePerXLabel = if (maxDataSize > 0) (size.width - spacing) / maxDataSize else 0f
 
         drawXAxisLabels(baseData, spacing, spacePerXLabel, xAxisLabelPaint)
@@ -123,7 +123,7 @@ fun TwoLineChart(
         }
 
         drawSingleLineChart(
-            data = data1,
+            data = firstData,
             lineColor = graphLineColor1,
             pointColor = pointColor1,
             fillBrush = fillBrush1,
@@ -139,7 +139,7 @@ fun TwoLineChart(
             dataValueTextPaint = dataValueTextPaint
         )
 
-        data2?.let {
+        secondData?.let {
             drawSingleLineChart(
                 data = it,
                 lineColor = graphLineColor2,
@@ -201,8 +201,8 @@ fun TwoLineChartPreview() {
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(),
-            data1 = sampleData1,
-            data2 = sampleData2,
+            firstData = sampleData1,
+            secondData = sampleData2,
             fillBrush1 = true,
             fillBrush2 = true
         )
