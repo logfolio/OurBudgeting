@@ -109,10 +109,10 @@ class StatisticsViewModel @Inject constructor(
         currentMonth: Int,
         offset: Int
     ): Pair<Int, Int> {
-        val newMonth = currentMonth + offset
-        val newYear = currentYear + (newMonth - 1) / 12
-        val adjustedMonth = (newMonth - 1).mod(12) + 1
-        return Pair(newYear, adjustedMonth)
+        val totalMonths = currentYear * 12 + (currentMonth - 1) + offset
+        val newYear = totalMonths / 12
+        val newMonth = (totalMonths % 12) + 1
+        return Pair(newYear, newMonth)
     }
 
     private fun getColorForCategory(category: String) = when (category) {
