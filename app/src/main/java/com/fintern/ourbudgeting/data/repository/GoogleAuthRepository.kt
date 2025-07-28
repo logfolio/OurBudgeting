@@ -1,6 +1,7 @@
 package com.fintern.ourbudgeting.data.repository
 
 import android.content.Context
+import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import com.fintern.ourbudgeting.BuildConfig
@@ -47,5 +48,12 @@ class GoogleAuthRepository @Inject constructor(
         } catch (e: Exception) {
             null
         }
+    }
+
+    suspend fun signOutWithGoogle() {
+        auth.signOut()
+        credentialManager.clearCredentialState(
+            ClearCredentialStateRequest()
+        )
     }
 }
