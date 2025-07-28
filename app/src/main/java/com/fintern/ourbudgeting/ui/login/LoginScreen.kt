@@ -11,21 +11,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.R
-import com.fintern.ourbudgeting.ui.theme.OurBudgetingTheme
 
 @Composable
 fun LoginScreen(
+    onNavigateHome: () -> Unit = {},
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
+    val uiState by loginViewModel.uiState.collectAsState()
     val context = LocalContext.current
+
+    LaunchedEffect(uiState.currentUser) {
+        if (uiState.currentUser != null) {
+            onNavigateHome()
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -41,13 +50,5 @@ fun LoginScreen(
             contentDescription = "로그인 버튼",
             modifier = Modifier.clickable { loginViewModel.signInWithGoogle(context) }
         )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    OurBudgetingTheme {
-        LoginScreen()
     }
 }
