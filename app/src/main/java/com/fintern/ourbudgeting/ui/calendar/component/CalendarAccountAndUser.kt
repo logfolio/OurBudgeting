@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,12 +35,15 @@ fun CalendarAccountAndUser(
     ) {
         FilledTonalButton(
             onClick = onAccountClick,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .defaultMinSize(minHeight = 0.dp),
             contentPadding = PaddingValues(0.dp)
         ) {
             Box(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = selectedAccount,
+                    fontSize = 16.sp,
                     modifier = Modifier.align(Alignment.Center)
                 )
 
@@ -56,12 +61,15 @@ fun CalendarAccountAndUser(
 
         FilledTonalButton(
             onClick = onUserClick,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .defaultMinSize(minHeight = 0.dp),
             contentPadding = PaddingValues(0.dp)
         ) {
             Box(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = selectedUser,
+                    fontSize = 16.sp,
                     modifier = Modifier.align(Alignment.Center)
                 )
 

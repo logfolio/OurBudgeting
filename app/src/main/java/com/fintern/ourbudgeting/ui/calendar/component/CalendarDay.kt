@@ -4,9 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -61,21 +63,22 @@ fun CalendarDayContent(
     val amountColor = if (dailyTotal >= 0) Color.Blue else Color.Red
 
     Column(
-        modifier = modifier
-            .size(48.dp)
-            .background(
-                todayBackgroundColor, shape = CircleShape
-            ),
+        modifier = modifier.size(48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-
-
-        ) {
+    ) {
         Text(
             text = date.dayOfMonth.toString(),
-            modifier = Modifier.wrapContentSize(),
+            modifier = Modifier
+                .wrapContentSize()
+                .background(
+                    color = todayBackgroundColor,
+                    shape = RoundedCornerShape(4.dp)
+                )
+                ,
             textAlign = TextAlign.Center,
             style = dayConfig.textStyle.copy(color = todayTextColor)
         )
+
         if (currentDayTransactions.isNotEmpty()) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(

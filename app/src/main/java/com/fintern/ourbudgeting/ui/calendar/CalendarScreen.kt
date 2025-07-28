@@ -1,14 +1,19 @@
 package com.fintern.ourbudgeting.ui.calendar
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -18,6 +23,7 @@ import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.calendar.component.Calendar
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarAccountAndUser
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarTopAppbar
+import com.fintern.ourbudgeting.ui.calendar.component.LabeledAmount
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -25,6 +31,9 @@ import java.time.LocalDate
 @Preview
 @Composable
 fun CalendarScreen() {
+
+    val sampleIncomeAmount = 100_000_000L
+    val sampleExpenseAmount = 50_000_000L
 
     val sampleTransactions = CalendarTransactions(
         transactionList = listOf(
@@ -77,6 +86,30 @@ fun CalendarScreen() {
                     onAccountClick = { },
                     onUserClick = { }
                 )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    LabeledAmount(
+                        label = "수입",
+                        labelColor = Color.Red,
+                        amount = sampleIncomeAmount,
+                        amountBoxWidth = 120.dp
+                    )
+
+                    Spacer(modifier = Modifier.width(28.dp))
+
+                    LabeledAmount(
+                        label = "지출",
+                        labelColor = Color.Blue,
+                        amount = sampleExpenseAmount,
+                        amountBoxWidth = 120.dp
+                    )
+                }
+
                 Calendar(
                     startDayOfWeek = DayOfWeek.SUNDAY,
                     selectedDate = LocalDate.now(),
