@@ -32,4 +32,11 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
+
+    fun signOutWithGoogle() {
+        viewModelScope.launch {
+            authRepository.signOutWithGoogle()
+            _uiState.value = _uiState.value.copy(currentUser = null)
+        }
+    }
 }
