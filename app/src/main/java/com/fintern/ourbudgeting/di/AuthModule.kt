@@ -2,6 +2,8 @@ package com.fintern.ourbudgeting.di
 
 import android.content.Context
 import androidx.credentials.CredentialManager
+import com.fintern.ourbudgeting.data.repository.GoogleAuthRepository
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,5 +21,14 @@ object AuthModule {
         @ApplicationContext context: Context
     ): CredentialManager {
         return CredentialManager.create(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGoogleAuthRepository(
+        credentialManager: CredentialManager,
+        firebaseAuth: FirebaseAuth
+    ): GoogleAuthRepository {
+        return GoogleAuthRepository(credentialManager, firebaseAuth)
     }
 }
