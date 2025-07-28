@@ -1,0 +1,55 @@
+package com.fintern.ourbudgeting.ui.assetmanagement.component
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+
+@Composable
+fun AssetTitle(
+    modifier: Modifier = Modifier,
+    name: String,
+    amount: Long
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = name,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = "${amount}원",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+    }
+
+}
+
+@Composable
+@Preview(showBackground = true)
+fun CashTitlePreview() {
+    MaterialTheme {
+        AssetTitle(name = "현금", amount = 0)
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun BankTitlePreview() {
+    MaterialTheme {
+        AssetTitle(name = "은행", amount = 0)
+    }
+}
