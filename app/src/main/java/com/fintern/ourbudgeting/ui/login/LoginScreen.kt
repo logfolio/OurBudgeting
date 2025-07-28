@@ -1,6 +1,7 @@
 package com.fintern.ourbudgeting.ui.login
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,14 +13,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.theme.OurBudgetingTheme
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    loginViewModel: LoginViewModel = hiltViewModel()
+) {
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -31,7 +38,8 @@ fun LoginScreen() {
         Spacer(modifier = Modifier.height(200.dp))
         Image(
             painter = painterResource(R.drawable.ic_google_login),
-            contentDescription = "로그인 버튼"
+            contentDescription = "로그인 버튼",
+            modifier = Modifier.clickable { loginViewModel.signInWithGoogle(context) }
         )
     }
 }
