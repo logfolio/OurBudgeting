@@ -10,15 +10,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,16 +25,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.R
-import com.fintern.ourbudgeting.ui.statistics.chart.components.MonthSelector
 import com.fintern.ourbudgeting.ui.statistics.chart.components.PieChart
 import com.fintern.ourbudgeting.ui.statistics.chart.components.StatisticsTab
+import com.fintern.ourbudgeting.ui.statistics.chart.components.StatisticsTopBar
 import com.fintern.ourbudgeting.ui.theme.OurBudgetingTheme
 import kotlin.math.roundToInt
 
@@ -54,29 +50,25 @@ fun StatisticsScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    MonthSelector(
-                        year = uiState.currentYear,
-                        month = uiState.currentMonth,
-                        onPreviousMonth = {
-                            statisticsViewModel.updateMonthAndFetchData(-1, uid, householdId)
-                        },
-                        onNextMonth = {
-                            statisticsViewModel.updateMonthAndFetchData(1, uid, householdId)
-                        }
+            StatisticsTopBar(
+                year = uiState.currentYear,
+                month = uiState.currentMonth,
+                onPreviousMonth = {
+                    statisticsViewModel.updateMonthAndFetchData(
+                        offset = -1,
+                        uid = uid,
+                        householdId = householdId
                     )
-                }, actions = {
-                    IconButton(
-                        onClick = {
-                            // TODO: AI 패턴 분석 화면 이동
-                        }
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_ai_analysis),
-                            contentDescription = stringResource(R.string.ai_analysis)
-                        )
-                    }
+                },
+                onNextMonth = {
+                    statisticsViewModel.updateMonthAndFetchData(
+                        offset = 1,
+                        uid = uid,
+                        householdId = householdId
+                    )
+                },
+                onAiAnalysisClick = {
+                    // TODO: AI 패턴 분석 화면 이동
                 }
             )
         }
