@@ -56,4 +56,8 @@ class GoogleAuthRepository @Inject constructor(
             ClearCredentialStateRequest()
         )
     }
+
+    fun getCurrentUser(): FirebaseUser? {
+        return auth.currentUser
+    }
 }
