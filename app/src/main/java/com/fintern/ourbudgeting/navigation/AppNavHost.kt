@@ -16,7 +16,7 @@ fun AppNavHost(navController: NavHostController) {
     ) {
         composable(Screen.Login.name) {
             LoginScreen(
-                onNavigateHome = {
+                onNavigateToHome = {
                     navController.navigate(Screen.Home.name) {
                         popUpTo(Screen.Login.name) { inclusive = true }
                     }

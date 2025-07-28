@@ -24,7 +24,7 @@ import com.fintern.ourbudgeting.R
 
 @Composable
 fun LoginScreen(
-    onNavigateHome: () -> Unit = {},
+    onNavigateToHome: () -> Unit = {},
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val uiState by loginViewModel.uiState.collectAsState()
@@ -32,7 +32,7 @@ fun LoginScreen(
 
     LaunchedEffect(uiState.currentUser) {
         if (uiState.currentUser != null) {
-            onNavigateHome()
+            onNavigateToHome()
         }
     }
 
