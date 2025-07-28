@@ -2,8 +2,12 @@ package com.fintern.ourbudgeting.ui.statistics.chart
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -11,6 +15,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -22,6 +27,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -33,6 +39,7 @@ import com.fintern.ourbudgeting.ui.statistics.chart.components.MonthSelector
 import com.fintern.ourbudgeting.ui.statistics.chart.components.PieChart
 import com.fintern.ourbudgeting.ui.statistics.chart.components.StatisticsTab
 import com.fintern.ourbudgeting.ui.theme.OurBudgetingTheme
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -126,10 +133,58 @@ fun StatisticsScreen(
                         modifier = Modifier.align(Alignment.Center)
                     )
 
-                    else -> PieChart(
-                        data = uiState.chartData,
-                        modifier = Modifier.align(Alignment.TopCenter)
-                    )
+                    else -> Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        PieChart(
+                            data = uiState.chartData,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+
+                        Column(modifier = Modifier.padding(top = 16.dp)) {
+                            uiState.chartData.forEach { entry ->
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 8.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Surface(
+                                        color = entry.pieColor,
+                                        contentColor = Color.White,
+                                        shape = RoundedCornerShape(50),
+                                    ) {
+                                        Text(
+                                            text = entry.pieLabel,
+                                            modifier = Modifier
+                                                .padding(horizontal = 8.dp, vertical = 4.dp),
+                                            style = MaterialTheme.typography.titleMedium
+                                        )
+                                    }
+
+                                    Spacer(modifier = Modifier.weight(1f))
+
+                                    val total = uiState.chartData.sumOf { it.value.toDouble() }
+                                    val percent = if (total > 0) {
+                                        ((entry.value / total * 100 * 10).roundToInt() / 10.0)
+                                    } else 0.0
+
+                                    Text(
+                                        text = "${percent}%",
+                                        modifier = Modifier.padding(end = 8.dp),
+                                        style = MaterialTheme.typography.titleMedium
+                                    )
+
+                                    // 금액 표시
+                                    Text(
+                                        text = "%,d원".format(entry.value.toInt()),
+                                        style = MaterialTheme.typography.titleMedium
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
