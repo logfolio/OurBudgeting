@@ -2,6 +2,7 @@ package com.fintern.ourbudgeting.ui.assetmanagement.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -22,9 +23,12 @@ fun AssetManagementScreen(modifier: Modifier = Modifier) {
         topBar = { AssetTopAppBar() },
         floatingActionButton = { }
     ) { paddingValue ->
-        Column(modifier = Modifier
-            .background(Color.White)
-            .padding(paddingValue)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+                .padding(paddingValue)
+        ) {
             AssetTopSection()
             AssetHorizontalDivider()
             AssetTitle(name = "현금", amount = 1000)

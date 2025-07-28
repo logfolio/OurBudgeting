@@ -2,6 +2,7 @@ package com.fintern.ourbudgeting.ui.assetmanagement.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -21,6 +22,7 @@ fun AddAssetManagementScreen(modifier: Modifier = Modifier) {
     ) { paddingValue ->
         Column(
             modifier = Modifier
+                .fillMaxSize()
                 .background(Color.White)
                 .padding(paddingValue)
         ) {
