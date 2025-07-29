@@ -11,13 +11,23 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.time.Clock
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 class StatisticsViewModel @Inject constructor(
-    private val repository: StatisticsRepository
+    private val repository: StatisticsRepository,
+    private val clock: Clock,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(StatisticsUiState())
+    private val now = LocalDate.now(clock)
+
+    private val _uiState = MutableStateFlow(
+        StatisticsUiState(
+            currentYear = now.year,
+            currentMonth = now.monthValue
+        )
+    )
     val uiState: StateFlow<StatisticsUiState> = _uiState.asStateFlow()
 
     fun initialize(
