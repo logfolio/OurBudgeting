@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +25,8 @@ import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.calendar.component.Calendar
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarAccountAndUser
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarTopAppbar
+import com.fintern.ourbudgeting.ui.calendar.component.CalendarTransactionFilter
+import com.fintern.ourbudgeting.ui.calendar.component.FilterType
 import com.fintern.ourbudgeting.ui.calendar.component.LabeledAmount
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import java.time.DayOfWeek
@@ -34,6 +38,9 @@ fun CalendarScreen() {
 
     val sampleIncomeAmount = 100_000_000L
     val sampleExpenseAmount = 50_000_000L
+
+    val nickname = "짱구"
+    var filterType by remember { mutableStateOf(FilterType.ALL) }
 
     val sampleTransactions = CalendarTransactions(
         transactionList = listOf(
@@ -67,10 +74,7 @@ fun CalendarScreen() {
     Scaffold(
         topBar = {
             CalendarTopAppbar(
-                title = stringResource(R.string.calendar_label_app_name),
-                onNotificationClick = {
-
-                },
+                title = stringResource(R.string.calendar_label_app_name)
             )
         },
         content = { innerPadding ->
@@ -117,6 +121,10 @@ fun CalendarScreen() {
                         .fillMaxWidth()
                         .padding(horizontal = 24.dp),
                     transactions = sampleTransactions,
+                )
+                CalendarTransactionFilter(
+                    nickname = nickname,
+                    filterType = filterType,
                 )
             }
         }
