@@ -26,6 +26,7 @@ import com.fintern.ourbudgeting.ui.calendar.component.Calendar
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarAccountAndUser
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarTopAppbar
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarTransactionFilter
+import com.fintern.ourbudgeting.ui.calendar.component.CategoryListSection
 import com.fintern.ourbudgeting.ui.calendar.component.FilterType
 import com.fintern.ourbudgeting.ui.calendar.component.LabeledAmount
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
@@ -126,6 +127,7 @@ fun CalendarScreen() {
                     nickname = nickname,
                     filterType = filterType,
                 )
+                CategoryListSection()
             }
         }
     )
