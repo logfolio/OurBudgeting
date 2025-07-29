@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fintern.ourbudgeting.data.repository.GoogleAuthRepository
+import com.fintern.ourbudgeting.ui.user.UserViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authRepository: GoogleAuthRepository
+    private val authRepository: GoogleAuthRepository,
+    private val userViewModel: UserViewModel,
 ) : ViewModel() {
 
     private val currentUser = authRepository.getCurrentUser()
@@ -27,6 +29,7 @@ class LoginViewModel @Inject constructor(
             try {
                 val user = authRepository.signInWithGoogle(context)
                 _uiState.value = _uiState.value.copy(currentUser = user)
+                userViewModel.updateUser(currentUser?.uid ?: "", "닉네임")
             } catch (e: Exception) {
                 // TODO: 에러 처리
             }
