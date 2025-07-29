@@ -20,7 +20,6 @@ import androidx.compose.ui.graphics.Color
 @Composable
 fun CalendarTopAppbar(
     title: String,
-    onNotificationClick: () -> Unit,
 ) {
     TopAppBar(
         title = {
@@ -35,18 +34,9 @@ fun CalendarTopAppbar(
                 )
             }
         },
-        actions = {
-            IconButton(onClick = onNotificationClick) {
-                Icon(
-                    imageVector = Icons.Default.Notifications,
-                    contentDescription = "Notification"
-                )
-            }
-        },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.White,
             titleContentColor = Color.Black,
-            actionIconContentColor = Color.Black
         )
     )
 }
