@@ -46,7 +46,9 @@ fun CategoryListSection() {
     }
 
     LazyColumn(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp)
     ) {
         categories.forEach { categoryItemData ->
             item {
