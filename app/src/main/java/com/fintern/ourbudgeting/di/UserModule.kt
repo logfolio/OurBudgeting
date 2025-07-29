@@ -3,6 +3,7 @@ package com.fintern.ourbudgeting.di
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.fintern.ourbudgeting.data.repository.UserPreferencesRepository
+import com.fintern.ourbudgeting.ui.user.UserViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,5 +20,13 @@ object UserModule {
         datastore: DataStore<Preferences>
     ): UserPreferencesRepository {
         return UserPreferencesRepository(datastore)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserViewModel(
+        userPreferencesRepository: UserPreferencesRepository
+    ): UserViewModel {
+        return UserViewModel(userPreferencesRepository)
     }
 }
