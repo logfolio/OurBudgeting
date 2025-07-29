@@ -1,12 +1,10 @@
 package com.fintern.ourbudgeting.ui.calendar.component
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,7 +25,7 @@ fun CalendarTransactionFilter(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
@@ -46,14 +44,17 @@ fun CalendarTransactionFilter(
                 }
             }
         )
+
         Spacer(modifier = Modifier.weight(1f))
 
-        CustomIconButton(
-            imageVector = Icons.Default.FilterList,
-            modifier = modifier.wrapContentSize(),
-            contentDescription = "Filter",
-            onClick = {  }
-        )
+        Column(
+            horizontalAlignment = Alignment.End
+        ) {
+            CustomFilterButton(
+                onClick = {  },
+                contentDescription = "Filter",
+            )
+        }
     }
 }
 

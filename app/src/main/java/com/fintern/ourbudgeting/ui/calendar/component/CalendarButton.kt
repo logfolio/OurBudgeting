@@ -1,16 +1,20 @@
 package com.fintern.ourbudgeting.ui.calendar.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -94,5 +98,29 @@ fun CustomDropDownButton(
                     .padding(start = 4.dp)
             )
         }
+    }
+}
+
+@Composable
+fun CustomFilterButton(
+    onClick: () -> Unit,
+    icon: ImageVector = Icons.Default.FilterList,
+    contentDescription: String? = "필터 버튼",
+    tint: Color = Color(0xff964BFF),
+    shape: Shape = CircleShape
+) {
+    Box(
+        modifier = Modifier
+            .size(24.dp)
+            .clip(shape)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = contentDescription,
+            tint = tint,
+            modifier = Modifier.size(24.dp)
+        )
     }
 }
