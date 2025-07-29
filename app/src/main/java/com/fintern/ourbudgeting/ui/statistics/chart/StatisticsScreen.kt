@@ -80,12 +80,14 @@ fun StatisticsScreen(
                     Tab(
                         selected = selectedTabIndex == index,
                         onClick = {
-                            selectedTabIndex = index
-                            statisticsViewModel.updateTypeAndFetchData(
-                                type = destination.type,
-                                uid = uid,
-                                householdId = householdId
-                            )
+                            if (selectedTabIndex != index) {
+                                selectedTabIndex = index
+                                statisticsViewModel.updateTypeAndFetchData(
+                                    type = destination.type,
+                                    uid = uid,
+                                    householdId = householdId
+                                )
+                            }
                         },
                         text = {
                             Text(
