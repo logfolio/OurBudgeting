@@ -29,7 +29,7 @@ class LoginViewModel @Inject constructor(
             try {
                 val user = authRepository.signInWithGoogle(context)
                 _uiState.value = _uiState.value.copy(currentUser = user)
-                userViewModel.updateUser(currentUser?.uid ?: "", "닉네임")
+                userViewModel.updateUser(user?.uid ?: "", "닉네임")
             } catch (e: Exception) {
                 // TODO: 에러 처리
             }
