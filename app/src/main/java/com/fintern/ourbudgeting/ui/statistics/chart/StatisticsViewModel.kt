@@ -20,6 +20,20 @@ class StatisticsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(StatisticsUiState())
     val uiState: StateFlow<StatisticsUiState> = _uiState.asStateFlow()
 
+    fun initialize(
+        uid: String,
+        householdId: String,
+    ) {
+        val current = _uiState.value
+        fetchMonthlyCategoryTotals(
+            year = current.currentYear,
+            month = current.currentMonth,
+            uid = uid,
+            householdId = householdId,
+            type = current.currentType
+        )
+    }
+
     fun updateMonthAndFetchData(
         offset: Int,
         uid: String,
