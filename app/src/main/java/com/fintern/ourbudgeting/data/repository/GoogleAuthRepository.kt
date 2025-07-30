@@ -19,14 +19,11 @@ class GoogleAuthRepository @Inject constructor(
 ) {
 
     suspend fun signInWithGoogle(context: Context): FirebaseUser? {
-        // 구글 로그인 요청 인스턴스화
-        // GetGoogleIdOption으로 사용자의 Google ID Token 검색
         val googleIdOption = GetGoogleIdOption.Builder()
             .setFilterByAuthorizedAccounts(false)
             .setServerClientId(BuildConfig.GOOGLE_CLIENT_ID)
             .build()
 
-        // GetCredentialRequest 인스턴스화
         val request = GetCredentialRequest.Builder()
             .addCredentialOption(googleIdOption)
             .build()
@@ -39,10 +36,8 @@ class GoogleAuthRepository @Inject constructor(
             val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
             val googleIdToken = googleIdTokenCredential.idToken
 
-            // 로그인 방법과 사용자의 고유 식별자
             val firebaseCredential = GoogleAuthProvider.getCredential(googleIdToken, null)
 
-            // 사용자의 Firebase 인증
             auth.signInWithCredential(firebaseCredential).await().user
 
         } catch (e: Exception) {
