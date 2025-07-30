@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fintern.ourbudgeting.data.chart.PieEntry
 import com.fintern.ourbudgeting.data.repository.StatisticsRepository
-import com.fintern.ourbudgeting.ui.statistics.chart.model.TransactionType
+import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

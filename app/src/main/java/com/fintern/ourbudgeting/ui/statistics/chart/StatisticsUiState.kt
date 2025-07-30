@@ -1,7 +1,7 @@
 package com.fintern.ourbudgeting.ui.statistics.chart
 
 import com.fintern.ourbudgeting.data.chart.PieEntry
-import com.fintern.ourbudgeting.ui.statistics.chart.model.TransactionType
+import com.fintern.ourbudgeting.ui.common.model.TransactionType
 
 data class StatisticsUiState(
     val currentYear: Int = 2025,
