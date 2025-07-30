@@ -41,6 +41,7 @@ class GoogleAuthRepository @Inject constructor(
             auth.signInWithCredential(firebaseCredential).await().user
 
         } catch (e: Exception) {
+            // TODO: 예외 처리
             null
         }
     }
