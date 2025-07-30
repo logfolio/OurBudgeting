@@ -3,6 +3,7 @@ package com.fintern.ourbudgeting.ui.statistics.chart
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.data.chart.PieEntry
 import com.fintern.ourbudgeting.data.model.ExpenseCategoryType
 import com.fintern.ourbudgeting.data.model.IncomeCategoryType
@@ -112,7 +113,8 @@ class StatisticsViewModel @Inject constructor(
                     PieEntry(
                         value = amount.toFloat(),
                         pieLabel = category,
-                        pieColor = getColorForCategory(category, type)
+                        pieColor = getColorForCategory(type, category),
+                        labelResId = getLabelResIdForCategory(type, category)
                     )
                 }
 
@@ -151,6 +153,18 @@ class StatisticsViewModel @Inject constructor(
 
         TransactionType.INCOME -> {
             IncomeCategoryType.entries.find { it.name == category }?.color ?: Color.Gray
+        }
+    }
+
+    private fun getLabelResIdForCategory(
+        type: TransactionType,
+        category: String
+    ): Int = when (type) {
+        TransactionType.EXPENSE -> {
+            ExpenseCategoryType.entries.find { it.name == category }?.labelRes ?: R.string.expense_etc
+        }
+        TransactionType.INCOME -> {
+            IncomeCategoryType.entries.find { it.name == category }?.labelRes ?: R.string.income_etc
         }
     }
 }
