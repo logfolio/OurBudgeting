@@ -17,7 +17,11 @@ import com.fintern.ourbudgeting.ui.assetmanagement.component.AssetTopAppBar
 import com.fintern.ourbudgeting.ui.assetmanagement.component.AssetTopSection
 
 @Composable
-fun AssetManagementScreen(modifier: Modifier = Modifier) {
+fun AssetManagementScreen(
+    modifier: Modifier = Modifier,
+    asset: Long,
+    dept:Long,
+) {
     Scaffold(
         modifier = modifier.background(Color.White),
         topBar = { AssetTopAppBar() },
@@ -29,7 +33,7 @@ fun AssetManagementScreen(modifier: Modifier = Modifier) {
                 .background(Color.White)
                 .padding(paddingValue)
         ) {
-            AssetTopSection()
+            AssetTopSection(asset = asset, debt = dept)
             AssetHorizontalDivider()
             AssetTitle(name = "현금", amount = 1000)
             AssetBody(name = "현금", amount = 1000)
@@ -43,6 +47,6 @@ fun AssetManagementScreen(modifier: Modifier = Modifier) {
 @Composable
 fun AssetManagementScreenPreview() {
     MaterialTheme {
-        AssetManagementScreen()
+        AssetManagementScreen(asset = 1000, dept = 2000)
     }
 }
