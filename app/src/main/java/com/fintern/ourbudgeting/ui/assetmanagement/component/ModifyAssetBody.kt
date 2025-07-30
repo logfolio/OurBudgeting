@@ -24,7 +24,7 @@ fun ModifyAssetBody(
     amount: Long,
     onModifyClick: () -> Unit = {},
     onDeleteClick: () -> Unit = {}
-    ) {
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()

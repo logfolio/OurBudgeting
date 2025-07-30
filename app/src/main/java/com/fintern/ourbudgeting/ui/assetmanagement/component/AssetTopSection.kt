@@ -30,7 +30,7 @@ fun AssetTopSection(
             .padding(16.dp)
             .background(Color.White),
         horizontalArrangement = Arrangement.Absolute.SpaceAround
-        ) {
+    ) {
         Column(
             modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -50,7 +50,7 @@ fun AssetTopSection(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(stringResource(R.string.total))
-            Text("${asset-debt}원")
+            Text("${asset - debt}원")
         }
     }
 }
