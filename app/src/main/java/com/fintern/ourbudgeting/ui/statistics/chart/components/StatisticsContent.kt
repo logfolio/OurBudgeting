@@ -48,7 +48,7 @@ fun StatisticsContent(
                         shape = RoundedCornerShape(50),
                     ) {
                         Text(
-                            text = entry.pieLabel,
+                            text = stringResource(id = entry.labelResId),
                             modifier = Modifier
                                 .padding(horizontal = 8.dp, vertical = 4.dp),
                             style = MaterialTheme.typography.titleMedium
