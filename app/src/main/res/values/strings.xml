@@ -20,5 +20,7 @@
     <string name="label_saturday">토</string>
     <string name="label_income">수입</string>
     <string name="label_expense">지출</string>
+    <string name="description_filter_button">filter button</string>
+    <string name="description_select_button">select button</string>
 
 </resources>

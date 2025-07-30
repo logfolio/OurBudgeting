@@ -16,10 +16,11 @@ fun CalendarAccountAndUser(
     selectedAccount: String,
     selectedUser: String,
     onAccountClick: () -> Unit,
-    onUserClick: () -> Unit
+    onUserClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically

@@ -27,17 +27,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fintern.ourbudgeting.R
 
 @Composable
 fun CustomIconButton(
     imageVector: ImageVector,
     modifier: Modifier,
-    contentDescription: String? = null,
+    contentDescription: String,
     onClick: () -> Unit = {}
 ) {
     IconButton(
@@ -63,7 +65,7 @@ fun CustomDropDownButton(
     fontSize: TextUnit = 16.sp,
     shape: Shape = RoundedCornerShape(4.dp),
     icon: ImageVector = Icons.Default.ArrowDropDown,
-    contentDescription: String? = null
+    contentDescription: String = stringResource(R.string.description_select_button)
 ) {
     Surface(
         onClick = onClick,
@@ -105,7 +107,7 @@ fun CustomDropDownButton(
 fun CustomFilterButton(
     onClick: () -> Unit,
     icon: ImageVector = Icons.Default.FilterList,
-    contentDescription: String? = "필터 버튼",
+    contentDescription: String = stringResource(R.string.description_filter_button),
     tint: Color = Color(0xff964BFF),
     shape: Shape = CircleShape
 ) {
