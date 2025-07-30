@@ -13,9 +13,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.data.calendar.CategoryItemData
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayConfig
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
@@ -54,7 +56,7 @@ fun CalendarDayContent(
         }
     }
 
-    val displayAmount = if (dailyTotal >= 0) "+$dailyTotal" else dailyTotal.toString()
+    val displayAmount = if (dailyTotal >= 0) stringResource(R.string.prefix_plus_amount, dailyTotal) else dailyTotal.toString()
     val amountColor = if (dailyTotal >= 0) Color.Red else Color.Blue
 
     Column(

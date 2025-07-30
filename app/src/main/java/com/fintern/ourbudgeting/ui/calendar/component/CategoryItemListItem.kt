@@ -16,9 +16,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.data.calendar.CategoryDefinition
 import com.fintern.ourbudgeting.data.calendar.CategoryItemData
 import com.fintern.ourbudgeting.ui.calendar.extensions.toFormatterDate
@@ -46,7 +48,7 @@ fun CategoryItemListItem(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = categoryDefinition?.emoji ?: "❓",
+                text = categoryDefinition?.emoji ?: stringResource(R.string.emoji_category_null),
                 fontSize = 16.sp
             )
         }
@@ -57,13 +59,15 @@ fun CategoryItemListItem(
             modifier = Modifier.weight(1f)
         ) {
             val amountColor = if (item.type == TransactionType.INCOME) Color.Red else Color.Blue
-            val amountPrefix = if (item.type == TransactionType.INCOME) "+" else "-"
+            val amountPrefix = if (item.type == TransactionType.INCOME) stringResource(R.string.prefix_plus) else stringResource(
+                R.string.prefix_minus
+            )
 
             val formatter = NumberFormat.getNumberInstance(Locale.getDefault())
             val formattedAmount = formatter.format(item.amount)
 
             Text(
-                text = "$amountPrefix ${formattedAmount}원",
+                text = stringResource(R.string.item_amount, amountPrefix, formattedAmount),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = amountColor

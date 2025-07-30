@@ -22,12 +22,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarHeaderConfig
 import java.time.Month
 
@@ -40,7 +41,7 @@ fun CalendarHeader(
     onPreviousClick: () -> Unit = {},
     onNextClick: () -> Unit = {},
 ) {
-    val titleText = remember(year, month) { getTitleText(year, month) }
+    val titleText = getTitleText(year, month)
 
     HeaderContent(
         titleText = titleText,
@@ -73,7 +74,7 @@ fun HeaderContent(
         CustomIconButton(
             modifier = Modifier.wrapContentSize(),
             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-            contentDescription = "Previous Button",
+            contentDescription = stringResource(R.string.description_previous_button),
             onClick = {
                 isNext = false
                 onPreviousClick()
@@ -99,7 +100,7 @@ fun HeaderContent(
         CustomIconButton(
             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
             modifier = Modifier.wrapContentSize(),
-            contentDescription = "Next Button",
+            contentDescription = stringResource(R.string.description_next_button),
             onClick = {
                 isNext = true
                 onNextClick()
@@ -108,11 +109,16 @@ fun HeaderContent(
     }
 }
 
+@Composable
 fun getTitleText(year: Int, month: Month): String {
     val monthValue = month.value
 
     val yearValue = year.toString()
-    return "${yearValue}년${monthValue}월"
+    return stringResource(
+        R.string.calendar_year_month_format,
+        yearValue,
+        monthValue
+    )
 }
 
 fun addAnimation(duration: Int = 200, isNext: Boolean): ContentTransform {
