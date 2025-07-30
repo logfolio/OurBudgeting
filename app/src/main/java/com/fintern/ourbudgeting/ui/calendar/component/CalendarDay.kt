@@ -4,10 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,8 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.util.fastFilter
-import com.fintern.ourbudgeting.ui.calendar.CalendarTransactions
+import com.fintern.ourbudgeting.data.calendar.CategoryItemData
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayConfig
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import java.time.LocalDate
@@ -29,7 +26,7 @@ fun CalendarDay(
     date: LocalDate,
     modifier: Modifier = Modifier,
     dayConfig: CalendarDayConfig = CalendarDayConfig.default(),
-    transactions: CalendarTransactions = CalendarTransactions()
+    transactions: List<CategoryItemData> = emptyList()
 ) {
     CalendarDayContent(
         date = date,
@@ -44,23 +41,21 @@ fun CalendarDayContent(
     date: LocalDate,
     modifier: Modifier = Modifier,
     dayConfig: CalendarDayConfig = CalendarDayConfig.default(),
-    transactions: CalendarTransactions,
+    transactions: List<CategoryItemData>,
 ) {
     val today = remember { LocalDate.now() }
     val currentDay = today.isEqual(date)
     val todayBackgroundColor = if (currentDay) Color(0xFF964BFF) else Color.Transparent
     val todayTextColor = if (currentDay) Color.White else dayConfig.textStyle.color
-    val currentDayTransactions =
-        remember(transactions) { transactions.transactionList.fastFilter { it.date == date } }
 
-    val dailyTotal = remember(currentDayTransactions) {
-        currentDayTransactions.sumOf {
+    val dailyTotal = remember(transactions) {
+        transactions.sumOf {
             if (it.type == TransactionType.INCOME) it.amount else -it.amount
         }
     }
 
     val displayAmount = if (dailyTotal >= 0) "+$dailyTotal" else dailyTotal.toString()
-    val amountColor = if (dailyTotal >= 0) Color.Blue else Color.Red
+    val amountColor = if (dailyTotal >= 0) Color.Red else Color.Blue
 
     Column(
         modifier = modifier.size(48.dp),
@@ -73,13 +68,12 @@ fun CalendarDayContent(
                 .background(
                     color = todayBackgroundColor,
                     shape = RoundedCornerShape(4.dp)
-                )
-                ,
+                ),
             textAlign = TextAlign.Center,
             style = dayConfig.textStyle.copy(color = todayTextColor)
         )
 
-        if (currentDayTransactions.isNotEmpty()) {
+        if (transactions.isNotEmpty()) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = displayAmount,

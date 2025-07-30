@@ -11,12 +11,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import com.fintern.ourbudgeting.data.calendar.CategoryList
 import com.fintern.ourbudgeting.ui.calendar.CalendarScaffold
-import com.fintern.ourbudgeting.ui.calendar.CalendarTransactions
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarConfig
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayConfig
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayLabelConfig
+import com.fintern.ourbudgeting.ui.calendar.extensions.toLocalDate
 import java.time.DayOfWeek
 import java.time.LocalDate
 
@@ -26,7 +26,7 @@ fun Calendar(
     modifier: Modifier = Modifier,
     calendarConfig: CalendarConfig = CalendarConfig(),
     startDayOfWeek: DayOfWeek = DayOfWeek.SUNDAY,
-    transactions: CalendarTransactions,
+    categoryLists: List<CategoryList> = emptyList(),
 ) {
 
     CalendarContent(
@@ -35,7 +35,7 @@ fun Calendar(
         startDayOfWeek = startDayOfWeek,
         dayLabelConfig = calendarConfig.calendarDayLabelConfig,
         dayConfig = calendarConfig.calendarDayConfig,
-        transactions = transactions
+        categoryLists = categoryLists
     )
 }
 
@@ -46,7 +46,7 @@ fun CalendarContent(
     startDayOfWeek: DayOfWeek,
     dayLabelConfig: CalendarDayLabelConfig,
     dayConfig: CalendarDayConfig,
-    transactions: CalendarTransactions
+    categoryLists: List<CategoryList>
 ) {
     var currentMonth by remember {
         mutableStateOf(
@@ -80,17 +80,16 @@ fun CalendarContent(
             dates = { displayDates },
         ) { date ->
 
-            val filteredTransactions = CalendarTransactions(
-                transactionList = transactions.transactionList.filter {
-                    it.date == date
-                }
-            )
+            val filteredItems = categoryLists.flatMap { it.items }.filter {
+                val itemDate = it.date.toLocalDate()
+                itemDate == date
+            }
 
             if (date.month == currentMonth.month) {
 
                 CalendarDay(
                     date = date,
-                    transactions = filteredTransactions,
+                    transactions = filteredItems,
                     dayConfig = if (date.dayOfWeek == DayOfWeek.SUNDAY) {
                         dayConfig.copy(
                             textStyle = dayConfig.textStyle.copy(
@@ -106,7 +105,7 @@ fun CalendarContent(
             } else {
                 CalendarDay(
                     date = date,
-                    transactions = filteredTransactions,
+                    transactions = filteredItems,
                     dayConfig = dayConfig.copy(
                         textStyle = dayConfig.textStyle
                             .copy(color = Color.LightGray)

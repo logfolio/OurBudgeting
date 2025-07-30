@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fintern.ourbudgeting.data.calendar.CategoryDefinition
 import com.fintern.ourbudgeting.data.calendar.CategoryItemData
+import com.fintern.ourbudgeting.ui.calendar.extensions.toFormatterDate
+import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -43,10 +45,10 @@ fun CategoryItemListItem(
                 .border(1.dp, Color(0xFF964BFF), RoundedCornerShape(4.dp)),
             contentAlignment = Alignment.Center
         ) {
-                Text(
-                    text = categoryDefinition?.emoji ?: "❓",
-                    fontSize = 16.sp
-                )
+            Text(
+                text = categoryDefinition?.emoji ?: "❓",
+                fontSize = 16.sp
+            )
         }
 
         Spacer(modifier = Modifier.width(16.dp))
@@ -54,8 +56,8 @@ fun CategoryItemListItem(
         Column(
             modifier = Modifier.weight(1f)
         ) {
-            val amountColor = if (item.amount > 0) Color.Red else Color.Blue
-            val amountPrefix = if (item.amount > 0) "+" else ""
+            val amountColor = if (item.type == TransactionType.INCOME) Color.Red else Color.Blue
+            val amountPrefix = if (item.type == TransactionType.INCOME) "+" else "-"
 
             val formatter = NumberFormat.getNumberInstance(Locale.getDefault())
             val formattedAmount = formatter.format(item.amount)
@@ -82,7 +84,7 @@ fun CategoryItemListItem(
                 color = Color.Gray
             )
             Text(
-                text = item.date,
+                text = item.date.toFormatterDate(),
                 fontSize = 11.sp,
                 color = Color.Gray
             )

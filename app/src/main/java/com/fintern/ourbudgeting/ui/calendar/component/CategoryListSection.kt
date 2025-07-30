@@ -10,48 +10,22 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.fintern.ourbudgeting.data.calendar.CategoryDefinition
-import com.fintern.ourbudgeting.data.calendar.CategoryItemData
 import com.fintern.ourbudgeting.data.calendar.CategoryList
+import com.google.firebase.Timestamp
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Date
 
 @Composable
-fun CategoryListSection() {
-    val categories = remember {
-        listOf(
-            CategoryList(
-                category = CategoryDefinition(
-                    id = "food",
-                    emoji = "🍔",
-                    displayName = "식비"
-                ),
-                items = listOf(
-                    CategoryItemData(
-                        id = "1",
-                        amount = 2000,
-                        description = "햄버거",
-                        date = "2025/07/29",
-                        userName = "짱구",
-                        categoryId = "food"
-                    ),
-                    CategoryItemData(
-                        id = "2",
-                        amount = -2000,
-                        description = "피자",
-                        date = "2025/07/29",
-                        userName = "짱구",
-                        categoryId = "food"
-                    )
-                )
-            )
-        )
-    }
-
+fun CategoryListSection(
+    categories: List<CategoryList>
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -85,4 +59,11 @@ fun CategoryListSection() {
             }
         }
     }
+}
+
+fun toTimestamp(dateString: String): Timestamp {
+    val formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd")
+    val localDate = LocalDate.parse(dateString, formatter)
+    val date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant())
+    return Timestamp(date)
 }
