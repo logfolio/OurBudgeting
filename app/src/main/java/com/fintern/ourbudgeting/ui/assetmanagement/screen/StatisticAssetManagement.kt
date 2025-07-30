@@ -51,7 +51,6 @@ fun StatisticAssetManagementScreen(
                     graphLineColor = Color.Blue,
                     pointColor = Color.Gray
                 )
-
             )
             StatisticAssetChartTitle(title = "수입/지출")
             TwoLineChart(
@@ -125,6 +124,5 @@ fun StatisticAssetManagementScreenPreview() {
             ),
             totalPrice = 50000,
         )
-
     }
 }
