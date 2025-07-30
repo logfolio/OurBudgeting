@@ -4,6 +4,28 @@
     <!--  Common Message  -->
     <string name="error_message">오류가 발생했어요!</string>
 
+    <!--  Income Category Type  -->
+    <string name="income_salary">급여</string>
+    <string name="income_bonus">보너스</string>
+    <string name="income_investment">투자 수익</string>
+    <string name="income_allowance">용돈</string>
+    <string name="income_cashback">캐시백</string>
+    <string name="income_etc">기타</string>
+
+    <!--  Expense Category Type  -->
+    <string name="expense_food">식비</string>
+    <string name="expense_cafe_snack">카페/간식</string>
+    <string name="expense_transport">교통</string>
+    <string name="expense_shopping">쇼핑</string>
+    <string name="expense_living_supplies">생활용품</string>
+    <string name="expense_medical">의료</string>
+    <string name="expense_education">교육</string>
+    <string name="expense_culture">문화</string>
+    <string name="expense_travel">여행</string>
+    <string name="expense_subscription">구독</string>
+    <string name="expense_tax">세금</string>
+    <string name="expense_etc">기타</string>
+
     <!--  Statistics Screen  -->
     <string name="previous_month">이전 달</string>
     <string name="next_month">다음 달</string>
