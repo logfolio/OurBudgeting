@@ -18,16 +18,22 @@ import com.fintern.ourbudgeting.ui.theme.OurBudgetingTheme
 
 
 @Composable
-fun ModifyAssetManagementScreen(modifier: Modifier = Modifier) {
+fun ModifyAssetManagementScreen(
+    modifier: Modifier = Modifier,
+    asset: Long,
+    debt: Long
+) {
     Scaffold(
         modifier = modifier.background(Color.White),
         topBar = { ModifyAssetTopAppBar() }
     ) { paddingValue ->
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-            .padding(paddingValue)) {
-            AssetTopSection()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+                .padding(paddingValue)
+        ) {
+            AssetTopSection(asset = asset, debt = debt)
             AssetTitle(name = "현금", amount = 1000)
             ModifyAssetBody(name = "현금", amount = 1000)
             AssetTitle(name = "카드", amount = 2000)
@@ -40,6 +46,6 @@ fun ModifyAssetManagementScreen(modifier: Modifier = Modifier) {
 @Composable
 fun ModifyAssetManagementScreenPreview() {
     OurBudgetingTheme {
-        ModifyAssetManagementScreen()
+        ModifyAssetManagementScreen(asset = 300, debt = 2000)
     }
 }
