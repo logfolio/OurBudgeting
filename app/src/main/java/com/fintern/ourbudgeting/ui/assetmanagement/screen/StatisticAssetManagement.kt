@@ -13,20 +13,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.fintern.ourbudgeting.ui.assetmanagement.component.LineChart
 import com.fintern.ourbudgeting.ui.assetmanagement.component.StatisticAssetChartTitle
-import com.fintern.ourbudgeting.ui.assetmanagement.component.StatisticAssetLineChart
 import com.fintern.ourbudgeting.ui.assetmanagement.component.StatisticAssetTopSection
-import com.fintern.ourbudgeting.ui.assetmanagement.component.StatisticAssetTwoLineChart
 import com.fintern.ourbudgeting.ui.assetmanagement.component.StatisticsAssetTopAppBar
+import com.fintern.ourbudgeting.ui.assetmanagement.component.TwoLineChart
+import com.fintern.ourbudgeting.ui.assetmanagement.data.LineChartConfig
+import com.fintern.ourbudgeting.ui.assetmanagement.data.Point
 
 @Composable
 fun StatisticAssetManagementScreen(
     modifier: Modifier = Modifier,
     totalPrice: Long,
-    data: List<Pair<Int, Double>>,
-    data1: List<Pair<Int, Double>>,
-    data2: List<Pair<Int, Double>>
+    data: List<Point>,
+    firstData: List<Point>,
+    secondData: List<Point>
 ) {
     Scaffold(
         modifier = modifier.background(Color.White),
@@ -40,31 +41,36 @@ fun StatisticAssetManagementScreen(
         ) {
             StatisticAssetTopSection(totalPrice = totalPrice)
             StatisticAssetChartTitle(title = "누적잔액")
-            StatisticAssetLineChart(
+            LineChart(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth()
                     .height(250.dp),
-                data = data,
-                graphLineColor = Color.Blue,
-                pointColor = Color.Blue,
-                fillBrush = true,
-                drawTextOnTop = true,
-                yAxisLabelTextSize = 8.sp
+                line = LineChartConfig(
+                    data = data,
+                    graphLineColor = Color.Blue,
+                    pointColor = Color.Gray
+                )
+
             )
             StatisticAssetChartTitle(title = "수입/지출")
-            StatisticAssetTwoLineChart(
+            TwoLineChart(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
                     .height(250.dp),
-                data1 = data1,
-                data2 = data2,
-                graphLineColor1 = Color.Blue,
-                graphLineColor2 = Color.Red,
-                pointColor1 = Color.Blue,
-                pointColor2 = Color.Red,
-                yAxisLabelTextSize = 8.sp
+                firstLine = LineChartConfig(
+                    data = firstData,
+                    graphLineColor = Color.Blue,
+                    pointColor = Color.Blue,
+                    fillBrush = false
+                ),
+                secondLine = LineChartConfig(
+                    data = secondData,
+                    graphLineColor = Color.Red,
+                    pointColor = Color.Red,
+                    fillBrush = false
+                )
             )
         }
     }
@@ -76,48 +82,49 @@ fun StatisticAssetManagementScreenPreview() {
     MaterialTheme {
         StatisticAssetManagementScreen(
             data = listOf(
-                Pair(1, 10.0),
-                Pair(2, 15.0),
-                Pair(3, 7.0),
-                Pair(4, 20.0),
-                Pair(5, 12.0),
-                Pair(6, 25.0),
-                Pair(7, 18.0),
-                Pair(8, 10.0),
-                Pair(9, 15.0),
-                Pair(10, 7.0),
-                Pair(11, 20.0),
-                Pair(12, 12.0)
+                Point(1, 10.0),
+                Point(2, 15.0),
+                Point(3, 7.0),
+                Point(4, 20.0),
+                Point(5, 12.0),
+                Point(6, 25.0),
+                Point(7, 18.0),
+                Point(8, 10.0),
+                Point(9, 15.0),
+                Point(10, 7.0),
+                Point(11, 20.0),
+                Point(12, 12.0)
             ),
-            data1 = listOf(
-                Pair(1, 10.0),
-                Pair(2, 15.0),
-                Pair(3, 7.0),
-                Pair(4, 20.0),
-                Pair(5, 12.0),
-                Pair(6, 25.0),
-                Pair(7, 18.0),
-                Pair(8, 10.0),
-                Pair(9, 15.0),
-                Pair(10, 7.0),
-                Pair(11, 20.0),
-                Pair(12, 12.0)
+            firstData = listOf(
+                Point(1, 10.0),
+                Point(2, 15.0),
+                Point(3, 7.0),
+                Point(4, 20.0),
+                Point(5, 12.0),
+                Point(6, 25.0),
+                Point(7, 18.0),
+                Point(8, 10.0),
+                Point(9, 15.0),
+                Point(10, 7.0),
+                Point(11, 20.0),
+                Point(12, 12.0)
             ),
-            data2 = listOf(
-                Pair(1, 12.0),
-                Pair(2, 14.0),
-                Pair(3, 10.0),
-                Pair(4, 25.0),
-                Pair(5, 21.0),
-                Pair(6, 20.0),
-                Pair(7, 15.0),
-                Pair(8, 18.0),
-                Pair(9, 8.0),
-                Pair(10, 12.0),
-                Pair(11, 15.0),
-                Pair(12, 17.0)
+            secondData = listOf(
+                Point(1, 12.0),
+                Point(2, 14.0),
+                Point(3, 10.0),
+                Point(4, 25.0),
+                Point(5, 21.0),
+                Point(6, 20.0),
+                Point(7, 15.0),
+                Point(8, 18.0),
+                Point(9, 8.0),
+                Point(10, 12.0),
+                Point(11, 15.0),
+                Point(12, 17.0)
             ),
-            totalPrice = 50000
+            totalPrice = 50000,
         )
+
     }
 }
