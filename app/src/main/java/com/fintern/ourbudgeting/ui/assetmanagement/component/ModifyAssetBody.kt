@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.R
@@ -22,8 +23,7 @@ fun ModifyAssetBody(
     name: String,
     amount: Long,
     onModifyClick: () -> Unit = {},
-    onDeleteClick: () -> Unit = {},
-
+    onDeleteClick: () -> Unit = {}
     ) {
     Row(
         modifier = modifier
@@ -45,7 +45,7 @@ fun ModifyAssetBody(
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_edit), // 예: 연필 아이콘
-                    contentDescription = "수정"
+                    contentDescription = stringResource(R.string.modify)
                 )
             }
             IconButton(
@@ -53,7 +53,7 @@ fun ModifyAssetBody(
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_delete), // 예: 연필 아이콘
-                    contentDescription = "삭제"
+                    contentDescription = stringResource(R.string.delete)
                 )
             }
             Text(

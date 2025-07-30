@@ -13,8 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.fintern.ourbudgeting.R
 
 @Composable
 fun AssetTopSection(
@@ -31,21 +33,21 @@ fun AssetTopSection(
             modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("자산")
+            Text(stringResource(R.string.asset))
             Text("0원", color = Color.Blue)
         }
         Column(
             modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("부채")
+            Text(stringResource(R.string.debt))
             Text("30000원", color = Red)
         }
         Column(
             modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("합계")
+            Text(stringResource(R.string.total))
             Text("-3000원")
         }
     }

@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.fintern.ourbudgeting.R
 
@@ -27,12 +28,12 @@ fun AddAssetTopAppBar(
             containerColor = Color.White,
             titleContentColor = Color.Black,
         ),
-        title = { Text("자산 추가") },
+        title = { Text(stringResource(R.string.add_asset)) },
         navigationIcon = {
             IconButton(onClick = onActionClick) {
                 Icon(
                     painter = painterResource(R.drawable.ic_arrowback),
-                    contentDescription = "그래프"
+                    contentDescription = stringResource(R.string.graph)
                 )
             }
         }

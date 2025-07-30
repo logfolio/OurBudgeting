@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.R
@@ -42,7 +43,7 @@ fun StatisticsAssetTopAppBar(
                 IconButton(onClick = { year-- }) {
                     Icon(
                         painter = painterResource(R.drawable.ic_navigate_before),
-                        contentDescription = "이전 연도"
+                        contentDescription = stringResource(R.string.previous_year)
                     )
                 }
                 Text(
@@ -53,17 +54,17 @@ fun StatisticsAssetTopAppBar(
                 IconButton(onClick = { year++ }) {
                     Icon(
                         painter = painterResource(R.drawable.ic_navigate_next),
-                        contentDescription = "다음 연도"
+                        contentDescription = stringResource(R.string.next_year)
                     )
                 }
             }
         },
-        title = { Text("전체통계") },
+        title = { Text(stringResource(R.string.total_statistic)) },
         navigationIcon = {
             IconButton(onClick = onActionClick) {
                 Icon(
                     painter = painterResource(R.drawable.ic_arrowback),
-                    contentDescription = "그래프"
+                    contentDescription = stringResource(R.string.graph)
                 )
             }
         }
