@@ -4,6 +4,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fintern.ourbudgeting.data.chart.PieEntry
+import com.fintern.ourbudgeting.data.model.ExpenseCategoryType
+import com.fintern.ourbudgeting.data.model.IncomeCategoryType
 import com.fintern.ourbudgeting.data.repository.StatisticsRepository
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -110,7 +112,7 @@ class StatisticsViewModel @Inject constructor(
                     PieEntry(
                         value = amount.toFloat(),
                         pieLabel = category,
-                        pieColor = getColorForCategory(category)
+                        pieColor = getColorForCategory(category, type)
                     )
                 }
 
@@ -139,12 +141,16 @@ class StatisticsViewModel @Inject constructor(
         return Pair(newYear, newMonth)
     }
 
-    private fun getColorForCategory(category: String) = when (category) {
-        "식비" -> Color(0xFFE57373)
-        "교통" -> Color(0xFF64B5F6)
-        "의료" -> Color(0xFF81C784)
-        "쇼핑" -> Color(0xFFFFB74D)
-        "기타" -> Color(0xFFBA68C8)
-        else -> Color.Gray
+    private fun getColorForCategory(
+        type: TransactionType,
+        category: String,
+    ): Color = when (type) {
+        TransactionType.EXPENSE -> {
+            ExpenseCategoryType.entries.find { it.name == category }?.color ?: Color.Gray
+        }
+
+        TransactionType.INCOME -> {
+            IncomeCategoryType.entries.find { it.name == category }?.color ?: Color.Gray
+        }
     }
 }
