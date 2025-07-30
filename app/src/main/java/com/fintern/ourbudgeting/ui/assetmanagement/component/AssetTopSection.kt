@@ -20,7 +20,9 @@ import com.fintern.ourbudgeting.R
 
 @Composable
 fun AssetTopSection(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    asset: Long,
+    debt: Long,
 ) {
     Row(
         modifier = modifier
@@ -34,21 +36,21 @@ fun AssetTopSection(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(stringResource(R.string.asset))
-            Text("0원", color = Color.Blue)
+            Text("${asset}원", color = Color.Blue)
         }
         Column(
             modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(stringResource(R.string.debt))
-            Text("30000원", color = Red)
+            Text("${debt}원", color = Red)
         }
         Column(
             modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(stringResource(R.string.total))
-            Text("-3000원")
+            Text("${asset-debt}원")
         }
     }
 }
@@ -57,6 +59,6 @@ fun AssetTopSection(
 @Preview(showBackground = true)
 fun TopSectionPreview() {
     MaterialTheme {
-        AssetTopSection()
+        AssetTopSection(asset = 30000, debt = 50000)
     }
 }
