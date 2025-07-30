@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.statistics.chart.components
+package com.fintern.ourbudgeting.ui.statistics.chart.model
 
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 

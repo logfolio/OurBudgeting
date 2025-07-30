@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.statistics.chart.components.StatisticsContent
-import com.fintern.ourbudgeting.ui.statistics.chart.components.StatisticsTab
+import com.fintern.ourbudgeting.ui.statistics.chart.model.StatisticsTab
 import com.fintern.ourbudgeting.ui.statistics.chart.components.StatisticsTopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
