@@ -2,7 +2,7 @@ package com.fintern.ourbudgeting.data.calendar
 
 data class CategoryItemData(
     val id: String,
-    val amount: Int,
+    val amount: Long,
     val description: String,
     val date: String,
     val userName: String,
