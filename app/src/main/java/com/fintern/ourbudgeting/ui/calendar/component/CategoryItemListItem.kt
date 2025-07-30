@@ -19,12 +19,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.fintern.ourbudgeting.data.calendar.CategoryItem
+import com.fintern.ourbudgeting.data.calendar.CategoryDefinition
+import com.fintern.ourbudgeting.data.calendar.CategoryItemData
 import java.text.NumberFormat
 import java.util.Locale
 
 @Composable
-fun CategoryItemListItem(item: CategoryItem) {
+fun CategoryItemListItem(
+    item: CategoryItemData,
+    categoryDefinition: CategoryDefinition?
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,12 +43,10 @@ fun CategoryItemListItem(item: CategoryItem) {
                 .border(1.dp, Color(0xFF964BFF), RoundedCornerShape(4.dp)),
             contentAlignment = Alignment.Center
         ) {
-            if (item.emoji != null) {
                 Text(
-                    text = item.emoji,
+                    text = categoryDefinition?.emoji ?: "❓",
                     fontSize = 16.sp
                 )
-            }
         }
 
         Spacer(modifier = Modifier.width(16.dp))

@@ -16,29 +16,36 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fintern.ourbudgeting.data.calendar.CategoryDefinition
+import com.fintern.ourbudgeting.data.calendar.CategoryItemData
 import com.fintern.ourbudgeting.data.calendar.CategoryList
-import com.fintern.ourbudgeting.data.calendar.FoodItem
 
 @Composable
 fun CategoryListSection() {
     val categories = remember {
         listOf(
             CategoryList(
-                name = "식비",
+                category = CategoryDefinition(
+                    id = "food",
+                    emoji = "🍔",
+                    displayName = "식비"
+                ),
                 items = listOf(
-                    FoodItem(
+                    CategoryItemData(
                         id = "1",
                         amount = 2000,
                         description = "햄버거",
                         date = "2025/07/29",
-                        userName = "짱구"
+                        userName = "짱구",
+                        categoryId = "food"
                     ),
-                    FoodItem(
+                    CategoryItemData(
                         id = "2",
                         amount = -2000,
                         description = "피자",
                         date = "2025/07/29",
-                        userName = "짱구"
+                        userName = "짱구",
+                        categoryId = "food"
                     )
                 )
             )
@@ -50,11 +57,11 @@ fun CategoryListSection() {
             .fillMaxWidth()
             .padding(top = 16.dp)
     ) {
-        categories.forEach { categoryItemData ->
+        categories.forEach { categoryList ->
             item {
                 Column {
                     Text(
-                        text = categoryItemData.name,
+                        text = categoryList.category.displayName,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(start = 16.dp)
@@ -62,8 +69,10 @@ fun CategoryListSection() {
                     Modifier.padding(horizontal = 16.dp)
                 }
             }
-            items(categoryItemData.items, key = { it.id }) { item ->
-                CategoryItemListItem(item = item)
+            items(categoryList.items, key = { it.id }) { item ->
+                CategoryItemListItem(
+                    item = item,
+                    categoryDefinition = categoryList.category)
             }
 
             item {
