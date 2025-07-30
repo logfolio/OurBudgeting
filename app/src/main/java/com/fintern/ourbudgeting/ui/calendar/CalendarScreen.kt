@@ -113,7 +113,7 @@ fun CalendarScreen() {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     LabeledAmount(
-                        label = "수입",
+                        label = stringResource(R.string.label_income),
                         labelColor = Color.Red,
                         amount = sampleIncomeAmount,
                         amountBoxWidth = 120.dp
@@ -122,7 +122,7 @@ fun CalendarScreen() {
                     Spacer(modifier = Modifier.width(28.dp))
 
                     LabeledAmount(
-                        label = "지출",
+                        label = stringResource(R.string.label_expense),
                         labelColor = Color.Blue,
                         amount = sampleExpenseAmount,
                         amountBoxWidth = 120.dp

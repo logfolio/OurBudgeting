@@ -18,5 +18,7 @@
     <string name="label_thursday">목</string>
     <string name="label_friday">금</string>
     <string name="label_saturday">토</string>
+    <string name="label_income">수입</string>
+    <string name="label_expense">지출</string>
 
 </resources>
