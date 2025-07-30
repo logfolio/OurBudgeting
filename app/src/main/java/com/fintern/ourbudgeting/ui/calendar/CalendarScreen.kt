@@ -89,7 +89,9 @@ fun CalendarScreen() {
     Scaffold(
         topBar = {
             CalendarTopAppbar(
-                title = stringResource(R.string.calendar_label_app_name)
+                title = stringResource(R.string.calendar_label_app_name),
+                modifier = Modifier
+                    .fillMaxWidth()
             )
         },
         content = { innerPadding ->

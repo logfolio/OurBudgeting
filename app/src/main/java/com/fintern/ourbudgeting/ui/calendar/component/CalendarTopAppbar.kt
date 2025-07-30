@@ -20,8 +20,10 @@ import androidx.compose.ui.graphics.Color
 @Composable
 fun CalendarTopAppbar(
     title: String,
+    modifier: Modifier = Modifier,
 ) {
     TopAppBar(
+        modifier = modifier,
         title = {
             Box(
                 modifier = Modifier
