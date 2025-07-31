@@ -91,7 +91,7 @@ fun StatisticsScreen(
                         },
                         text = {
                             Text(
-                                text = destination.label,
+                                text = stringResource(id = destination.labelResId),
                                 overflow = TextOverflow.Ellipsis
                             )
                         }
