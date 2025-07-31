@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.R
+import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,7 +30,8 @@ fun StatisticsAssetTopAppBar(
     modifier: Modifier = Modifier,
     onActionClick: () -> Unit = {}
 ) {
-    var year by rememberSaveable { mutableStateOf(2025) }
+    val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+    var year by rememberSaveable { mutableStateOf(currentYear) }
     TopAppBar(
         modifier = modifier,
         colors = TopAppBarDefaults.topAppBarColors(
