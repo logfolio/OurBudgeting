@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -20,14 +19,14 @@ import com.fintern.ourbudgeting.ui.common.model.TransactionType
 
 @Composable
 fun TransactionToggle(
+    modifier: Modifier = Modifier,
     transactionType: TransactionType,
     onTransactionTypeChange: (TransactionType) -> Unit,
 ) {
 
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier = modifier
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         ToggleButton(
