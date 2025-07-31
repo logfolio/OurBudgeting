@@ -4,6 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -19,24 +20,28 @@ fun PieChart(
 ) {
     val textMeasurer = rememberTextMeasurer()
 
+    val localizedData = data.map {
+        it.copy(pieLabel = stringResource(id = it.labelResId))
+    }
+
     val config = calculateChartConfig(
-        data = data,
+        data = localizedData,
         size = size,
         labelDistanceRatio = labelDistanceRatio,
         textMeasurer = textMeasurer
     )
 
     Canvas(modifier = modifier.size(config.totalCanvasSize)) {
-        val chartData = prepareChartData(data)
+        val chartData = prepareChartData(localizedData)
 
         drawPieSlices(
-            data = data,
+            data = localizedData,
             chartData = chartData,
             config = config
         )
 
         drawLabelsWithLines(
-            data = data,
+            data = localizedData,
             chartData = chartData,
             config = config,
             textMeasurer = textMeasurer
