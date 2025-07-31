@@ -9,11 +9,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetValue
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,14 +35,17 @@ import com.fintern.ourbudgeting.ui.calendar.component.CalendarAccountAndUser
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarTopAppbar
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarTransactionFilter
 import com.fintern.ourbudgeting.ui.calendar.component.CategoryListSection
+import com.fintern.ourbudgeting.ui.calendar.component.FilterBottomSheet
 import com.fintern.ourbudgeting.ui.calendar.component.FilterType
 import com.fintern.ourbudgeting.ui.calendar.component.LabeledAmount
 import com.fintern.ourbudgeting.ui.calendar.component.toTimestamp
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.google.firebase.Timestamp
+import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.LocalDate
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun CalendarScreen() {
@@ -47,10 +54,34 @@ fun CalendarScreen() {
     val sampleExpenseAmount = 50_000_000L
 
     val nickname = "짱구"
-    var filterType by remember { mutableStateOf(FilterType.ALL) }
 
     val selectedAccount = remember { mutableStateOf("가계부") }
     val selectedUser = remember { mutableStateOf("조민환") }
+
+    val sheetState = rememberStandardBottomSheetState(
+        initialValue = SheetValue.Hidden,
+        skipHiddenState = false
+    )
+
+    val scope = rememberCoroutineScope()
+
+    var currentFilterType by remember { mutableStateOf(FilterType.ALL) }
+    var showBottomSheet = remember { mutableStateOf(false) }
+
+    if (showBottomSheet.value) {
+        FilterBottomSheet(
+            sheetState = sheetState,
+            currentFilterType = currentFilterType,
+            onFilterSelected = { selectedFilter ->
+                currentFilterType = selectedFilter
+                scope.launch { sheetState.hide() }
+                showBottomSheet.value = false
+            },
+            onDismissRequest = {
+                showBottomSheet.value = false
+            }
+        )
+    }
 
     val sampleCategoryLists = listOf(
         CategoryList(
@@ -154,7 +185,13 @@ fun CalendarScreen() {
                 )
                 CalendarTransactionFilter(
                     nickname = nickname,
-                    filterType = filterType,
+                    filterType = currentFilterType,
+                    onFilterClick = {
+                        showBottomSheet.value = true
+                        scope.launch {
+                            sheetState.show()
+                        }
+                    },
                 )
                 CategoryListSection(
                     categories = sampleCategoryLists
