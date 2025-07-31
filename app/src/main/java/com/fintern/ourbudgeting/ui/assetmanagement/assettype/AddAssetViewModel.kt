@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement
+package com.fintern.ourbudgeting.ui.assetmanagement.assettype
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

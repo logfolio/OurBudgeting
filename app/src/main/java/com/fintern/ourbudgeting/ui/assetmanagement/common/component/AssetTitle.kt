@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.component
+package com.fintern.ourbudgeting.ui.assetmanagement.common.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -9,12 +9,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.R
 
 @Composable
-fun AssetBody(
+fun AssetTitle(
     modifier: Modifier = Modifier,
     name: String,
     amount: Long
@@ -28,26 +29,28 @@ fun AssetBody(
         Text(
             text = name,
             style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
         )
         Text(
             text = stringResource(R.string.amount_won, amount),
             style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
         )
     }
 }
 
 @Composable
 @Preview(showBackground = true)
-fun CashBodyPreview() {
+fun CashTitlePreview() {
     MaterialTheme {
-        AssetBody(name = "현금", amount = 0)
+        AssetTitle(name = "현금", amount = 0)
     }
 }
 
 @Composable
 @Preview(showBackground = true)
-fun BankBodyPreview() {
+fun BankTitlePreview() {
     MaterialTheme {
-        AssetBody(name = "은행", amount = 0)
+        AssetTitle(name = "은행", amount = 0)
     }
 }

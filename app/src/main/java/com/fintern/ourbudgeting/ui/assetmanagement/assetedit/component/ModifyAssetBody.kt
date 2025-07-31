@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.component
+package com.fintern.ourbudgeting.ui.assetmanagement.assetedit.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

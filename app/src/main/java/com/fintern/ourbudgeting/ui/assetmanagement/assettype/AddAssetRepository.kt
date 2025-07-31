@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement
+package com.fintern.ourbudgeting.ui.assetmanagement.assettype
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth

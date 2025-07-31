@@ -1,6 +1,5 @@
-package com.fintern.ourbudgeting.ui.assetmanagement
+package com.fintern.ourbudgeting.ui.assetmanagement.assettype.screen
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -16,9 +14,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.fintern.ourbudgeting.ui.assetmanagement.component.AddAssetButton
-import com.fintern.ourbudgeting.ui.assetmanagement.component.AddAssetOutLinedTextField
-import com.fintern.ourbudgeting.ui.assetmanagement.component.AddAssetTopAppBar
+import com.fintern.ourbudgeting.ui.assetmanagement.assettype.AddAssetViewModel
+import com.fintern.ourbudgeting.ui.assetmanagement.assettype.component.AddAssetButton
+import com.fintern.ourbudgeting.ui.assetmanagement.assettype.component.AddAssetOutLinedTextField
+import com.fintern.ourbudgeting.ui.assetmanagement.assettype.component.AddAssetTopAppBar
 
 @Composable
 fun AddAssetManagementScreen(

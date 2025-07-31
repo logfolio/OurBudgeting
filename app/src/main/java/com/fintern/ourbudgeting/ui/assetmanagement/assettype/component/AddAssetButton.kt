@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.component
+package com.fintern.ourbudgeting.ui.assetmanagement.assettype.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -33,8 +33,8 @@ fun AddAssetButton(
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun AddAssetButtonPreview() {
-//    MaterialTheme { AddAssetButton("추가 하기") }
-//}
+@Preview(showBackground = true)
+@Composable
+fun AddAssetButtonPreview() {
+    MaterialTheme { AddAssetButton(title = "추가 하기", onClick = {}) }
+}

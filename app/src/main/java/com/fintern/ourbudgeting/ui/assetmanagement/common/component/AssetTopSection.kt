@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.component
+package com.fintern.ourbudgeting.ui.assetmanagement.common.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,8 +27,8 @@ fun AssetTopSection(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp)
-            .background(Color.White),
+            .padding(16.dp),
+//            .background(Color.White),
         horizontalArrangement = Arrangement.Absolute.SpaceAround
     ) {
         Column(

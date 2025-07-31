@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement
+package com.fintern.ourbudgeting.ui.assetmanagement.assettype
 
 data class AssetUiState(
     val input: String = "",

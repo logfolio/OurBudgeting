@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.component
+package com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component
 
 import android.graphics.Paint
 import androidx.compose.foundation.Canvas

@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.screen
+package com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -11,15 +11,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.fintern.ourbudgeting.R
-import com.fintern.ourbudgeting.ui.assetmanagement.component.LineChart
-import com.fintern.ourbudgeting.ui.assetmanagement.component.StatisticAssetChartTitle
-import com.fintern.ourbudgeting.ui.assetmanagement.component.StatisticAssetTopSection
-import com.fintern.ourbudgeting.ui.assetmanagement.component.StatisticsAssetTopAppBar
-import com.fintern.ourbudgeting.ui.assetmanagement.component.TwoLineChart
+import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.LineChart
+import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.StatisticAssetChartTitle
+import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.StatisticAssetTopSection
+import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.StatisticsAssetTopAppBar
+import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.TwoLineChart
 import com.fintern.ourbudgeting.ui.assetmanagement.data.LineChartConfig
 import com.fintern.ourbudgeting.ui.assetmanagement.data.Point
 
@@ -42,7 +40,7 @@ fun StatisticAssetManagementScreen(
                 .padding(paddingValue)
         ) {
             StatisticAssetTopSection(totalPrice = totalPrice)
-            StatisticAssetChartTitle(title = stringResource(R.string.cumulative_balance))
+            StatisticAssetChartTitle(title = "누적잔액")
             LineChart(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
@@ -54,7 +52,7 @@ fun StatisticAssetManagementScreen(
                     pointColor = Color.Gray
                 )
             )
-            StatisticAssetChartTitle(title = stringResource(R.string.income_expense))
+            StatisticAssetChartTitle(title = "수입/지출")
             TwoLineChart(
                 modifier = Modifier
                     .fillMaxWidth()
