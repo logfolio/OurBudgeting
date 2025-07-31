@@ -19,14 +19,12 @@ import com.fintern.ourbudgeting.ui.common.model.TransactionType
 
 @Composable
 fun TransactionToggle(
-    modifier: Modifier = Modifier,
     transactionType: TransactionType,
     onTransactionTypeChange: (TransactionType) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-
     Row(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         ToggleButton(

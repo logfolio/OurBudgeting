@@ -24,8 +24,9 @@ fun AddTransactionScreen(
     initialTransactionType: TransactionType,
     modifier: Modifier = Modifier,
 ) {
-    var transactionType by remember { mutableStateOf(initialTransactionType) }
-    var selectedDate by remember { mutableStateOf<Long?>(null) }
+    var uiState by remember {
+        mutableStateOf(AddTransactionUiState(transactionType = initialTransactionType))
+    }
 
     Scaffold { innerPadding ->
         Column(
@@ -35,14 +36,16 @@ fun AddTransactionScreen(
                 .fillMaxWidth()
         ) {
             TransactionToggle(
-                transactionType = transactionType,
-                onTransactionTypeChange = { transactionType = it },
+                transactionType = uiState.transactionType,
+                onTransactionTypeChange = {
+                    uiState = uiState.copy(transactionType = it)
+                }
             )
 
             DatePickerField(
                 label = stringResource(R.string.select_date_label),
                 onDateSelected = { transactionDate ->
-                    selectedDate = transactionDate
+                    uiState = uiState.copy(selectedDate = transactionDate)
                 },
                 modifier = modifier
             )
