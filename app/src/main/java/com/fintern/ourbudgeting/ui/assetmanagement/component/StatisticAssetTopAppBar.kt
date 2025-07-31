@@ -69,7 +69,6 @@ fun StatisticsAssetTopAppBar(
             }
         }
     )
-
 }
 
 @Preview(showBackground = true)
@@ -78,5 +77,4 @@ fun StatisticAssetTopAppBarPreview() {
     MaterialTheme {
         StatisticsAssetTopAppBar()
     }
-
 }

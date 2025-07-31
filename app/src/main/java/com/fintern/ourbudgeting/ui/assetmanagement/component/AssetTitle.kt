@@ -35,7 +35,6 @@ fun AssetTitle(
             fontWeight = FontWeight.Bold
         )
     }
-
 }
 
 @Composable

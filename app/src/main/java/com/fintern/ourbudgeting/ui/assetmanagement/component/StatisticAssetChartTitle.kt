@@ -11,16 +11,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun StatisticAssetChartTitle(modifier: Modifier = Modifier, title: String) {
+fun StatisticAssetChartTitle(
+    modifier: Modifier = Modifier,
+    title: String
+) {
     Column(modifier = modifier.padding(16.dp)) {
         Text(
             title,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold
-
         )
     }
-
 }
 
 @Preview(showBackground = true)

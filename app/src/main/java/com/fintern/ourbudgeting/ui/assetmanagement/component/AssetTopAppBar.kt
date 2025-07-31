@@ -34,9 +34,7 @@ fun AssetTopAppBar(
                     contentDescription = stringResource(R.string.graph)
                 )
             }
-
         }
-
     )
 }
 

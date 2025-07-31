@@ -44,15 +44,14 @@ fun ModifyAssetBody(
                 onClick = onModifyClick
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_edit), // 예: 연필 아이콘
-                    contentDescription = stringResource(R.string.modify)
+                    painter = painterResource(R.drawable.ic_edit),                     contentDescription = stringResource(R.string.modify)
                 )
             }
             IconButton(
                 onClick = onDeleteClick
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_delete), // 예: 연필 아이콘
+                    painter = painterResource(R.drawable.ic_delete), 
                     contentDescription = stringResource(R.string.delete)
                 )
             }
@@ -60,10 +59,8 @@ fun ModifyAssetBody(
                 text = "${amount}원",
                 style = MaterialTheme.typography.titleMedium,
             )
-
         }
     }
-
 }
 
 @Composable

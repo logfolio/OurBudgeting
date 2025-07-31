@@ -25,7 +25,7 @@ fun AddAssetOutLinedTextField(modifier: Modifier = Modifier, label: String, plac
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 6.dp),
         value = text,
-        onValueChange = { text = it }, // 입력값 업데이트
+        onValueChange = { text = it },
         label = {
             Text(label, color = Color.Gray)
         },
@@ -36,7 +36,6 @@ fun AddAssetOutLinedTextField(modifier: Modifier = Modifier, label: String, plac
         )
     )
 }
-
 
 @Preview(showBackground = true)
 @Composable

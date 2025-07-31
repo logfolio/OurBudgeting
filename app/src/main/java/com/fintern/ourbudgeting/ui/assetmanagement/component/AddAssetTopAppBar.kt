@@ -38,15 +38,12 @@ fun AddAssetTopAppBar(
             }
         }
     )
-
 }
 
 @Preview(showBackground = true)
 @Composable
 fun AddAssetTopAppBarPreview() {
-
     MaterialTheme {
         AddAssetTopAppBar()
     }
-
 }
