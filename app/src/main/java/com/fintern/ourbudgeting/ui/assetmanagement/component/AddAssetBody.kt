@@ -21,7 +21,7 @@ fun AddAssetOutLinedTextField(modifier: Modifier = Modifier, label: String, plac
     var text by remember { mutableStateOf("") }
 
     OutlinedTextField(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 6.dp),
         value = text,
