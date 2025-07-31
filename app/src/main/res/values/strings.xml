@@ -3,6 +3,9 @@
 
     <!--  Common Message  -->
     <string name="error_message">오류가 발생했어요!</string>
+    <string name="error_network">인터넷 연결을 확인해주세요!</string>
+    <string name="error_firestore">데이터베이스 오류가 발생했습니다.</string>
+    <string name="error_unknown">알 수 없는 오류가 발생했습니다.</string>
 
     <!--  Income Category Type  -->
     <string name="income_salary">급여</string>
