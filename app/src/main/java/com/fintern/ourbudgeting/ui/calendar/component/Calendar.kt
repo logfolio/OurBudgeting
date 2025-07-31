@@ -28,7 +28,6 @@ fun Calendar(
     startDayOfWeek: DayOfWeek = DayOfWeek.SUNDAY,
     categoryLists: List<CategoryList> = emptyList(),
 ) {
-
     CalendarContent(
         selectedDate = selectedDate,
         modifier = modifier,
