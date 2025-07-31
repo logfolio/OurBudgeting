@@ -2,6 +2,10 @@
     <string name="app_name">OurBudgeting</string>
 
     <!--  Common Message  -->
+    <string name="expense">지출</string>
+    <string name="income">수입</string>
+
+    <!--  Common Error Message  -->
     <string name="error_message">오류가 발생했어요!</string>
     <string name="error_network">인터넷 연결을 확인해주세요!</string>
     <string name="error_firestore">데이터베이스 오류가 발생했습니다.</string>
