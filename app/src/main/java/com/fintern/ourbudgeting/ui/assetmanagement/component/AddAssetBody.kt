@@ -15,17 +15,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun AddAssetOutLinedTextField(modifier: Modifier = Modifier, label: String, placeHolder: String) {
-    var text by remember { mutableStateOf("") }
+fun AddAssetOutLinedTextField(
+    label: String,
+    placeHolder: String,
+    value: String,
+    onValueChanged :(String)-> Unit,
+) {
+//    var text by remember { mutableStateOf("") }
 
     OutlinedTextField(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 6.dp),
-        value = text,
-        onValueChange = { text = it },
+        value = value,
+        onValueChange = onValueChanged, // 입력값 업데이트
         label = {
             Text(label, color = Color.Gray)
         },
@@ -37,8 +43,9 @@ fun AddAssetOutLinedTextField(modifier: Modifier = Modifier, label: String, plac
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun AddAssetOutLinedTextFieldPreview() {
-    MaterialTheme { AddAssetOutLinedTextField(label = "금액", placeHolder = "금액을 입력해주세요.") }
-}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun AddAssetOutLinedTextFieldPreview() {
+//    MaterialTheme { AddAssetOutLinedTextField(label = "금액", placeHolder = "금액을 입력해주세요.") }
+//}
