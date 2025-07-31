@@ -36,21 +36,21 @@ fun AssetTopSection(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(stringResource(R.string.asset))
-            Text("${asset}원", color = Color.Blue)
+            Text(stringResource(R.string.amount_won,asset), color = Color.Blue)
         }
         Column(
             modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(stringResource(R.string.debt))
-            Text("${debt}원", color = Red)
+            Text(stringResource(R.string.amount_won,debt), color = Red)
         }
         Column(
             modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(stringResource(R.string.total))
-            Text("${asset - debt}원")
+            Text(stringResource(R.string.amount_won,asset-debt))
         }
     }
 }

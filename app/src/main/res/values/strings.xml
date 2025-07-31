@@ -1,17 +1,32 @@
 <resources>
+    <!--    common-->
     <string name="app_name">OurBudgeting</string>
     <string name="add">추가 하기</string>
-    <string name="add_asset">자산 추가</string>
+    <string name="amount_won">%1$s원</string>
     <string name="asset">자산</string>
     <string name="debt">부채</string>
     <string name="total">합계</string>
-    <string name="modify_asset">자산 수정</string>
+    <!--   Asset Management-->
     <string name="asset_management">자산 관리</string>
+    <string name="cash">현금</string>
+    <string name="card">카드</string>
+    <!--    Add Asset-->
+    <string name="add_asset">자산 추가</string>
+    <string name="asset_cash_amount">현금 금액</string>
+    <string name="input_cash_amount">현금 금액을 입력해주세요.</string>
+    <string name="bank">은행</string>
+    <string name="amount">금액</string>
+    <string name="select_bank">은행을 선택해주세요.</string>
+    <string name="input_amount">금액을 입력해주세요.</string>
+    <!--    Modify Asset-->
+    <string name="modify_asset">자산 수정</string>
+    <string name="modify">수정</string>
+    <string name="delete">삭제</string>
+    <!--    Statistic Asset-->
+    <string name="cumulative_balance">누적잔액</string>
+    <string name="income_expense">수입/지출</string>
     <string name="graph">그래프</string>
     <string name="total_statistic">전체통계</string>
     <string name="next_year">다음 연도</string>
     <string name="previous_year">이전 연도</string>
-    <string name="modify">수정</string>
-    <string name="delete">삭제</string>
-    <string name="cumulative_balance">누적잔액</string>
 </resources>

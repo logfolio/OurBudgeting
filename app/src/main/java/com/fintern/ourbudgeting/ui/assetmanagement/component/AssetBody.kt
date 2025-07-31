@@ -8,8 +8,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.fintern.ourbudgeting.R
 
 @Composable
 fun AssetBody(
@@ -28,7 +30,7 @@ fun AssetBody(
             style = MaterialTheme.typography.titleMedium,
         )
         Text(
-            text = "${amount}원",
+            text = stringResource(R.string.amount_won, amount),
             style = MaterialTheme.typography.titleMedium,
         )
     }

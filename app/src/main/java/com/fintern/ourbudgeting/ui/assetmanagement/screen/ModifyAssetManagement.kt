@@ -9,7 +9,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.assetmanagement.component.AssetTitle
 import com.fintern.ourbudgeting.ui.assetmanagement.component.AssetTopSection
 import com.fintern.ourbudgeting.ui.assetmanagement.component.ModifyAssetBody
@@ -34,10 +36,10 @@ fun ModifyAssetManagementScreen(
                 .padding(paddingValue)
         ) {
             AssetTopSection(asset = asset, debt = debt)
-            AssetTitle(name = "현금", amount = 1000)
-            ModifyAssetBody(name = "현금", amount = 1000)
-            AssetTitle(name = "카드", amount = 2000)
-            ModifyAssetBody(name = "카드", amount = 1000)
+            AssetTitle(name = stringResource(R.string.cash), amount = 1000)
+            ModifyAssetBody(name = stringResource(R.string.cash), amount = 1000)
+            AssetTitle(name = stringResource(R.string.card), amount = 2000)
+            ModifyAssetBody(name = stringResource(R.string.card), amount = 1000)
         }
     }
 }

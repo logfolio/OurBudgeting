@@ -23,7 +23,7 @@ fun StatisticAssetTopSection(
             style = MaterialTheme.typography.titleMedium
         )
         Text(
-            text = "${totalPrice}원",
+            text = stringResource(R.string.amount_won,totalPrice),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold
         )
