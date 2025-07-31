@@ -29,4 +29,46 @@
     <string name="total_statistic">전체통계</string>
     <string name="next_year">다음 연도</string>
     <string name="previous_year">이전 연도</string>
+
+    <!--  Common Message  -->
+    <string name="expense">지출</string>
+    <string name="income">수입</string>
+
+    <!--  Common Error Message  -->
+    <string name="error_message">오류가 발생했어요!</string>
+    <string name="error_network">인터넷 연결을 확인해주세요!</string>
+    <string name="error_firestore">데이터베이스 오류가 발생했습니다.</string>
+    <string name="error_unknown">알 수 없는 오류가 발생했습니다.</string>
+
+    <!--  Income Category Type  -->
+    <string name="income_salary">급여</string>
+    <string name="income_bonus">보너스</string>
+    <string name="income_investment">투자 수익</string>
+    <string name="income_allowance">용돈</string>
+    <string name="income_cashback">캐시백</string>
+    <string name="income_etc">기타</string>
+
+    <!--  Expense Category Type  -->
+    <string name="expense_food">식비</string>
+    <string name="expense_cafe_snack">카페/간식</string>
+    <string name="expense_transport">교통</string>
+    <string name="expense_shopping">쇼핑</string>
+    <string name="expense_living_supplies">생활용품</string>
+    <string name="expense_medical">의료</string>
+    <string name="expense_education">교육</string>
+    <string name="expense_culture">문화</string>
+    <string name="expense_travel">여행</string>
+    <string name="expense_subscription">구독</string>
+    <string name="expense_tax">세금</string>
+    <string name="expense_etc">기타</string>
+
+    <!--  Statistics Screen  -->
+    <string name="previous_month">이전 달</string>
+    <string name="next_month">다음 달</string>
+    <string name="statistics_empty_transaction_message">지출/수입을 입력해주세요!</string>
+    <string name="percentage_format">%1$.1f%%</string>
+    <string name="won_format">%1$,d원</string>
+
+    <!--  AI Analysis Screen  -->
+    <string name="ai_analysis">AI 패턴 분석</string>
 </resources>
