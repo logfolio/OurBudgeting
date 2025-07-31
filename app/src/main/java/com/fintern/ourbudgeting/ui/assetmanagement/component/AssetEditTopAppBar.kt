@@ -17,7 +17,7 @@ import com.fintern.ourbudgeting.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModifyAssetTopAppBar(
+fun AssetEditTopAppBar(
     modifier: Modifier = Modifier,
     onActionClick: () -> Unit = {}
 ) {
@@ -42,6 +42,6 @@ fun ModifyAssetTopAppBar(
 @Preview
 fun ModifyAssetTopAppBarPreview() {
     MaterialTheme {
-        ModifyAssetTopAppBar()
+        AssetEditTopAppBar()
     }
 }
