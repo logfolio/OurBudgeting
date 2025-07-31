@@ -110,8 +110,8 @@ fun StatisticsScreen(
                         )
                     )
 
-                    uiState.errorMessage != null -> Text(
-                        text = uiState.errorMessage ?: stringResource(R.string.error_message),
+                    uiState.error != null -> Text(
+                        text = stringResource(id = uiState.error!!.messageResId),
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.align(Alignment.Center)
