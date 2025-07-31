@@ -2,15 +2,17 @@ package com.fintern.ourbudgeting.data.calendar
 
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.GeoPoint
 
-data class CategoryItemData(
-    val id: String,
-    val amount: Long,
-    val description: String,
-    val date: Timestamp,
-    val userName: String,
+data class Transaction(
+    val amount: Long = 0,
+    val assetId: String = "",
+    val category: String = "",
+    val description: String = "",
+    val date: Timestamp = Timestamp.now(),
+    val createdBy: String = "",
+    val createdAt: Timestamp = Timestamp.now(),
     val type: TransactionType,
-    val categoryId: String
 )
 
 data class CategoryDefinition(
@@ -21,5 +23,10 @@ data class CategoryDefinition(
 
 data class CategoryList(
     val category: CategoryDefinition,
-    val items: List<CategoryItemData>
+    val items: List<TransactionWithId>
+)
+
+data class TransactionWithId(
+    val id: String,
+    val transaction: Transaction
 )

@@ -19,11 +19,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.data.calendar.CategoryDefinition
-import com.fintern.ourbudgeting.data.calendar.CategoryItemData
+import com.fintern.ourbudgeting.data.calendar.Transaction
 import com.fintern.ourbudgeting.data.calendar.CategoryList
+import com.fintern.ourbudgeting.data.calendar.TransactionWithId
 import com.fintern.ourbudgeting.ui.calendar.component.Calendar
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarAccountAndUser
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarTopAppbar
@@ -37,6 +39,7 @@ import com.google.firebase.Timestamp
 import java.time.DayOfWeek
 import java.time.LocalDate
 
+@Preview
 @Composable
 fun CalendarScreen() {
 
@@ -53,32 +56,44 @@ fun CalendarScreen() {
         CategoryList(
             category = CategoryDefinition("food", "🍔", "식비"),
             items = listOf(
-                CategoryItemData(
+                TransactionWithId(
                     id = "1",
-                    amount = 2000L,
-                    description = "햄버거",
-                    date = Timestamp.now(),
-                    userName = "짱구",
-                    type = TransactionType.EXPENSE,
-                    categoryId = "food"
+                    transaction = Transaction(
+                        amount = 2000L,
+                        description = "햄버거",
+                        assetId = "현금",
+                        date = Timestamp.now(),
+                        createdBy = "짱구",
+                        createdAt = Timestamp.now(),
+                        type = TransactionType.EXPENSE,
+                        category = "food"
+                    )
                 ),
-                CategoryItemData(
+                TransactionWithId(
                     id = "2",
-                    amount = 3000L,
-                    description = "햄버거",
-                    date = Timestamp.now(),
-                    userName = "짱구",
-                    type = TransactionType.INCOME,
-                    categoryId = "food"
+                    transaction = Transaction(
+                        amount = 3000L,
+                        description = "햄버거",
+                        assetId = "현금",
+                        date = Timestamp.now(),
+                        createdBy = "짱구",
+                        createdAt = Timestamp.now(),
+                        type = TransactionType.INCOME,
+                        category = "food"
+                    )
                 ),
-                CategoryItemData(
+                TransactionWithId(
                     id = "3",
-                    amount = 3000L,
-                    description = "햄버거",
-                    date = toTimestamp("2025/07/21"),
-                    userName = "짱구",
-                    type = TransactionType.EXPENSE,
-                    categoryId = "food"
+                    transaction = Transaction(
+                        amount = 3000L,
+                        description = "햄버거",
+                        assetId = "현금",
+                        date = toTimestamp("2025/07/21"),
+                        createdBy = "짱구",
+                        createdAt = Timestamp.now(),
+                        type = TransactionType.EXPENSE,
+                        category = "food"
+                    )
                 )
             )
         )

@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fintern.ourbudgeting.R
-import com.fintern.ourbudgeting.data.calendar.CategoryItemData
+import com.fintern.ourbudgeting.data.calendar.TransactionWithId
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayConfig
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import java.time.LocalDate
@@ -28,7 +28,7 @@ fun CalendarDay(
     date: LocalDate,
     modifier: Modifier = Modifier,
     dayConfig: CalendarDayConfig = CalendarDayConfig.default(),
-    transactions: List<CategoryItemData> = emptyList()
+    transactions: List<TransactionWithId> = emptyList()
 ) {
     CalendarDayContent(
         date = date,
@@ -43,7 +43,7 @@ fun CalendarDayContent(
     date: LocalDate,
     modifier: Modifier = Modifier,
     dayConfig: CalendarDayConfig = CalendarDayConfig.default(),
-    transactions: List<CategoryItemData>,
+    transactions: List<TransactionWithId>,
 ) {
     val today = remember { LocalDate.now() }
     val currentDay = today.isEqual(date)
@@ -52,11 +52,14 @@ fun CalendarDayContent(
 
     val dailyTotal = remember(transactions) {
         transactions.sumOf {
-            if (it.type == TransactionType.INCOME) it.amount else -it.amount
+            if (it.transaction.type == TransactionType.INCOME) it.transaction.amount else -it.transaction.amount
         }
     }
 
-    val displayAmount = if (dailyTotal >= 0) stringResource(R.string.prefix_plus_amount, dailyTotal) else dailyTotal.toString()
+    val displayAmount = if (dailyTotal >= 0) stringResource(
+        R.string.prefix_plus_amount,
+        dailyTotal
+    ) else dailyTotal.toString()
     val amountColor = if (dailyTotal >= 0) Color.Red else Color.Blue
 
     Column(
