@@ -9,6 +9,8 @@ import com.fintern.ourbudgeting.data.model.ExpenseCategoryType
 import com.fintern.ourbudgeting.data.model.IncomeCategoryType
 import com.fintern.ourbudgeting.data.repository.StatisticsRepository
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.firestore.FirebaseFirestoreException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -93,7 +95,7 @@ class StatisticsViewModel @Inject constructor(
     ) {
         _uiState.value = _uiState.value.copy(
             isLoading = true,
-            errorMessage = null,
+            error = null,
             currentYear = year,
             currentMonth = month,
             currentType = type,
@@ -120,12 +122,22 @@ class StatisticsViewModel @Inject constructor(
 
                 _uiState.value = _uiState.value.copy(
                     chartData = entries,
-                    isLoading = false,
-                    errorMessage = null
+                    error = null
+                )
+            } catch (e: FirebaseNetworkException) {
+                _uiState.value = _uiState.value.copy(
+                    error = StatisticsError.NetworkError
+                )
+            } catch (e: FirebaseFirestoreException) {
+                _uiState.value = _uiState.value.copy(
+                    error = StatisticsError.FirestoreError
                 )
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(
-                    errorMessage = e.message ?: "알 수 없는 오류가 발생했습니다.",
+                    error = StatisticsError.UnknownError
+                )
+            } finally {
+                _uiState.value = _uiState.value.copy(
                     isLoading = false
                 )
             }
@@ -161,8 +173,10 @@ class StatisticsViewModel @Inject constructor(
         category: String
     ): Int = when (type) {
         TransactionType.EXPENSE -> {
-            ExpenseCategoryType.entries.find { it.name == category }?.labelRes ?: R.string.expense_etc
+            ExpenseCategoryType.entries.find { it.name == category }?.labelRes
+                ?: R.string.expense_etc
         }
+
         TransactionType.INCOME -> {
             IncomeCategoryType.entries.find { it.name == category }?.labelRes ?: R.string.income_etc
         }
