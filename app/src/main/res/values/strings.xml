@@ -22,6 +22,8 @@
     <string name="label_expense">지출</string>
     <string name="description_filter_button">filter button</string>
     <string name="description_select_button">select button</string>
+    <string name="label_about_name">" 님에 대한 "</string>
+    <string name="label_transaction_history">" 내역"</string>
 
 
     <!--  Common Message  -->
