@@ -1,11 +1,39 @@
 <resources>
     <!--    common-->
     <string name="app_name">OurBudgeting</string>
+    <string name="calendar_label_app_name">가계부 쓰고 가게</string>
     <string name="add">추가 하기</string>
     <string name="amount_won">%1$s원</string>
     <string name="asset">자산</string>
     <string name="debt">부채</string>
     <string name="total">합계</string>
+
+    <!--  Calendar  -->
+    <string name="item_amount">%1$s %2$s원</string>
+    <string name="calendar_year_month_format">%1$s년%2$s월</string>
+    <string name="description_next_button">다음 버튼</string>
+    <string name="description_previous_button">이전 버튼</string>
+    <string name="emoji_category_null">❓</string>
+    <string name="prefix_plus">+</string>
+    <string name="prefix_minus">-</string>
+    <string name="prefix_plus_amount">+%1$s</string>
+    <string name="label_sunday">일</string>
+    <string name="label_monday">월</string>
+    <string name="label_tuesday">화</string>
+    <string name="label_wednesday">수</string>
+    <string name="label_thursday">목</string>
+    <string name="label_friday">금</string>
+    <string name="label_saturday">토</string>
+    <string name="label_income">수입</string>
+    <string name="label_expense">지출</string>
+    <string name="description_filter_button">필터 버튼</string>
+    <string name="description_select_button">선택 버튼</string>
+    <string name="label_about_name">" 님에 대한 "</string>
+    <string name="label_transaction_history">" 내역"</string>
+    <string name="label_filter_all">모든</string>
+    <string name="label_filter_income">수입</string>
+    <string name="label_filter_expense">지출</string>
+
     <!--   Asset Management-->
     <string name="asset_management">자산 관리</string>
     <string name="cash">현금</string>
