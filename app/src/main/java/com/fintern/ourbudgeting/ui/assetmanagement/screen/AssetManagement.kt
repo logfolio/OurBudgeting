@@ -20,10 +20,12 @@ import com.fintern.ourbudgeting.ui.assetmanagement.component.AssetTopSection
 
 @Composable
 fun AssetManagementScreen(
+    modifier: Modifier = Modifier,
     asset: Long,
     dept: Long,
 ) {
     Scaffold(
+        modifier = modifier,
         topBar = { AssetTopAppBar() },
         floatingActionButton = { }
     ) { paddingValue ->
