@@ -1,5 +1,6 @@
 package com.fintern.ourbudgeting.ui.calendar.component
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -39,7 +40,7 @@ fun CalendarTransactionFilter(
                     append(stringResource(R.string.label_about_name))
                 }
                 withStyle(style = SpanStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold)) {
-                    append(filterType.label)
+                    append(filterType.label.toString())
                 }
                 withStyle(style = SpanStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold)) {
                     append(stringResource(R.string.label_transaction_history))
@@ -60,8 +61,8 @@ fun CalendarTransactionFilter(
     }
 }
 
-enum class FilterType(val label: String) {
-    ALL("모든"),
-    INCOME("수입"),
-    EXPENSE("지출")
+enum class FilterType(@StringRes val label: Int) {
+    ALL(R.string.label_filter_all),
+    INCOME(R.string.label_filter_income),
+    EXPENSE(R.string.label_filter_expense)
 }

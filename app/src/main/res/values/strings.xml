@@ -24,6 +24,9 @@
     <string name="description_select_button">select button</string>
     <string name="label_about_name">" 님에 대한 "</string>
     <string name="label_transaction_history">" 내역"</string>
+    <string name="label_filter_all">모든</string>
+    <string name="label_filter_income">수입</string>
+    <string name="label_filter_expense">지출</string>
 
 
     <!--  Common Message  -->
