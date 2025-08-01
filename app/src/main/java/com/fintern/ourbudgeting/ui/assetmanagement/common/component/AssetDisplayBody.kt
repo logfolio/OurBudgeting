@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.R
 
 @Composable
-fun AssetBody(
+fun AssetDisplayBody(
     modifier: Modifier = Modifier,
     name: String,
     amount: Long
@@ -38,16 +38,16 @@ fun AssetBody(
 
 @Composable
 @Preview(showBackground = true)
-fun CashBodyPreview() {
+fun CashAssetDisplayBodyPreview() {
     MaterialTheme {
-        AssetBody(name = "현금", amount = 0)
+        AssetDisplayBody(name = "현금", amount = 0)
     }
 }
 
 @Composable
 @Preview(showBackground = true)
-fun BankBodyPreview() {
+fun BankAssetDisplayBodyPreview() {
     MaterialTheme {
-        AssetBody(name = "은행", amount = 0)
+        AssetDisplayBody(name = "은행", amount = 0)
     }
 }

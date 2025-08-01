@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.assetlist.component
+package com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.component
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -17,7 +17,7 @@ import com.fintern.ourbudgeting.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AssetTopAppBar(
+fun AssetDisplayTopAppBar(
     modifier: Modifier = Modifier,
     onActionClick: () -> Unit = {}
 ) {
@@ -40,8 +40,8 @@ fun AssetTopAppBar(
 
 @Composable
 @Preview
-fun AssetManagementTopAppBarPreview() {
+fun AssetDisplayTopAppBarPreview() {
     MaterialTheme {
-        AssetTopAppBar()
+        AssetDisplayTopAppBar()
     }
 }

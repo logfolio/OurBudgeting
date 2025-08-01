@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.assettype
+package com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
@@ -14,11 +14,9 @@ class AddAssetRepository @Inject constructor(
     suspend fun initializeUserHousehold(): Result<Unit> {
         val user = auth.currentUser ?: return Result.failure(Exception("로그인 안됨"))
         val householdRef = db.collection("users").document(user.uid)
-        Log.e("UUUUUUID",  user.uid)
         return try {
             val snapshot = householdRef.get().await()
             if (!snapshot.exists()) {
-                Log.e("UUUUUU",  user.uid)
 
                 val initialData = mapOf(
                     "assetType" to listOf("현금"),

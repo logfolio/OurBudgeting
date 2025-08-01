@@ -196,7 +196,7 @@ fun DrawScope.drawVerticalGridLines(
 }
 
 @Composable
-fun LineChart(
+fun StatisticLineChart(
     modifier: Modifier = Modifier,
     line: LineChartConfig,
     lineChartStyle: LineChartStyleConfig = LineChartStyleConfig()
@@ -289,7 +289,7 @@ fun LineChart(
 
 @Preview(showBackground = true)
 @Composable
-fun LineChartPreview() {
+fun StatisticLineChartPreview() {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -314,7 +314,7 @@ fun LineChartPreview() {
             graphLineColor = Color.Blue,
             pointColor = Color.Blue,
         )
-        LineChart(
+        StatisticLineChart(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(250.dp),

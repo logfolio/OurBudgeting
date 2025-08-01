@@ -13,11 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.LineChart
+import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.StatisticLineChart
 import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.StatisticAssetChartTitle
 import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.StatisticAssetTopSection
 import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.StatisticsAssetTopAppBar
-import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.TwoLineChart
+import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.StatisticTwoLineChart
 import com.fintern.ourbudgeting.ui.assetmanagement.data.LineChartConfig
 import com.fintern.ourbudgeting.ui.assetmanagement.data.Point
 
@@ -41,7 +41,7 @@ fun StatisticAssetManagementScreen(
         ) {
             StatisticAssetTopSection(totalPrice = totalPrice)
             StatisticAssetChartTitle(title = "누적잔액")
-            LineChart(
+            StatisticLineChart(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth()
@@ -53,7 +53,7 @@ fun StatisticAssetManagementScreen(
                 )
             )
             StatisticAssetChartTitle(title = "수입/지출")
-            TwoLineChart(
+            StatisticTwoLineChart(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)

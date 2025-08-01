@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.R
 
 @Composable
-fun AssetTitle(
+fun AssetDisplayTitle(
     modifier: Modifier = Modifier,
     name: String,
     amount: Long
@@ -41,16 +41,16 @@ fun AssetTitle(
 
 @Composable
 @Preview(showBackground = true)
-fun CashTitlePreview() {
+fun CashAssetDisplayTitlePreview() {
     MaterialTheme {
-        AssetTitle(name = "현금", amount = 0)
+        AssetDisplayTitle(name = "현금", amount = 0)
     }
 }
 
 @Composable
 @Preview(showBackground = true)
-fun BankTitlePreview() {
+fun BankAssetDisplayTitlePreview() {
     MaterialTheme {
-        AssetTitle(name = "은행", amount = 0)
+        AssetDisplayTitle(name = "은행", amount = 0)
     }
 }

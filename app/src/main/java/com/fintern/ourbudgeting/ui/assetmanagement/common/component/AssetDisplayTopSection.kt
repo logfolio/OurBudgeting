@@ -1,6 +1,5 @@
 package com.fintern.ourbudgeting.ui.assetmanagement.common.component
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.R
 
 @Composable
-fun AssetTopSection(
+fun AssetDisplayTopSection(
     modifier: Modifier = Modifier,
     asset: Long,
     debt: Long,
@@ -57,8 +56,8 @@ fun AssetTopSection(
 
 @Composable
 @Preview(showBackground = true)
-fun TopSectionPreview() {
+fun AssetDisplayTopSectionPreview() {
     MaterialTheme {
-        AssetTopSection(asset = 30000, debt = 50000)
+        AssetDisplayTopSection(asset = 30000, debt = 50000)
     }
 }

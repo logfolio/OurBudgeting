@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.assettype.component
+package com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,13 +13,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AddAssetOutLinedTextField(
+fun AssetTypeAdditionBody(
     label: String,
     placeHolder: String,
     value: String,
     onValueChanged :(String)-> Unit,
 ) {
-//    var text by remember { mutableStateOf("") }
 
     OutlinedTextField(
         modifier = Modifier
@@ -42,6 +41,6 @@ fun AddAssetOutLinedTextField(
 @Preview(showBackground = true)
 @Composable
 fun AddAssetOutLinedTextFieldPreview() {
-    MaterialTheme { AddAssetOutLinedTextField(label = "금액", placeHolder = "금액을 입력해주세요.", value = "", onValueChanged = {}) }
+    MaterialTheme { AssetTypeAdditionBody(label = "금액", placeHolder = "금액을 입력해주세요.", value = "", onValueChanged = {}) }
 
 }

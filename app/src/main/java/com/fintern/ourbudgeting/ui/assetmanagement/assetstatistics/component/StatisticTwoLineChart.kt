@@ -17,7 +17,7 @@ import com.fintern.ourbudgeting.ui.assetmanagement.data.LineChartStyleConfig
 import com.fintern.ourbudgeting.ui.assetmanagement.data.Point
 
 @Composable
-fun TwoLineChart(
+fun StatisticTwoLineChart(
     modifier: Modifier = Modifier,
     firstLine: LineChartConfig,
     secondLine: LineChartConfig,
@@ -148,7 +148,7 @@ fun TwoLineChart(
 
 @Preview(showBackground = true)
 @Composable
-fun TwoLineChartPreview() {
+fun StatisticTwoLineChartPreview() {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -195,7 +195,7 @@ fun TwoLineChartPreview() {
             graphLineColor = Color.Blue,
             pointColor = Color.Blue
         )
-        TwoLineChart(
+        StatisticTwoLineChart(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(),

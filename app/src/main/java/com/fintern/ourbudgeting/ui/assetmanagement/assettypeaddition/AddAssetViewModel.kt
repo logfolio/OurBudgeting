@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.assettype
+package com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,13 +14,12 @@ class AddAssetViewModel @Inject constructor(
     private val repository: AddAssetRepository
 ): ViewModel() {
 
-    private val _uiState = MutableStateFlow(AssetUiState())
-    val uiState: StateFlow<AssetUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(AssetTypeUiState())
+    val uiState: StateFlow<AssetTypeUiState> = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
             repository.initializeUserHousehold()
-
         }
     }
 
@@ -33,7 +32,7 @@ class AddAssetViewModel @Inject constructor(
     }
 
     fun submitAssetType() {
-        val text = _uiState.value.input.trim()
+        val text = _uiState.value.input.trim() // 띄어쓰기는 입력으로 취급 안하겠다
         if (text.isBlank()) {
             _uiState.value = _uiState.value.copy(message = "입력값이 비어있습니다")
             return
