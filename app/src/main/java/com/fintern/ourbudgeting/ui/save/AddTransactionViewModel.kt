@@ -6,9 +6,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
 @HiltViewModel
-class AddTransactionViewModel : ViewModel() {
+class AddTransactionViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(AddTransactionUiState())
     val uiState: StateFlow<AddTransactionUiState> = _uiState
 
@@ -26,5 +27,11 @@ class AddTransactionViewModel : ViewModel() {
 
     fun setCategory(category: String) {
         _uiState.update { it.copy(selectedCategory = category) }
+    }
+
+    fun setAmountText(input: String) {
+        _uiState.update {
+            it.copy(amount = input)
+        }
     }
 }

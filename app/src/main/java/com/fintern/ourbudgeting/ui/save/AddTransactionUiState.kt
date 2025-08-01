@@ -7,4 +7,5 @@ data class AddTransactionUiState(
     val selectedDate: Long? = null,
     val selectedAsset: String? = null,
     val selectedCategory: String? = null,
+    val amount: String = ""
 )
