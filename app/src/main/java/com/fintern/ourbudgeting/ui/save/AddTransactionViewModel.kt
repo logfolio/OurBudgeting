@@ -30,8 +30,10 @@ class AddTransactionViewModel @Inject constructor() : ViewModel() {
     }
 
     fun setAmountText(input: String) {
-        _uiState.update {
-            it.copy(amount = input)
-        }
+        _uiState.update { it.copy(amount = input) }
+    }
+
+    fun setContent(content: String) {
+        _uiState.update { it.copy(content = content) }
     }
 }

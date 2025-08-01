@@ -109,4 +109,8 @@
     <string name="calendar_open_button">달력 열기</string>
     <string name="date_picker_format">yyyy년 MM월 dd일</string>
     <string name="amount">금액</string>
+    <string name="add_image">이미지 추가</string>
+    <string name="location">위치</string>
+    <string name="save">저장하기</string>
+    <string name="content">내용</string>
 </resources>
