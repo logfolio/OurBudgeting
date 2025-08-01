@@ -70,4 +70,5 @@
 
     <!--  AI Analysis Screen  -->
     <string name="ai_analysis">AI 패턴 분석</string>
+    <string name="currency_format">%,d원</string>
 </resources>

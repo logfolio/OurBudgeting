@@ -10,10 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fintern.ourbudgeting.R
 
 @Composable
 fun LabeledAmount(
@@ -46,6 +48,7 @@ fun LabeledAmount(
     }
 }
 
+@Composable
 fun formatCurrency(amount: Long): String {
-    return "%,d원".format(amount)
+    return stringResource(R.string.currency_format).format(amount)
 }
