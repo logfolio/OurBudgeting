@@ -5,8 +5,8 @@
     <!--  Calendar  -->
     <string name="item_amount">%1$s %2$s원</string>
     <string name="calendar_year_month_format">%1$s년%2$s월</string>
-    <string name="description_next_button">Next Button</string>
-    <string name="description_previous_button">Previous Button</string>
+    <string name="description_next_button">다음 버튼</string>
+    <string name="description_previous_button">이전 버튼</string>
     <string name="emoji_category_null">❓</string>
     <string name="prefix_plus">+</string>
     <string name="prefix_minus">-</string>
