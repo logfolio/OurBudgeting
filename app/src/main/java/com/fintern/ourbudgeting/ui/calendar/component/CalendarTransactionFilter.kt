@@ -43,7 +43,7 @@ fun CalendarTransactionFilter(
                     append(stringResource(R.string.label_about_name))
                 }
                 withStyle(style = SpanStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold)) {
-                    append(filterType.label.toString())
+                    append(stringResource(filterType.label))
                 }
                 withStyle(style = SpanStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold)) {
                     append(stringResource(R.string.label_transaction_history))

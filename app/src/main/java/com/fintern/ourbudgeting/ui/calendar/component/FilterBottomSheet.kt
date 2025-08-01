@@ -19,6 +19,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,12 +63,17 @@ fun FilterBottomSheet(
                         .padding(vertical = 4.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = if (currentFilterType == filter) Color(0xFF964BFF) else Color.White,
-                        contentColor = if (currentFilterType == filter) Color.White else Color(0xFF964BFF)
+                        contentColor = if (currentFilterType == filter) Color.White else Color(
+                            0xFF964BFF
+                        )
                     ),
                     shape = RoundedCornerShape(4.dp),
-                    border = if (currentFilterType == filter) null else BorderStroke(1.dp, Color(0xFF964BFF))
+                    border = if (currentFilterType == filter) null else BorderStroke(
+                        1.dp,
+                        Color(0xFF964BFF)
+                    )
                 ) {
-                    Text(filter.label)
+                    Text(text = stringResource(id = filter.label))
                 }
             }
         }
