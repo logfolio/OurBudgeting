@@ -12,11 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.fintern.ourbudgeting.data.calendar.CategoryList
-import com.fintern.ourbudgeting.ui.calendar.CalendarScaffold
+import com.fintern.ourbudgeting.ui.calendar.CalendarGrid
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarConfig
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayConfig
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayLabelConfig
 import com.fintern.ourbudgeting.ui.calendar.extensions.toLocalDate
+import com.fintern.ourbudgeting.util.CalendarConstants
 import java.time.DayOfWeek
 import java.time.LocalDate
 
@@ -28,7 +29,6 @@ fun Calendar(
     startDayOfWeek: DayOfWeek = DayOfWeek.SUNDAY,
     categoryLists: List<CategoryList> = emptyList(),
 ) {
-
     CalendarContent(
         selectedDate = selectedDate,
         modifier = modifier,
@@ -73,7 +73,7 @@ fun CalendarContent(
             onPreviousClick = { currentMonth = currentMonth.minusMonths(1) },
             onNextClick = { currentMonth = currentMonth.plusMonths(1) }
         )
-        CalendarScaffold(
+        CalendarGrid(
             modifier = Modifier.fillMaxWidth(),
             dayOfWeek = { daysOfWeek },
             calendarDayLabelConfig = dayLabelConfig,
@@ -123,10 +123,10 @@ fun getMonthDates(
 ): List<LocalDate> {
     val firstDayOfMonth = currentMonth.withDayOfMonth(1)
 
-    val firstDayOffset = (firstDayOfMonth.dayOfWeek.ordinal - startDayOfWeek.ordinal + 7) % 7
+    val firstDayOffset = (firstDayOfMonth.dayOfWeek.ordinal - startDayOfWeek.ordinal + CalendarConstants.DAYS_IN_WEEK) % CalendarConstants.DAYS_IN_WEEK
     val calendarStartDate = firstDayOfMonth.minusDays(firstDayOffset.toLong())
 
-    return (0 until 42).map { i ->
+    return (0 until CalendarConstants.CALENDAR_TOTAL_CELL_COUNT).map { i ->
         calendarStartDate.plusDays(i.toLong())
     }
 }

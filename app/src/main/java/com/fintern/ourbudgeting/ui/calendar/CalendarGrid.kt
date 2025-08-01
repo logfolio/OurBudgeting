@@ -16,7 +16,7 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 
 @Composable
-fun CalendarScaffold(
+fun CalendarGrid(
     dayOfWeek: () -> List<DayOfWeek>,
     calendarDayLabelConfig: CalendarDayLabelConfig,
     modifier: Modifier = Modifier,

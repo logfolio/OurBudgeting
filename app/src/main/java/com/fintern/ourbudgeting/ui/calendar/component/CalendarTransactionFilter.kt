@@ -1,5 +1,6 @@
 package com.fintern.ourbudgeting.ui.calendar.component
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,12 +11,14 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fintern.ourbudgeting.R
 
 @Composable
 fun CalendarTransactionFilter(
@@ -37,13 +40,13 @@ fun CalendarTransactionFilter(
                     append(nickname)
                 }
                 withStyle(style = SpanStyle(fontSize = 14.sp, fontWeight = FontWeight.Normal)) {
-                    append(" 님에 대한 ")
+                    append(stringResource(R.string.label_about_name))
                 }
                 withStyle(style = SpanStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold)) {
-                    append(filterType.label)
+                    append(filterType.label.toString())
                 }
                 withStyle(style = SpanStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold)) {
-                    append(" 내역")
+                    append(stringResource(R.string.label_transaction_history))
                 }
             }
         )
@@ -61,8 +64,8 @@ fun CalendarTransactionFilter(
     }
 }
 
-enum class FilterType(val label: String) {
-    ALL("모든"),
-    INCOME("수입"),
-    EXPENSE("지출")
+enum class FilterType(@StringRes val label: Int) {
+    ALL(R.string.label_filter_all),
+    INCOME(R.string.label_filter_income),
+    EXPENSE(R.string.label_filter_expense)
 }
