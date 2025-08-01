@@ -3,14 +3,7 @@ package com.fintern.ourbudgeting.ui.save
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -37,6 +30,14 @@ fun AddTransactionScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     Scaffold { innerPadding ->
+        val categoryOptions = when (uiState.transactionType) {
+            TransactionType.EXPENSE -> ExpenseCategoryType.entries
+                .map { stringResource(id = it.labelRes) }
+
+            TransactionType.INCOME -> IncomeCategoryType.entries
+                .map { stringResource(id = it.labelRes) }
+        }
+
         Column(
             modifier = modifier
                 .padding(innerPadding)
@@ -65,6 +66,15 @@ fun AddTransactionScreen(
                 // TODO: Firestore에서 데이터 불러와서 표시
                 onOptionSelected = { selected ->
                     viewModel.setSelectedAsset(selected)
+                },
+            )
+
+            // 카테고리 선택
+            DropDownField(
+                label = stringResource(R.string.category),
+                options = categoryOptions,
+                onOptionSelected = { selected ->
+                    viewModel.setCategory(selected)
                 },
             )
         }
