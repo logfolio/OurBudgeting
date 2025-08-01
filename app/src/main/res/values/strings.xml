@@ -26,8 +26,8 @@
     <string name="label_saturday">토</string>
     <string name="label_income">수입</string>
     <string name="label_expense">지출</string>
-    <string name="description_filter_button">filter button</string>
-    <string name="description_select_button">select button</string>
+    <string name="description_filter_button">필터 버튼</string>
+    <string name="description_select_button">선택 버튼</string>
     <string name="label_about_name">" 님에 대한 "</string>
     <string name="label_transaction_history">" 내역"</string>
     <string name="label_filter_all">모든</string>
