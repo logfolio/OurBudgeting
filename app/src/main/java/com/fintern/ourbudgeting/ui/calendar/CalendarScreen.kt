@@ -11,124 +11,90 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SheetValue
-import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.data.calendar.CategoryDefinition
-import com.fintern.ourbudgeting.data.calendar.Transaction
 import com.fintern.ourbudgeting.data.calendar.CategoryList
 import com.fintern.ourbudgeting.data.calendar.TransactionWithId
 import com.fintern.ourbudgeting.ui.calendar.component.Calendar
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarAccountAndUser
+import com.fintern.ourbudgeting.ui.calendar.component.CalendarFilterControls
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarTopAppbar
-import com.fintern.ourbudgeting.ui.calendar.component.CalendarTransactionFilter
 import com.fintern.ourbudgeting.ui.calendar.component.CategoryListSection
-import com.fintern.ourbudgeting.ui.calendar.component.FilterBottomSheet
 import com.fintern.ourbudgeting.ui.calendar.component.FilterType
 import com.fintern.ourbudgeting.ui.calendar.component.LabeledAmount
-import com.fintern.ourbudgeting.ui.calendar.component.toTimestamp
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
-import com.google.firebase.Timestamp
-import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
-fun CalendarScreen() {
+fun CalendarScreen(
+    viewModel: TransactionViewModel = hiltViewModel()
+) {
 
-    val sampleIncomeAmount = 100_000_000L
-    val sampleExpenseAmount = 50_000_000L
+    val householdId = "dlmRP5U0pNhyH7oaIvTy"
 
     val nickname = "짱구"
 
     val selectedAccount = remember { mutableStateOf("가계부") }
     val selectedUser = remember { mutableStateOf("조민환") }
 
-    val sheetState = rememberStandardBottomSheetState(
-        initialValue = SheetValue.Hidden,
-        skipHiddenState = false
-    )
-
-    val scope = rememberCoroutineScope()
-
     var currentFilterType by remember { mutableStateOf(FilterType.ALL) }
-    var showBottomSheet = remember { mutableStateOf(false) }
 
-    if (showBottomSheet.value) {
-        FilterBottomSheet(
-            sheetState = sheetState,
-            currentFilterType = currentFilterType,
-            onFilterSelected = { selectedFilter ->
-                currentFilterType = selectedFilter
-                scope.launch { sheetState.hide() }
-                showBottomSheet.value = false
-            },
-            onDismissRequest = {
-                showBottomSheet.value = false
-            }
-        )
+    val uiState = viewModel.transactionsUiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(householdId, currentFilterType) {
+        viewModel.loadTransactions(householdId, currentFilterType)
     }
 
-    val sampleCategoryLists = listOf(
-        CategoryList(
-            category = CategoryDefinition("food", "🍔", "식비"),
-            items = listOf(
-                TransactionWithId(
-                    id = "1",
-                    transaction = Transaction(
-                        amount = 2000L,
-                        description = "햄버거",
-                        assetId = "현금",
-                        date = Timestamp.now(),
-                        createdBy = "짱구",
-                        createdAt = Timestamp.now(),
-                        type = TransactionType.EXPENSE,
-                        category = "food"
-                    )
-                ),
-                TransactionWithId(
-                    id = "2",
-                    transaction = Transaction(
-                        amount = 3000L,
-                        description = "햄버거",
-                        assetId = "현금",
-                        date = Timestamp.now(),
-                        createdBy = "짱구",
-                        createdAt = Timestamp.now(),
-                        type = TransactionType.INCOME,
-                        category = "food"
-                    )
-                ),
-                TransactionWithId(
-                    id = "3",
-                    transaction = Transaction(
-                        amount = 3000L,
-                        description = "햄버거",
-                        assetId = "현금",
-                        date = toTimestamp("2025/07/21"),
-                        createdBy = "짱구",
-                        createdAt = Timestamp.now(),
-                        type = TransactionType.EXPENSE,
-                        category = "food"
-                    )
+    val transactions: List<TransactionWithId> = when (uiState.value) {
+        is UiState.Loading -> {
+            emptyList<TransactionWithId>()
+        }
+        is UiState.Success -> {
+            val successData = (uiState.value as UiState.Success<List<TransactionWithId>>).data
+            successData
+        }
+        is UiState.Error -> {
+            emptyList<TransactionWithId>()
+        }
+    }
+
+    val totalIncome = transactions.filter {
+        it.transaction.type == TransactionType.INCOME
+    }.sumOf { it.transaction.amount }
+
+    val totalExpense = transactions.filter {
+        it.transaction.type == TransactionType.EXPENSE
+    }.sumOf { it.transaction.amount }
+
+    val categoryListsForUi: List<CategoryList> = remember(transactions) {
+        transactions
+            .groupBy { it.transaction.category }
+            .map { (categoryName, transactionList) ->
+                CategoryList(
+                    category = CategoryDefinition(
+                        id = categoryName,
+                        emoji = "🍔",
+                        displayName = "식비"
+                    ),
+                    items = transactionList
                 )
-            )
-        )
-    )
+            }
+    }
 
     Scaffold(
         topBar = {
@@ -161,7 +127,7 @@ fun CalendarScreen() {
                     LabeledAmount(
                         label = stringResource(R.string.label_income),
                         labelColor = Color.Red,
-                        amount = sampleIncomeAmount,
+                        amount = totalIncome,
                         amountBoxWidth = 120.dp
                     )
 
@@ -170,7 +136,7 @@ fun CalendarScreen() {
                     LabeledAmount(
                         label = stringResource(R.string.label_expense),
                         labelColor = Color.Blue,
-                        amount = sampleExpenseAmount,
+                        amount = totalExpense,
                         amountBoxWidth = 120.dp
                     )
                 }
@@ -181,20 +147,18 @@ fun CalendarScreen() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 24.dp),
-                    categoryLists = sampleCategoryLists,
+                    categoryLists = categoryListsForUi,
                 )
-                CalendarTransactionFilter(
+                CalendarFilterControls(
                     nickname = nickname,
                     filterType = currentFilterType,
-                    onFilterClick = {
-                        showBottomSheet.value = true
-                        scope.launch {
-                            sheetState.show()
-                        }
+                    onFilterTypeSelected = {newFilterType ->
+                        currentFilterType = newFilterType
                     },
                 )
+
                 CategoryListSection(
-                    categories = sampleCategoryLists
+                    categories = categoryListsForUi
                 )
             }
         }
