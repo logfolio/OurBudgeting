@@ -11,6 +11,14 @@ class AddTransactionViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(AddTransactionUiState())
     val uiState: StateFlow<AddTransactionUiState> = _uiState
 
+    fun setTransactionType(type: TransactionType) {
+        _uiState.update { it.copy(transactionType = type) }
+    }
+
+    fun setSelectedDate(date: Long?) {
+        _uiState.update { it.copy(selectedDate = date) }
+    }
+
     fun setSelectedAsset(asset: String) {
         _uiState.update { it.copy(selectedAsset = asset) }
     }

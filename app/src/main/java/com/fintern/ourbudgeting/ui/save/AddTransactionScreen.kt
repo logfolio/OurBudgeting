@@ -3,7 +3,14 @@ package com.fintern.ourbudgeting.ui.save
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -25,6 +32,7 @@ import com.fintern.ourbudgeting.ui.theme.OurBudgetingTheme
 fun AddTransactionScreen(
     initialTransactionType: TransactionType,
     modifier: Modifier = Modifier,
+    viewModel: AddTransactionViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -38,14 +46,14 @@ fun AddTransactionScreen(
             TransactionToggle(
                 transactionType = uiState.transactionType,
                 onTransactionTypeChange = {
-                    uiState = uiState.copy(transactionType = it)
+                    viewModel.setTransactionType(it)
                 }
             )
 
             DatePickerField(
                 label = stringResource(R.string.select_date_label),
                 onDateSelected = { transactionDate ->
-                    uiState = uiState.copy(selectedDate = transactionDate)
+                    viewModel.setSelectedDate(transactionDate)
                 },
                 modifier = modifier
             )
