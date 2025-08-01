@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.fintern.ourbudgeting.data.calendar.CategoryList
-import com.fintern.ourbudgeting.ui.calendar.CalendarScaffold
+import com.fintern.ourbudgeting.ui.calendar.CalendarGrid
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarConfig
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayConfig
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayLabelConfig
@@ -73,7 +73,7 @@ fun CalendarContent(
             onPreviousClick = { currentMonth = currentMonth.minusMonths(1) },
             onNextClick = { currentMonth = currentMonth.plusMonths(1) }
         )
-        CalendarScaffold(
+        CalendarGrid(
             modifier = Modifier.fillMaxWidth(),
             dayOfWeek = { daysOfWeek },
             calendarDayLabelConfig = dayLabelConfig,
