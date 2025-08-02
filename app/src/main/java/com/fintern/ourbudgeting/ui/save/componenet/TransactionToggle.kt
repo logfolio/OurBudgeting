@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 
@@ -28,14 +29,14 @@ fun TransactionToggle(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         ToggleButton(
-            text = TransactionType.INCOME.name,
+            text = stringResource(TransactionType.INCOME.labelRes),
             isSelected = transactionType == TransactionType.INCOME,
             onClick = { onTransactionTypeChange(TransactionType.INCOME) },
             modifier = Modifier.weight(1f)
         )
         Spacer(modifier = Modifier.width(8.dp))
         ToggleButton(
-            text = TransactionType.EXPENSE.name,
+            text = stringResource(TransactionType.EXPENSE.labelRes),
             isSelected = transactionType == TransactionType.EXPENSE,
             onClick = { onTransactionTypeChange(TransactionType.EXPENSE) },
             modifier = Modifier.weight(1f)

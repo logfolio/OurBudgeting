@@ -1,3 +1,9 @@
 package com.fintern.ourbudgeting.ui.common.model
 
-enum class TransactionType { EXPENSE, INCOME }
+import androidx.annotation.StringRes
+import com.fintern.ourbudgeting.R
+
+enum class TransactionType(@StringRes val labelRes: Int) {
+    EXPENSE(R.string.expense),
+    INCOME(R.string.income)
+}
