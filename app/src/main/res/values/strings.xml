@@ -12,6 +12,7 @@
     <string name="asset">자산</string>
     <string name="debt">부채</string>
     <string name="total">합계</string>
+    <string name="image">이미지</string>
 
     <!--  Calendar  -->
     <string name="item_amount">%1$s %2$s원</string>

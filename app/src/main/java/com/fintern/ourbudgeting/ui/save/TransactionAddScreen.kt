@@ -1,9 +1,15 @@
 package com.fintern.ourbudgeting.ui.save
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -11,14 +17,21 @@ import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -26,6 +39,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil3.compose.rememberAsyncImagePainter
+import coil3.request.ImageRequest
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.data.model.ExpenseCategoryType
 import com.fintern.ourbudgeting.data.model.IncomeCategoryType
@@ -42,6 +57,11 @@ fun TransactionAddScreen(
     viewModel: TransactionAddViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    var photoUri: Uri? by remember { mutableStateOf(null) }
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            photoUri = uri
+        }
 
     Scaffold { innerPadding ->
         val categoryOptions = when (uiState.transactionType) {
@@ -115,13 +135,42 @@ fun TransactionAddScreen(
                 },
                 label = { Text(stringResource(R.string.content)) },
                 trailingIcon = {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_camera),
-                        contentDescription = stringResource(R.string.add_image)
-                    )
+                    IconButton(
+                        onClick = {
+                            launcher.launch(
+                                PickVisualMediaRequest(
+                                    mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly
+                                )
+                            )
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_camera),
+                            contentDescription = stringResource(R.string.add_image)
+                        )
+                    }
                 },
                 modifier = Modifier.fillMaxWidth(),
             )
+
+            // 선택한 이미지 미리보기
+            if (photoUri != null) {
+                val painter = rememberAsyncImagePainter(
+                    ImageRequest
+                        .Builder(LocalContext.current)
+                        .data(data = photoUri)
+                        .build()
+                )
+
+                Image(
+                    painter = painter,
+                    contentDescription = stringResource(R.string.image),
+                    modifier = Modifier
+                        .size(80.dp)
+                        .clip(RoundedCornerShape(12.dp)),
+                    contentScale = ContentScale.Crop,
+                )
+            }
 
             // 위치 입력
             OutlinedTextField(
