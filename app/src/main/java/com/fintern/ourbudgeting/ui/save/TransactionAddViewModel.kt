@@ -1,5 +1,6 @@
 package com.fintern.ourbudgeting.ui.save
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,5 +36,13 @@ class TransactionAddViewModel @Inject constructor() : ViewModel() {
 
     fun setContent(content: String) {
         _uiState.update { it.copy(content = content) }
+    }
+
+    fun setPhotoUri(uri: Uri?) {
+        _uiState.update { it.copy(photoUri = uri) }
+    }
+
+    fun clearPhotoUri() {
+        _uiState.update { it.copy(photoUri = null) }
     }
 }

@@ -1,5 +1,6 @@
 package com.fintern.ourbudgeting.ui.save
 
+import android.net.Uri
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 
 data class TransactionAddUiState(
@@ -10,4 +11,5 @@ data class TransactionAddUiState(
     val amount: String = "",
     val content: String = "",
     val location: String = "",
+    val photoUri: Uri? = null
 )

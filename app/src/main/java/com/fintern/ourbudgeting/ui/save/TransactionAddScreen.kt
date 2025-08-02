@@ -1,6 +1,5 @@
 package com.fintern.ourbudgeting.ui.save
 
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,9 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -60,10 +56,9 @@ fun TransactionAddScreen(
     viewModel: TransactionAddViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    var photoUri: Uri? by remember { mutableStateOf(null) }
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            photoUri = uri
+            viewModel.setPhotoUri(uri)
         }
 
     Scaffold { innerPadding ->
@@ -157,11 +152,11 @@ fun TransactionAddScreen(
             )
 
             // 선택한 이미지 미리보기
-            if (photoUri != null) {
+            if (uiState.photoUri != null) {
                 val painter = rememberAsyncImagePainter(
                     ImageRequest
                         .Builder(LocalContext.current)
-                        .data(data = photoUri)
+                        .data(data = uiState.photoUri)
                         .build()
                 )
 
@@ -180,7 +175,7 @@ fun TransactionAddScreen(
                     )
 
                     IconButton(
-                        onClick = { photoUri = null },
+                        onClick = { viewModel.clearPhotoUri() },
                         modifier = Modifier
                             .align(Alignment.TopEnd)
                             .padding(4.dp)
