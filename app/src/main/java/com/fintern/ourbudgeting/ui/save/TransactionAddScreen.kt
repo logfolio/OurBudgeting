@@ -3,9 +3,11 @@ package com.fintern.ourbudgeting.ui.save
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -64,7 +66,8 @@ fun TransactionAddScreen(
             modifier = modifier
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             TransactionToggle(
                 transactionType = uiState.transactionType,
@@ -156,18 +159,18 @@ fun TransactionAddScreen(
                         tint = Color(0xFF964BFF)
                     )
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { }
             )
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             // 저장 버튼
             Button(
                 onClick = {
                     // TODO: 저장
                 },
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(48.dp),
                 shape = RoundedCornerShape(4.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF964BFF)

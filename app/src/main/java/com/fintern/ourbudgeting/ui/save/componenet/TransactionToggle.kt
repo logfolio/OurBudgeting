@@ -54,7 +54,7 @@ fun ToggleButton(
     Button(
         onClick = onClick,
         modifier = modifier.height(48.dp),
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = if (isSelected) Color(0xFF964BFF) else Color.White,
             contentColor = if (isSelected) Color.White else Color(0xFF964BFF)
