@@ -36,10 +36,10 @@ import com.fintern.ourbudgeting.ui.save.componenet.TransactionToggle
 import com.fintern.ourbudgeting.ui.theme.OurBudgetingTheme
 
 @Composable
-fun AddTransactionScreen(
+fun TransactionAddScreen(
     initialTransactionType: TransactionType,
     modifier: Modifier = Modifier,
-    viewModel: AddTransactionViewModel = hiltViewModel()
+    viewModel: TransactionAddViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -165,6 +165,6 @@ fun AddTransactionScreen(
 @Composable
 fun Preview() {
     OurBudgetingTheme {
-        AddTransactionScreen(TransactionType.EXPENSE)
+        TransactionAddScreen(TransactionType.EXPENSE)
     }
 }

@@ -2,7 +2,7 @@ package com.fintern.ourbudgeting.ui.save
 
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 
-data class AddTransactionUiState(
+data class TransactionAddUiState(
     val transactionType: TransactionType = TransactionType.EXPENSE,
     val selectedDate: Long? = null,
     val selectedAsset: String? = null,

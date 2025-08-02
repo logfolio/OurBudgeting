@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class AddTransactionViewModel @Inject constructor() : ViewModel() {
-    private val _uiState = MutableStateFlow(AddTransactionUiState())
-    val uiState: StateFlow<AddTransactionUiState> = _uiState
+class TransactionAddViewModel @Inject constructor() : ViewModel() {
+    private val _uiState = MutableStateFlow(TransactionAddUiState())
+    val uiState: StateFlow<TransactionAddUiState> = _uiState
 
     fun setTransactionType(type: TransactionType) {
         _uiState.update { it.copy(transactionType = type) }
