@@ -9,4 +9,5 @@ data class AddTransactionUiState(
     val selectedCategory: String? = null,
     val amount: String = "",
     val content: String = "",
+    val location: String = "",
 )
