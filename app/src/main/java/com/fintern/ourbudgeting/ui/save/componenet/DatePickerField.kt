@@ -10,7 +10,6 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
@@ -20,6 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
@@ -41,7 +41,7 @@ fun DatePickerField(
         selectedDate?.let { convertMillisToDate(it, stringResource(R.string.date_picker_format)) }
             ?: ""
 
-    OutlinedTextField(
+    CommonOutlinedTextField(
         value = formattedDate,
         onValueChange = { },
         modifier = modifier
@@ -55,12 +55,13 @@ fun DatePickerField(
                     }
                 }
             },
+        label = label,
         readOnly = true,
-        label = { Text(label) },
         trailingIcon = {
             Icon(
                 Icons.Default.DateRange,
-                contentDescription = stringResource(R.string.calendar_open_button)
+                contentDescription = stringResource(R.string.calendar_open_button),
+                tint = Color(0xFF964BFF),
             )
         },
     )

@@ -8,14 +8,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +32,7 @@ import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.data.model.ExpenseCategoryType
 import com.fintern.ourbudgeting.data.model.IncomeCategoryType
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
+import com.fintern.ourbudgeting.ui.save.componenet.CommonOutlinedTextField
 import com.fintern.ourbudgeting.ui.save.componenet.DatePickerField
 import com.fintern.ourbudgeting.ui.save.componenet.DropDownField
 import com.fintern.ourbudgeting.ui.save.componenet.ImagePreview
@@ -102,27 +101,23 @@ fun TransactionAddScreen(
             )
 
             // 금액 입력
-            OutlinedTextField(
+            CommonOutlinedTextField(
                 value = uiState.amount,
                 onValueChange = { newValue ->
                     viewModel.setAmountText(newValue)
                 },
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text(stringResource(R.string.amount)) },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
-                ),
-                singleLine = true
+                label = stringResource(R.string.amount),
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done
             )
 
             // 내용 입력
-            OutlinedTextField(
+            CommonOutlinedTextField(
                 value = uiState.content,
                 onValueChange = { newContent ->
                     viewModel.setContent(newContent)
                 },
-                label = { Text(stringResource(R.string.content)) },
+                label = stringResource(R.string.content),
                 trailingIcon = {
                     IconButton(
                         onClick = {
@@ -135,11 +130,11 @@ fun TransactionAddScreen(
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_camera),
-                            contentDescription = stringResource(R.string.add_image)
+                            contentDescription = stringResource(R.string.add_image),
+                            tint = Color(0xFF964BFF)
                         )
                     }
-                },
-                modifier = Modifier.fillMaxWidth(),
+                }
             )
 
             // 선택한 이미지 미리보기
@@ -149,20 +144,21 @@ fun TransactionAddScreen(
             )
 
             // 위치 입력
-            OutlinedTextField(
+            CommonOutlinedTextField(
                 value = uiState.location,
                 onValueChange = {},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { },
-                label = { Text(stringResource(R.string.location)) },
+                label = stringResource(R.string.location),
+                readOnly = true,
                 trailingIcon = {
                     Icon(
                         imageVector = Icons.Outlined.LocationOn,
                         contentDescription = stringResource(R.string.location),
+                        tint = Color(0xFF964BFF)
                     )
                 },
-                readOnly = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { }
             )
 
             // 저장 버튼

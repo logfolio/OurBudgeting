@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,11 +18,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
+import com.fintern.ourbudgeting.R
 
 @Composable
 fun DropDownField(
@@ -40,9 +42,18 @@ fun DropDownField(
             .padding(top = 8.dp)
     ) {
 
-        OutlinedTextField(
+        CommonOutlinedTextField(
             value = selectedOption,
             onValueChange = {},
+            label = label,
+            readOnly = true,
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.ArrowDropDown,
+                    contentDescription = stringResource(R.string.date_picker),
+                    tint = Color(0xFF964BFF)
+                )
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .pointerInput(expanded) {
@@ -54,14 +65,6 @@ fun DropDownField(
                         }
                     }
                 },
-            readOnly = true,
-            label = { Text(label) },
-            trailingIcon = {
-                Icon(
-                    imageVector = Icons.Default.ArrowDropDown,
-                    contentDescription = null,
-                )
-            },
         )
         DropdownMenu(
             expanded = expanded,
