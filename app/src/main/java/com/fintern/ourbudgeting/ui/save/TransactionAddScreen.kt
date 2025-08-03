@@ -143,7 +143,9 @@ fun TransactionAddScreen(
             // 선택한 이미지 미리보기
             ImagePreview(
                 photoUri = uiState.photoUri,
-                onRemove = { viewModel.clearPhotoUri() }
+                onRemove = { viewModel.clearPhotoUri() },
+                modifier = modifier
+                    .padding(top = 8.dp)
             )
 
             // 위치 입력
