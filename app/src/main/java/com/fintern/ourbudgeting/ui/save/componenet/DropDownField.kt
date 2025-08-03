@@ -18,7 +18,8 @@ import androidx.compose.ui.Modifier
 fun DropDownField(
     label: String,
     options: List<String>,
-    onOptionSelected: (String) -> Unit
+    onOptionSelected: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selectedOption by remember { mutableStateOf("") }
@@ -35,7 +36,7 @@ fun DropDownField(
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
-            modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryEditable, enabled = true)
+            modifier = modifier.menuAnchor(MenuAnchorType.PrimaryEditable, enabled = true)
 
         )
 
