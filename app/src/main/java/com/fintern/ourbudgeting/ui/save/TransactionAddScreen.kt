@@ -175,6 +175,7 @@ fun TransactionAddScreen(
                 onClick = {
                     // TODO: 저장
                 },
+                enabled = uiState.isSaveEnabled,
                 modifier = modifier
                     .fillMaxWidth()
                     .height(48.dp),

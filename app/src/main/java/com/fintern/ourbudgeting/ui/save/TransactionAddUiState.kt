@@ -5,6 +5,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 
 data class TransactionAddUiState(
+    val isSaveEnabled: Boolean = false,
     val transactionType: TransactionType = TransactionType.EXPENSE,
     val selectedDate: Long? = null,
     val selectedAsset: String? = null,

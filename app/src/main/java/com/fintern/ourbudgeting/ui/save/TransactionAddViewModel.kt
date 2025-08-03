@@ -18,20 +18,35 @@ class TransactionAddViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(TransactionAddUiState())
     val uiState: StateFlow<TransactionAddUiState> = _uiState
 
+    private fun updateSaveEnabledState() {
+        val state = _uiState.value
+        val isValid = state.selectedDate != null &&
+                !state.selectedAsset.isNullOrBlank() &&
+                !state.selectedCategory.isNullOrBlank() &&
+                state.amountTextFieldValue.text.isNotBlank() &&
+                state.content.isNotBlank()
+
+        _uiState.update { it.copy(isSaveEnabled = isValid) }
+    }
+
+
     fun setTransactionType(type: TransactionType) {
         _uiState.update { it.copy(transactionType = type) }
     }
 
     fun setSelectedDate(date: Long?) {
         _uiState.update { it.copy(selectedDate = date) }
+        updateSaveEnabledState()
     }
 
     fun setSelectedAsset(asset: String) {
         _uiState.update { it.copy(selectedAsset = asset) }
+        updateSaveEnabledState()
     }
 
     fun setCategory(category: String) {
         _uiState.update { it.copy(selectedCategory = category) }
+        updateSaveEnabledState()
     }
 
     fun setAmountTextFieldValue(textFieldValue: TextFieldValue) {
@@ -51,10 +66,12 @@ class TransactionAddViewModel @Inject constructor() : ViewModel() {
                 amount = number
             )
         }
+        updateSaveEnabledState()
     }
 
     fun setContent(content: String) {
         _uiState.update { it.copy(content = content) }
+        updateSaveEnabledState()
     }
 
     fun setPhotoUri(uri: Uri?) {
