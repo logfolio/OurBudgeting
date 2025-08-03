@@ -1,6 +1,7 @@
 package com.fintern.ourbudgeting.ui.save
 
 import android.net.Uri
+import androidx.compose.ui.text.input.TextFieldValue
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 
 data class TransactionAddUiState(
@@ -8,7 +9,8 @@ data class TransactionAddUiState(
     val selectedDate: Long? = null,
     val selectedAsset: String? = null,
     val selectedCategory: String? = null,
-    val amount: String = "",
+    val amountTextFieldValue: TextFieldValue = TextFieldValue(""),
+    val amount: Long = 0L,
     val content: String = "",
     val location: String = "",
     val photoUri: Uri? = null

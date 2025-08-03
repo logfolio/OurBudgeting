@@ -1,12 +1,16 @@
 package com.fintern.ourbudgeting.ui.save
 
 import android.net.Uri
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import java.text.NumberFormat
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,8 +34,23 @@ class TransactionAddViewModel @Inject constructor() : ViewModel() {
         _uiState.update { it.copy(selectedCategory = category) }
     }
 
-    fun setAmountText(input: String) {
-        _uiState.update { it.copy(amount = input) }
+    fun setAmountTextFieldValue(textFieldValue: TextFieldValue) {
+        val cleanedInput = textFieldValue.text.replace("\\D".toRegex(), "")
+
+        val number = if (cleanedInput.isEmpty()) 0L else cleanedInput.toLong()
+        val formattedAmount = NumberFormat.getNumberInstance(Locale.US).format(number)
+
+        val newTextFieldValue = textFieldValue.copy(
+            text = formattedAmount,
+            selection = TextRange(formattedAmount.length)
+        )
+
+        _uiState.update {
+            it.copy(
+                amountTextFieldValue = newTextFieldValue,
+                amount = number
+            )
+        }
     }
 
     fun setContent(content: String) {

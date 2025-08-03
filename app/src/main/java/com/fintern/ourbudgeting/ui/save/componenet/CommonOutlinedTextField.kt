@@ -10,37 +10,60 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 
 @Composable
 fun CommonOutlinedTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
+    value: Any,
+    onValueChange: (Any) -> Unit,
+    label: String,
     modifier: Modifier = Modifier,
     readOnly: Boolean = false,
-    label: String,
     trailingIcon: @Composable (() -> Unit)? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Done,
     singleLine: Boolean = true,
 ) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(label) },
-        modifier = modifier
-            .fillMaxWidth(),
-        trailingIcon = trailingIcon,
-        keyboardOptions = KeyboardOptions(
-            keyboardType = keyboardType,
-            imeAction = imeAction
-        ),
-        singleLine = singleLine,
-        readOnly = readOnly,
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = Color(0xFF964BFF),
-            unfocusedBorderColor = Color(0xFF964BFF),
-            focusedLabelColor = Color(0xFF964BFF),
-            cursorColor = Color(0xFF964BFF)
-        )
+    val commonColors = OutlinedTextFieldDefaults.colors(
+        focusedBorderColor = Color(0xFF964BFF),
+        unfocusedBorderColor = Color(0xFF964BFF),
+        focusedLabelColor = Color(0xFF964BFF),
+        cursorColor = Color(0xFF964BFF)
     )
+
+    when (value) {
+        is String -> {
+            OutlinedTextField(
+                value = value,
+                onValueChange = { onValueChange(it) },
+                label = { Text(label) },
+                modifier = modifier.fillMaxWidth(),
+                trailingIcon = trailingIcon,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = keyboardType,
+                    imeAction = imeAction
+                ),
+                singleLine = singleLine,
+                readOnly = readOnly,
+                colors = commonColors
+            )
+        }
+
+        is TextFieldValue -> {
+            OutlinedTextField(
+                value = value,
+                onValueChange = { onValueChange(it) },
+                label = { Text(label) },
+                modifier = modifier.fillMaxWidth(),
+                trailingIcon = trailingIcon,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = keyboardType,
+                    imeAction = imeAction
+                ),
+                singleLine = singleLine,
+                readOnly = readOnly,
+                colors = commonColors
+            )
+        }
+    }
 }
