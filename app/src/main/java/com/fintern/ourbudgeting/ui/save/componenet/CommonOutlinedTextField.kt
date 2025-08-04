@@ -14,8 +14,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 
 @Composable
 fun CommonOutlinedTextField(
-    value: Any,
-    onValueChange: (Any) -> Unit,
+    value: String,
+    onValueChange: (String) -> Unit,
     label: String,
     modifier: Modifier = Modifier,
     readOnly: Boolean = false,
@@ -24,46 +24,57 @@ fun CommonOutlinedTextField(
     imeAction: ImeAction = ImeAction.Done,
     singleLine: Boolean = true,
 ) {
-    val commonColors = OutlinedTextFieldDefaults.colors(
-        focusedBorderColor = Color(0xFF964BFF),
-        unfocusedBorderColor = Color(0xFF964BFF),
-        focusedLabelColor = Color(0xFF964BFF),
-        cursorColor = Color(0xFF964BFF)
+
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(label) },
+        modifier = modifier.fillMaxWidth(),
+        trailingIcon = trailingIcon,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType,
+            imeAction = imeAction
+        ),
+        singleLine = singleLine,
+        readOnly = readOnly,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = Color(0xFF964BFF),
+            unfocusedBorderColor = Color(0xFF964BFF),
+            focusedLabelColor = Color(0xFF964BFF),
+            cursorColor = Color(0xFF964BFF)
+        )
     )
+}
 
-    when (value) {
-        is String -> {
-            OutlinedTextField(
-                value = value,
-                onValueChange = { onValueChange(it) },
-                label = { Text(label) },
-                modifier = modifier.fillMaxWidth(),
-                trailingIcon = trailingIcon,
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = keyboardType,
-                    imeAction = imeAction
-                ),
-                singleLine = singleLine,
-                readOnly = readOnly,
-                colors = commonColors
-            )
-        }
-
-        is TextFieldValue -> {
-            OutlinedTextField(
-                value = value,
-                onValueChange = { onValueChange(it) },
-                label = { Text(label) },
-                modifier = modifier.fillMaxWidth(),
-                trailingIcon = trailingIcon,
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = keyboardType,
-                    imeAction = imeAction
-                ),
-                singleLine = singleLine,
-                readOnly = readOnly,
-                colors = commonColors
-            )
-        }
-    }
+@Composable
+fun CommonOutlinedTextField(
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
+    label: String,
+    modifier: Modifier = Modifier,
+    readOnly: Boolean = false,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Done,
+    singleLine: Boolean = true,
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(label) },
+        modifier = modifier.fillMaxWidth(),
+        trailingIcon = trailingIcon,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType,
+            imeAction = imeAction
+        ),
+        singleLine = singleLine,
+        readOnly = readOnly,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = Color(0xFF964BFF),
+            unfocusedBorderColor = Color(0xFF964BFF),
+            focusedLabelColor = Color(0xFF964BFF),
+            cursorColor = Color(0xFF964BFF)
+        )
+    )
 }
