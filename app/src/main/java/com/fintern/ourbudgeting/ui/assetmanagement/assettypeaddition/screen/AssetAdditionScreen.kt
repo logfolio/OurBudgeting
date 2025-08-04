@@ -15,12 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.ui.assetmanagement.AddAssetViewModel
-import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component.AddAssetButton
-import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component.AddAssetOutLinedTextField
-import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component.AddAssetTopAppBar
+import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component.AssetAdditionButton
+import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component.AssetAdditionBody
+import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component.AssetAdditionTopAppBar
 
 @Composable
-fun AddAssetManagementScreen(
+fun AssetAdditionScreen(
     viewModel: AddAssetViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -35,7 +35,7 @@ fun AddAssetManagementScreen(
     }
     Scaffold(
         modifier = Modifier.background(Color.White),
-        topBar = { AddAssetTopAppBar () }
+        topBar = { AssetAdditionTopAppBar () }
     ) { paddingValue ->
         Column(
             modifier = Modifier
@@ -43,7 +43,7 @@ fun AddAssetManagementScreen(
                 .background(Color.White)
                 .padding(paddingValue)
         ) {
-            AddAssetOutLinedTextField(
+            AssetAdditionBody(
                 label = "자산유형을 입력해주세요.",
                 placeHolder = "은행을 선택해주세요.",
                 value = uiState.input,
@@ -51,7 +51,7 @@ fun AddAssetManagementScreen(
                     viewModel.updateInput(newValue)
                 }
             )
-            AddAssetButton(
+            AssetAdditionButton(
                 title = "추가하기",
                 onClick = {
                     viewModel.submitAssetType()

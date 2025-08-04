@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AddAssetButton(
+fun AssetAdditionButton(
     title: String,
     modifier: Modifier = Modifier,
     onClick: ()-> Unit
@@ -37,5 +37,5 @@ fun AddAssetButton(
 @Preview(showBackground = true)
 @Composable
 fun AddAssetButtonPreview() {
-    MaterialTheme { AddAssetButton(title = "추가 하기", onClick = {}) }
+    MaterialTheme { AssetAdditionButton(title = "추가 하기", onClick = {}) }
 }

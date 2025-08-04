@@ -24,7 +24,7 @@ import com.fintern.ourbudgeting.ui.assetmanagement.data.LineChartConfig
 import com.fintern.ourbudgeting.ui.assetmanagement.data.Point
 
 @Composable
-fun StatisticAssetManagementScreen(
+fun StatisticAssetScreen(
     modifier: Modifier = Modifier,
     totalPrice: Long,
     data: List<Point>,
@@ -81,7 +81,7 @@ fun StatisticAssetManagementScreen(
 @Composable
 fun StatisticAssetManagementScreenPreview() {
     MaterialTheme {
-        StatisticAssetManagementScreen(
+        StatisticAssetScreen(
             data = listOf(
                 Point(1, 10.0),
                 Point(2, 15.0),

@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AddAssetOutLinedTextField(
+fun AssetAdditionBody(
     modifier: Modifier = Modifier,
     label: String,
     placeHolder: String,
@@ -43,5 +43,5 @@ fun AddAssetOutLinedTextField(
 @Preview(showBackground = true)
 @Composable
 fun AddAssetOutLinedTextFieldPreview() {
-    MaterialTheme { AddAssetOutLinedTextField(label = "금액", placeHolder = "금액을 입력해주세요.", value = "", onValueChanged = {}) }
+    MaterialTheme { AssetAdditionBody(label = "금액", placeHolder = "금액을 입력해주세요.", value = "", onValueChanged = {}) }
 }
