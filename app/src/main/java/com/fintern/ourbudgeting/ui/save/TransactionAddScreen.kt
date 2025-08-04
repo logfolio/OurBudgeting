@@ -108,9 +108,7 @@ fun TransactionAddScreen(
             CommonOutlinedTextField(
                 value = uiState.amountTextFieldValue,
                 onValueChange = { newValue ->
-                    if (newValue is TextFieldValue) {
-                        viewModel.setAmountTextFieldValue(newValue)
-                    }
+                    viewModel.setAmountTextFieldValue(newValue)
                 },
                 label = stringResource(R.string.amount),
                 keyboardType = KeyboardType.Number,
@@ -121,9 +119,7 @@ fun TransactionAddScreen(
             CommonOutlinedTextField(
                 value = uiState.content,
                 onValueChange = { newContent ->
-                    if (newContent is String) {
-                        viewModel.setContent(newContent)
-                    }
+                    viewModel.setContent(newContent)
                 },
                 label = stringResource(R.string.content),
                 trailingIcon = {
