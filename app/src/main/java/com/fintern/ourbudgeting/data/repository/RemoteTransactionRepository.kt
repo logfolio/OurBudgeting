@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.catch
 import javax.inject.Inject
 
-class TransactionRepositoryImpl @Inject constructor(
+class RemoteTransactionRepository @Inject constructor(
     private val firestore: FirebaseFirestore
 ) : TransactionRepository {
     override fun getTransactions(

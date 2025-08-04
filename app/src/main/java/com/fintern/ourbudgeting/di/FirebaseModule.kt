@@ -1,7 +1,7 @@
 package com.fintern.ourbudgeting.di
 
 import com.fintern.ourbudgeting.data.repository.TransactionRepository
-import com.fintern.ourbudgeting.data.repository.TransactionRepositoryImpl
+import com.fintern.ourbudgeting.data.repository.RemoteTransactionRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -29,6 +29,6 @@ object FirebaseModule {
     fun provideTransactionRepository(
         firestore: FirebaseFirestore
     ): TransactionRepository  {
-        return TransactionRepositoryImpl(firestore)
+        return RemoteTransactionRepository(firestore)
     }
 }
