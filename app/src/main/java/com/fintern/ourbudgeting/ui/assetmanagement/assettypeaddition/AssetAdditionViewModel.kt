@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement
+package com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,8 +11,8 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class AddAssetViewModel @Inject constructor(
-    private val repository: AddAssetRepository
+class AssetAdditionViewModel @Inject constructor(
+    private val repository: AssetAdditionRepository
 ): ViewModel() {
 
 

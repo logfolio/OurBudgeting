@@ -16,14 +16,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.R
-import com.fintern.ourbudgeting.ui.assetmanagement.AddAssetViewModel
+import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.AssetAdditionViewModel
 import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component.AssetAdditionButton
 import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component.AssetAdditionBody
 import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component.AssetAdditionTopAppBar
 
 @Composable
 fun AssetAdditionScreen(
-    viewModel: AddAssetViewModel = hiltViewModel()
+    viewModel: AssetAdditionViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current

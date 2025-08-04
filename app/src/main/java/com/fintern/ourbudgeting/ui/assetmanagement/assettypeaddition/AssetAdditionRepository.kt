@@ -1,6 +1,5 @@
-package com.fintern.ourbudgeting.ui.assetmanagement
+package com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -8,7 +7,7 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 
-class AddAssetRepository @Inject constructor(
+class AssetAdditionRepository @Inject constructor(
     private val db: FirebaseFirestore,
     private val auth: FirebaseAuth
 ) {
