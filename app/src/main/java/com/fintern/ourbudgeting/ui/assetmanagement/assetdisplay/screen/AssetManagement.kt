@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.screen
+package com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -12,11 +12,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.fintern.ourbudgeting.R
-import com.fintern.ourbudgeting.ui.assetmanagement.component.AssetBody
-import com.fintern.ourbudgeting.ui.assetmanagement.component.AssetHorizontalDivider
-import com.fintern.ourbudgeting.ui.assetmanagement.component.AssetTitle
-import com.fintern.ourbudgeting.ui.assetmanagement.component.AssetTopAppBar
-import com.fintern.ourbudgeting.ui.assetmanagement.component.AssetTopSection
+import com.fintern.ourbudgeting.ui.assetmanagement.common.component.AssetBody
+import com.fintern.ourbudgeting.ui.assetmanagement.common.component.AssetHorizontalDivider
+import com.fintern.ourbudgeting.ui.assetmanagement.common.component.AssetTitle
+import com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.component.AssetTopAppBar
+import com.fintern.ourbudgeting.ui.assetmanagement.common.component.AssetTopSection
 
 @Composable
 fun AssetManagementScreen(

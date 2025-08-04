@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.component
+package com.fintern.ourbudgeting.ui.assetmanagement.assetedition.component
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -17,7 +17,7 @@ import com.fintern.ourbudgeting.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AssetTopAppBar(
+fun AssetEditTopAppBar(
     modifier: Modifier = Modifier,
     onActionClick: () -> Unit = {}
 ) {
@@ -26,11 +26,11 @@ fun AssetTopAppBar(
             containerColor = Color.White,
             titleContentColor = Color.Black,
         ),
-        title = { Text(stringResource(R.string.asset_management)) },
-        actions = {
+        title = { Text(stringResource(R.string.modify_asset)) },
+        navigationIcon = {
             IconButton(onClick = onActionClick) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_graph),
+                    painter = painterResource(R.drawable.ic_arrowback),
                     contentDescription = stringResource(R.string.graph)
                 )
             }
@@ -40,8 +40,8 @@ fun AssetTopAppBar(
 
 @Composable
 @Preview
-fun AssetManagementTopAppBarPreview() {
+fun ModifyAssetTopAppBarPreview() {
     MaterialTheme {
-        AssetTopAppBar()
+        AssetEditTopAppBar()
     }
 }

@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.component
+package com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,6 +32,8 @@ fun AddAssetOutLinedTextField(
         },
         placeholder = { Text(placeHolder, color = Color.Gray) },
         colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.Black,
+            unfocusedTextColor = Color.Black,
             focusedBorderColor = Color(0xFF964BFF),
             unfocusedBorderColor = Color(0xFF964BFF)
         )
