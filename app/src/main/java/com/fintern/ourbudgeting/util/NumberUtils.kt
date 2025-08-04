@@ -10,6 +10,7 @@ object NumberUtils {
 
     fun extractDigits(input: String): Long {
         val cleaned = input.replace("\\D".toRegex(), "")
-        return if (cleaned.isEmpty()) 0L else cleaned.toLong()
+        val trimmed = if (cleaned.length > 19) cleaned.substring(0, 19) else cleaned
+        return trimmed.toLongOrNull() ?: 0L
     }
 }
