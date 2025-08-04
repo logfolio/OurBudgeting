@@ -7,25 +7,26 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AddAssetOutLinedTextField(modifier: Modifier = Modifier, label: String, placeHolder: String) {
-    var text by remember { mutableStateOf("") }
+fun AddAssetOutLinedTextField(
+    modifier: Modifier = Modifier,
+    label: String,
+    placeHolder: String,
+    value: String,
+    onValueChanged: (String) -> Unit
+) {
 
     OutlinedTextField(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 6.dp),
-        value = text,
-        onValueChange = { text = it },
+        value = value,
+        onValueChange = onValueChanged,
         label = {
             Text(label, color = Color.Gray)
         },
@@ -40,5 +41,5 @@ fun AddAssetOutLinedTextField(modifier: Modifier = Modifier, label: String, plac
 @Preview(showBackground = true)
 @Composable
 fun AddAssetOutLinedTextFieldPreview() {
-    MaterialTheme { AddAssetOutLinedTextField(label = "금액", placeHolder = "금액을 입력해주세요.") }
+    MaterialTheme { AddAssetOutLinedTextField(label = "금액", placeHolder = "금액을 입력해주세요.", value = "", onValueChanged = {}) }
 }
