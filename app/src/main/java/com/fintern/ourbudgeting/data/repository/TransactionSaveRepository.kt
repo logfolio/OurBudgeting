@@ -22,7 +22,7 @@ class TransactionRepository @Inject constructor(
         uid: String,
         uiState: TransactionAddUiState
     ): Result<Unit> {
-        return try {
+        return runCatching {
             val photoUrl = uiState.photoUri?.let { uploadPhoto(it) }
 
             val transactionData = mapOf(
@@ -43,9 +43,7 @@ class TransactionRepository @Inject constructor(
                 .add(transactionData)
                 .await()
 
-            Result.success(Unit)
-        } catch (e: Exception) {
-            Result.failure(e)
+            Unit
         }
     }
 
