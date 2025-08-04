@@ -1,26 +1,41 @@
 package com.fintern.ourbudgeting.ui.assetmanagement.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import com.fintern.ourbudgeting.R
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.fintern.ourbudgeting.ui.assetmanagement.AddAssetViewModel
 import com.fintern.ourbudgeting.ui.assetmanagement.component.AddAssetButton
 import com.fintern.ourbudgeting.ui.assetmanagement.component.AddAssetOutLinedTextField
 import com.fintern.ourbudgeting.ui.assetmanagement.component.AddAssetTopAppBar
 
 @Composable
-fun AddAssetManagementScreen(modifier: Modifier = Modifier) {
+fun AddAssetManagementScreen(
+    viewModel: AddAssetViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
+
+
+    LaunchedEffect(uiState.message) {
+        if (uiState.message.isNotEmpty()) {
+            Toast.makeText(context, uiState.message, Toast.LENGTH_SHORT).show()
+            viewModel.clearMessage()
+        }
+    }
     Scaffold(
-        modifier = modifier.background(Color.White),
-        topBar = { AddAssetTopAppBar() }
+        modifier = Modifier.background(Color.White),
+        topBar = { AddAssetTopAppBar () }
     ) { paddingValue ->
         Column(
             modifier = Modifier
@@ -29,29 +44,18 @@ fun AddAssetManagementScreen(modifier: Modifier = Modifier) {
                 .padding(paddingValue)
         ) {
             AddAssetOutLinedTextField(
-                label = stringResource(R.string.asset_cash_amount), placeHolder = stringResource(
-                    R.string.input_cash_amount
-                )
+                label = "자산유형을 입력해주세요.",
+                placeHolder = "은행을 선택해주세요.",
+                value = uiState.input,
+                onValueChanged ={ newValue->
+                    viewModel.updateInput(newValue)
+                }
             )
-            AddAssetOutLinedTextField(
-                label = stringResource(R.string.bank), placeHolder = stringResource(
-                    R.string.select_bank
-                )
-            )
-            AddAssetOutLinedTextField(
-                label = stringResource(R.string.amount), placeHolder = stringResource(
-                    R.string.input_amount
-                )
-            )
-            AddAssetButton(stringResource(R.string.add))
+            AddAssetButton(
+                title = "추가하기",
+                onClick = {
+                    viewModel.submitAssetType()
+                })
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AddAssetManagementScreenPreview() {
-    MaterialTheme {
-        AddAssetManagementScreen()
     }
 }
