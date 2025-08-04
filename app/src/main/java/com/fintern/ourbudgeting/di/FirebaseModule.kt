@@ -23,12 +23,4 @@ object FirebaseModule {
     fun provideFirebaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
     }
-
-    @Provides
-    @Singleton
-    fun provideTransactionRepository(
-        firestore: FirebaseFirestore
-    ): TransactionRepository  {
-        return RemoteTransactionRepository(firestore)
-    }
 }
