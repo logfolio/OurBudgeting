@@ -8,7 +8,7 @@ data class Transaction(
     val assetId: String = "",
     val category: String = "",
     val description: String = "",
-    val date: Timestamp = Timestamp.now(),
+    val date: Timestamp? = null,
     val createdBy: String = "",
     val createdAt: Timestamp = Timestamp.now(),
     val type: TransactionType? = null,

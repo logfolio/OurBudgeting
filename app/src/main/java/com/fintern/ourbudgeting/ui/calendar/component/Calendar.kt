@@ -81,7 +81,7 @@ fun CalendarContent(
         ) { date ->
 
             val filteredItems = categoryLists.flatMap { it.items }.filter {
-                val itemDate = it.transaction.date.toLocalDate()
+                val itemDate = it.transaction.date?.toLocalDate()
                 itemDate == date
             }
 

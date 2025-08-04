@@ -89,7 +89,7 @@ fun CategoryItemListItem(
                 color = Color.Gray
             )
             Text(
-                text = item.transaction.date.toFormatterDate(),
+                text = item.transaction.date?.toFormatterDate() ?: "",
                 fontSize = 11.sp,
                 color = Color.Gray
             )
