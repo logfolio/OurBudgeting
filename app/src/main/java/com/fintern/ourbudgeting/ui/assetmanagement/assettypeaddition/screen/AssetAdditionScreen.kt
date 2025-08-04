@@ -13,7 +13,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.assetmanagement.AddAssetViewModel
 import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component.AssetAdditionButton
 import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component.AssetAdditionBody
@@ -44,15 +46,15 @@ fun AssetAdditionScreen(
                 .padding(paddingValue)
         ) {
             AssetAdditionBody(
-                label = "자산유형을 입력해주세요.",
-                placeHolder = "은행을 선택해주세요.",
+                label = stringResource(R.string.type_asset_type),
+                placeHolder = stringResource(R.string.type_asset_type),
                 value = uiState.input,
                 onValueChanged ={ newValue->
                     viewModel.updateInput(newValue)
                 }
             )
             AssetAdditionButton(
-                title = "추가하기",
+                title = stringResource(R.string.add),
                 onClick = {
                     viewModel.submitAssetType()
                 })
