@@ -2,7 +2,7 @@ package com.fintern.ourbudgeting.data.repository
 
 import com.fintern.ourbudgeting.data.calendar.Transaction
 import com.fintern.ourbudgeting.data.calendar.TransactionWithId
-import com.fintern.ourbudgeting.ui.calendar.UiState
+import com.fintern.ourbudgeting.ui.calendar.TransactionUiState
 import com.fintern.ourbudgeting.ui.calendar.component.FilterType
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.google.firebase.firestore.FirebaseFirestore
@@ -18,8 +18,8 @@ class RemoteTransactionRepository @Inject constructor(
     override fun getTransactions(
         householdId: String,
         filter: FilterType
-    ): Flow<UiState<List<TransactionWithId>>> = callbackFlow {
-        trySend(UiState.Loading)
+    ): Flow<TransactionUiState> = callbackFlow {
+        trySend(TransactionUiState.Loading)
 
         val collectionRef = firestore
             .collection("households")
@@ -28,7 +28,7 @@ class RemoteTransactionRepository @Inject constructor(
 
         val listener = collectionRef.addSnapshotListener { snapshot, error ->
             if (error != null) {
-                trySend(UiState.Error(error))
+                trySend(TransactionUiState.Error(error))
                 return@addSnapshotListener
             }
 
@@ -45,12 +45,12 @@ class RemoteTransactionRepository @Inject constructor(
                     FilterType.EXPENSE -> allItems.filter { it.transaction.type == TransactionType.EXPENSE }
                 }
 
-                trySend(UiState.Success(filtered))
+                trySend(TransactionUiState.Success(filtered))
             }
         }
 
         awaitClose { listener.remove() }
     }.catch {
-        emit(UiState.Error(it))
+        emit(TransactionUiState.Error(it))
     }
 }

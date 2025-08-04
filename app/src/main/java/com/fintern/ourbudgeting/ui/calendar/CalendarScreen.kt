@@ -61,14 +61,14 @@ fun CalendarScreen(
     }
 
     val transactions: List<TransactionWithId> = when (uiState.value) {
-        is UiState.Loading -> {
+        is TransactionUiState.Loading -> {
             emptyList<TransactionWithId>()
         }
-        is UiState.Success -> {
-            val successData = (uiState.value as UiState.Success<List<TransactionWithId>>).data
+        is TransactionUiState.Success -> {
+            val successData = (uiState.value as TransactionUiState.Success).data
             successData
         }
-        is UiState.Error -> {
+        is TransactionUiState.Error -> {
             emptyList<TransactionWithId>()
         }
     }

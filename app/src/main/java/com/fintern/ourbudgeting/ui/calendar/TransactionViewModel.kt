@@ -8,6 +8,7 @@ import com.fintern.ourbudgeting.ui.calendar.component.FilterType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,8 +18,8 @@ class TransactionViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _transactionsUiState =
-        MutableStateFlow<UiState<List<TransactionWithId>>>(UiState.Loading)
-    val transactionsUiState: StateFlow<UiState<List<TransactionWithId>>> = _transactionsUiState
+        MutableStateFlow<TransactionUiState>(TransactionUiState.Loading)
+    val transactionsUiState: StateFlow<TransactionUiState> = _transactionsUiState.asStateFlow()
 
     fun loadTransactions(
         householdId: String, filter: FilterType = FilterType.ALL
@@ -32,8 +33,8 @@ class TransactionViewModel @Inject constructor(
     }
 }
 
-sealed class UiState<out T> {
-    object Loading : UiState<Nothing>()
-    data class Success<T>(val data: T) : UiState<T>()
-    data class Error(val exception: Throwable) : UiState<Nothing>()
+sealed class TransactionUiState {
+    object Loading : TransactionUiState()
+    data class Success(val data: List<TransactionWithId>) : TransactionUiState()
+    data class Error(val exception: Throwable) : TransactionUiState()
 }
