@@ -1,6 +1,5 @@
 package com.fintern.ourbudgeting.data.calendar
 
-import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.google.firebase.Timestamp
 
 data class Transaction(
@@ -11,7 +10,7 @@ data class Transaction(
     val date: Timestamp? = null,
     val createdBy: String = "",
     val createdAt: Timestamp = Timestamp.now(),
-    val type: TransactionType? = null,
+    val type: String? = null,
 )
 
 data class CategoryDefinition(

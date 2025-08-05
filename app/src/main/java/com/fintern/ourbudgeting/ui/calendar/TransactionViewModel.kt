@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fintern.ourbudgeting.data.calendar.TransactionWithId
 import com.fintern.ourbudgeting.data.repository.RemoteTransactionRepository
+import com.fintern.ourbudgeting.data.repository.TransactionRepository
 import com.fintern.ourbudgeting.ui.calendar.component.FilterType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TransactionViewModel @Inject constructor(
-    private val repository: RemoteTransactionRepository
+    private val repository: TransactionRepository
 ) : ViewModel() {
 
     private val _transactionsUiState =

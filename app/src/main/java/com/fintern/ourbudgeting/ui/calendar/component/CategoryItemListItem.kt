@@ -58,9 +58,9 @@ fun CategoryItemListItem(
         Column(
             modifier = Modifier.weight(1f)
         ) {
-            val amountColor = if (item.transaction.type == TransactionType.INCOME) Color.Red else Color.Blue
+            val amountColor = if (item.transaction.type == TransactionType.INCOME.name) Color.Red else Color.Blue
             val amountPrefix =
-                if (item.transaction.type == TransactionType.INCOME) stringResource(R.string.prefix_plus) else stringResource(
+                if (item.transaction.type == TransactionType.INCOME.name) stringResource(R.string.prefix_plus) else stringResource(
                     R.string.prefix_minus
                 )
 

@@ -41,8 +41,8 @@ class RemoteTransactionRepository @Inject constructor(
 
                 val filtered = when (filter) {
                     FilterType.ALL -> allItems
-                    FilterType.INCOME -> allItems.filter { it.transaction.type == TransactionType.INCOME }
-                    FilterType.EXPENSE -> allItems.filter { it.transaction.type == TransactionType.EXPENSE }
+                    FilterType.INCOME -> allItems.filter { it.transaction.type == TransactionType.INCOME.name }
+                    FilterType.EXPENSE -> allItems.filter { it.transaction.type == TransactionType.EXPENSE.name }
                 }
 
                 trySend(TransactionUiState.Success(filtered))

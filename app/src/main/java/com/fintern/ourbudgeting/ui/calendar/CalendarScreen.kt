@@ -74,11 +74,11 @@ fun CalendarScreen(
     }
 
     val totalIncome = transactions.filter {
-        it.transaction.type == TransactionType.INCOME
+        it.transaction.type == TransactionType.INCOME.name
     }.sumOf { it.transaction.amount }
 
     val totalExpense = transactions.filter {
-        it.transaction.type == TransactionType.EXPENSE
+        it.transaction.type == TransactionType.EXPENSE.name
     }.sumOf { it.transaction.amount }
 
     val categoryListsForUi: List<CategoryList> = remember(transactions) {

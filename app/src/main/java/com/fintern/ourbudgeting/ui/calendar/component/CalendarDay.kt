@@ -52,7 +52,7 @@ fun CalendarDayContent(
 
     val dailyTotal = remember(transactions) {
         transactions.sumOf {
-            if (it.transaction.type == TransactionType.INCOME) it.transaction.amount else -it.transaction.amount
+            if (it.transaction.type == TransactionType.INCOME.name) it.transaction.amount else -it.transaction.amount
         }
     }
 
