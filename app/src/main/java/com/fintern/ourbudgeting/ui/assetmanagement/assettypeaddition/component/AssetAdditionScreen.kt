@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.screen
+package com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -17,9 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.AssetAdditionViewModel
-import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component.AssetAdditionButton
-import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component.AssetAdditionBody
-import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component.AssetAdditionTopAppBar
 
 @Composable
 fun AssetAdditionScreen(

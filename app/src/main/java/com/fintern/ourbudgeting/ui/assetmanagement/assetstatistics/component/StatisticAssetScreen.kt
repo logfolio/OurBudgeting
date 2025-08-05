@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.screen
+package com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,11 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.R
-import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.LineChart
-import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.StatisticAssetChartTitle
-import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.StatisticAssetTopSection
-import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.StatisticsAssetTopAppBar
-import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.TwoLineChart
 import com.fintern.ourbudgeting.ui.assetmanagement.data.LineChartConfig
 import com.fintern.ourbudgeting.ui.assetmanagement.data.Point
 
