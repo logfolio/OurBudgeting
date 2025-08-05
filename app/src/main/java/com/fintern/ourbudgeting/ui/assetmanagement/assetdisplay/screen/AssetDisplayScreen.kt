@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.assetmanagement.common.component.AssetBody
-import com.fintern.ourbudgeting.ui.assetmanagement.common.component.AssetHorizontalDivider
+import com.fintern.ourbudgeting.ui.assetmanagement.common.component.AssetDivider
 import com.fintern.ourbudgeting.ui.assetmanagement.common.component.AssetTitle
 import com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.component.AssetDisplayTopAppBar
 import com.fintern.ourbudgeting.ui.assetmanagement.common.component.AssetTopSection
@@ -36,7 +36,7 @@ fun AssetDisplayScreen(
                 .padding(paddingValue)
         ) {
             AssetTopSection(asset = asset, debt = dept)
-            AssetHorizontalDivider()
+            AssetDivider()
             AssetTitle(name = stringResource(R.string.cash), amount = 1000)
             AssetBody(name = stringResource(R.string.cash), amount = 1000)
             AssetTitle(name = stringResource(R.string.card), amount = 2000)
