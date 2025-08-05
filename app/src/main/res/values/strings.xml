@@ -116,4 +116,12 @@
     <string name="content">내용</string>
     <string name="delete_image">이미지 삭제</string>
     <string name="date_picker">날짜 선택</string>
+
+    <!--  Household Management  -->
+    <string name="label_edit">수정하기</string>
+    <string name="label_household_management">가계부 관리</string>
+    <string name="description_back_button">뒤로가기</string>
+    <string name="label_reset">초기화</string>
+    <string name="label_personal_household">개인 가계부</string>
+
 </resources>
