@@ -69,7 +69,7 @@ fun CalendarDayContent(
         Text(
             text = date.dayOfMonth.toString(),
             modifier = Modifier
-                .wrapContentSize()
+                .size(20.dp)
                 .background(
                     color = todayBackgroundColor,
                     shape = RoundedCornerShape(4.dp)
