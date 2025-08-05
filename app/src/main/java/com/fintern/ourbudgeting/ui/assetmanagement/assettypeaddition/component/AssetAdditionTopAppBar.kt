@@ -21,7 +21,6 @@ fun AssetAdditionTopAppBar(
     modifier: Modifier = Modifier,
     onActionClick: () -> Unit = {}
 ) {
-
     TopAppBar(
         modifier = modifier,
         colors = TopAppBarDefaults.topAppBarColors(

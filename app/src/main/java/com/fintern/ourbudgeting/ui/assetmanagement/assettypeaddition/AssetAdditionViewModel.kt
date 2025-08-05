@@ -13,12 +13,9 @@ import javax.inject.Inject
 @HiltViewModel
 class AssetAdditionViewModel @Inject constructor(
     private val repository: AssetAdditionRepository
-): ViewModel() {
-
-
+) : ViewModel() {
     private val _uiState = MutableStateFlow(AssetTypeUiState())
     val uiState: StateFlow<AssetTypeUiState> = _uiState.asStateFlow()
-
 
     init {
         viewModelScope.launch {
@@ -26,16 +23,13 @@ class AssetAdditionViewModel @Inject constructor(
         }
     }
 
-
     fun updateInput(newInput: String) {
         _uiState.value = _uiState.value.copy(input = newInput)
     }
 
-
     fun clearMessage() {
         _uiState.value = _uiState.value.copy(message = "")
     }
-
 
     fun submitAssetType() {
         val text = _uiState.value.input.trim() // 띄어쓰기는 입력으로 취급 안하겠다
@@ -43,11 +37,7 @@ class AssetAdditionViewModel @Inject constructor(
             _uiState.value = _uiState.value.copy(message = "입력값이 비어있습니다")
             return
         }
-
-
         _uiState.value = _uiState.value.copy(isLoading = true)
-
-
         viewModelScope.launch {
             val result = repository.addAssetType(text)
             if (result.isSuccess) {

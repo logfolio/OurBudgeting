@@ -20,7 +20,6 @@ fun AssetAdditionBody(
     value: String,
     onValueChanged: (String) -> Unit
 ) {
-
     OutlinedTextField(
         modifier = modifier
             .fillMaxWidth()
@@ -43,5 +42,11 @@ fun AssetAdditionBody(
 @Preview(showBackground = true)
 @Composable
 fun AddAssetOutLinedTextFieldPreview() {
-    MaterialTheme { AssetAdditionBody(label = "금액", placeHolder = "금액을 입력해주세요.", value = "", onValueChanged = {}) }
+    MaterialTheme {
+        AssetAdditionBody(
+            label = "금액",
+            placeHolder = "금액을 입력해주세요.",
+            value = "",
+            onValueChanged = {})
+    }
 }

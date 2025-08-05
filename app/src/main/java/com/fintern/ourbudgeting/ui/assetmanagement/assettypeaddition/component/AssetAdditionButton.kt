@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 fun AssetAdditionButton(
     title: String,
     modifier: Modifier = Modifier,
-    onClick: ()-> Unit
+    onClick: () -> Unit
 ) {
     Button(
         modifier = modifier
