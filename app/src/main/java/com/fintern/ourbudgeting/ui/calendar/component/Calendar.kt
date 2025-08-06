@@ -26,7 +26,7 @@ import java.time.LocalDate
 @Composable
 fun Calendar(
     modifier: Modifier = Modifier,
-    selectedDate: LocalDate = LocalDate.now(),
+    selectedDate: LocalDate?,
     onDateClick: (LocalDate) -> Unit,
     calendarConfig: CalendarConfig = CalendarConfig(),
     startDayOfWeek: DayOfWeek = DayOfWeek.SUNDAY,
@@ -51,7 +51,7 @@ fun Calendar(
 
 @Composable
 fun CalendarContent(
-    selectedDate: LocalDate,
+    selectedDate: LocalDate?,
     modifier: Modifier = Modifier,
     startDayOfWeek: DayOfWeek,
     dayLabelConfig: CalendarDayLabelConfig,

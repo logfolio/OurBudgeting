@@ -52,7 +52,7 @@ fun CalendarScreen(
     val selectedUser = remember { mutableStateOf("조민환") }
 
     var currentMonth by remember { mutableStateOf(LocalDate.now()) }
-    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
+    var selectedDate: LocalDate? by remember { mutableStateOf(null) }
 
     var currentFilterType by remember { mutableStateOf(FilterType.ALL) }
 
@@ -92,10 +92,10 @@ fun CalendarScreen(
         it.transaction.type == TransactionType.EXPENSE.name
     }.sumOf { it.transaction.amount }
 
-    val categoryListsForUi: List<CategoryList> = remember(transactions) {
+    val categoryListsForUi: List<CategoryList> = remember(transactions, currentMonth) {
         transactions.filter {
             it.transaction.date?.toLocalDate()?.year == currentMonth.year &&
-                    it.transaction.date.toLocalDate().month == currentMonth.month
+                    it.transaction.date?.toLocalDate()?.month == currentMonth.month
         }
             .groupBy { it.transaction.category }
             .map { (categoryName, transactionList) ->
@@ -110,11 +110,19 @@ fun CalendarScreen(
             }
     }
 
-    val selectedDayTransactions: List<TransactionWithId> = remember(transactions, selectedDate) {
-        transactions.filter {
-            it.transaction.date?.toLocalDate() == selectedDate
+    val selectedDayTransactions: List<TransactionWithId> =
+        remember(transactions, currentMonth, selectedDate) {
+            if (selectedDate == null) {
+                transactions.filter {
+                    it.transaction.date?.toLocalDate()?.year == currentMonth.year &&
+                            it.transaction.date?.toLocalDate()?.month == currentMonth.month
+                }
+            } else {
+                transactions.filter {
+                    it.transaction.date?.toLocalDate() == selectedDate
+                }
+            }
         }
-    }
 
     val selectedDayCategoryLists: List<CategoryList> = remember(selectedDayTransactions) {
         selectedDayTransactions
@@ -184,8 +192,14 @@ fun CalendarScreen(
                         .padding(horizontal = 24.dp),
                     categoryLists = categoryListsForUi,
                     currentMonth = currentMonth,
-                    onPreviousClick = { currentMonth = currentMonth.minusMonths(1)},
-                    onNextClick = { currentMonth = currentMonth.plusMonths(1)},
+                    onPreviousClick = {
+                        currentMonth = currentMonth.minusMonths(1)
+                        selectedDate = null
+                    },
+                    onNextClick = {
+                        currentMonth = currentMonth.plusMonths(1)
+                        selectedDate = null
+                    },
                     onDateClick = { newDate -> selectedDate = newDate }
                 )
                 CalendarFilterControls(

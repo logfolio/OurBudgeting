@@ -29,7 +29,7 @@ fun CalendarDay(
     modifier: Modifier = Modifier,
     dayConfig: CalendarDayConfig = CalendarDayConfig.default(),
     transactions: List<TransactionWithId> = emptyList(),
-    selectedDate: LocalDate = date,
+    selectedDate: LocalDate? = date,
 
 ) {
     CalendarDayContent(
@@ -47,7 +47,7 @@ fun CalendarDayContent(
     modifier: Modifier = Modifier,
     dayConfig: CalendarDayConfig = CalendarDayConfig.default(),
     transactions: List<TransactionWithId>,
-    selectedDate: LocalDate = date,
+    selectedDate: LocalDate? = date,
 ) {
     val today = remember { LocalDate.now() }
     val currentDay = today.isEqual(date)
