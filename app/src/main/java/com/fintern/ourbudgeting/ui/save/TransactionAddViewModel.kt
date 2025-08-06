@@ -12,8 +12,10 @@ import com.fintern.ourbudgeting.util.NumberUtils
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.firestore.FirebaseFirestoreException
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,6 +26,9 @@ class TransactionAddViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(TransactionAddUiState())
     val uiState: StateFlow<TransactionAddUiState> = _uiState
+
+    private val _eventFlow = MutableSharedFlow<TransactionUiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     fun saveTransaction(householdId: String) {
         viewModelScope.launch {
@@ -39,16 +44,20 @@ class TransactionAddViewModel @Inject constructor(
                     isLoading = false,
                     isSuccess = true,
                 )
+                _eventFlow.emit(TransactionUiEvent.Success)
             }.onFailure { e ->
+                val error = when (e) {
+                    is FirebaseNetworkException -> FirebaseError.NetworkError
+                    is FirebaseFirestoreException -> FirebaseError.FirestoreError
+                    else -> FirebaseError.UnknownError
+                }
 
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
-                    error = when (e) {
-                        is FirebaseNetworkException -> FirebaseError.NetworkError
-                        is FirebaseFirestoreException -> FirebaseError.FirestoreError
-                        else -> FirebaseError.UnknownError
-                    }
+                    error = error
                 )
+
+                _eventFlow.emit(TransactionUiEvent.ShowSnackbar(error.messageResId))
             }
         }
     }
