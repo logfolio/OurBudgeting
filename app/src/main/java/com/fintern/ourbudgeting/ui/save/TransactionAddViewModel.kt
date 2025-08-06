@@ -5,7 +5,7 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fintern.ourbudgeting.data.repository.RemoteTransactionSaveRepository
+import com.fintern.ourbudgeting.data.repository.TransactionSaveRepository
 import com.fintern.ourbudgeting.ui.common.model.FirebaseError
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.fintern.ourbudgeting.util.NumberUtils
@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TransactionAddViewModel @Inject constructor(
-    private val repository: RemoteTransactionSaveRepository,
+    private val repository: TransactionSaveRepository,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(TransactionAddUiState())
     val uiState: StateFlow<TransactionAddUiState> = _uiState
