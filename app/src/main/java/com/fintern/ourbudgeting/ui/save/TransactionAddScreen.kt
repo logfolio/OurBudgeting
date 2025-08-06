@@ -48,13 +48,15 @@ import com.fintern.ourbudgeting.ui.save.componenet.DatePickerField
 import com.fintern.ourbudgeting.ui.save.componenet.DropDownField
 import com.fintern.ourbudgeting.ui.save.componenet.ImagePreview
 import com.fintern.ourbudgeting.ui.save.componenet.TransactionToggle
+import com.fintern.ourbudgeting.ui.user.UserViewModel
 
 @Composable
 fun TransactionAddScreen(
     initialTransactionType: TransactionType,
     householdId: String,
     modifier: Modifier = Modifier,
-    viewModel: TransactionAddViewModel = hiltViewModel()
+    viewModel: TransactionAddViewModel = hiltViewModel(),
+    userViewModel: UserViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val launcher =
@@ -63,6 +65,8 @@ fun TransactionAddScreen(
         }
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
+
+    val uid by userViewModel.uid.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collect { event ->
@@ -213,7 +217,7 @@ fun TransactionAddScreen(
             // 저장 버튼
             Button(
                 onClick = {
-                    viewModel.saveTransaction(householdId)
+                    viewModel.saveTransaction(householdId, uid)
                 },
                 enabled = uiState.isSaveEnabled,
                 modifier = modifier

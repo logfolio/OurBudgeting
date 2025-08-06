@@ -30,14 +30,14 @@ class TransactionAddViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<TransactionUiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    fun saveTransaction(householdId: String) {
+    fun saveTransaction(householdId: String, uid: String) {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(
                 isLoading = true
             )
             repository.saveTransaction(
                 householdId = householdId,
-                uid = "",
+                uid = uid,
                 uiState = _uiState.value
             ).onSuccess {
                 _uiState.value = _uiState.value.copy(
