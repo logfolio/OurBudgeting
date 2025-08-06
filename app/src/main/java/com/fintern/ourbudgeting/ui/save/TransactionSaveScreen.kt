@@ -53,6 +53,7 @@ import com.fintern.ourbudgeting.ui.user.UserViewModel
 fun TransactionSaveScreen(
     initialTransactionType: TransactionType,
     householdId: String,
+    onNavigateToBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TransactionSaveViewModel = hiltViewModel(),
     userViewModel: UserViewModel = hiltViewModel(),

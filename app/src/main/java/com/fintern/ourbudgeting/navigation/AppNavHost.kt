@@ -61,7 +61,10 @@ fun AppNavHost(
         composable(Screen.TRANSACTIONSAVE.name) {
             TransactionSaveScreen(
                 initialTransactionType = TransactionType.EXPENSE,
-                householdId = ""
+                householdId = "",
+                onNavigateToBack = {
+                    navController.popBackStack()
+                },
                 // TODO: householdId 추가
             )
         }
