@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,8 +24,10 @@ import com.fintern.ourbudgeting.R
 fun CalendarTransactionFilter(
     nickname: String,
     filterType: FilterType,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onFilterClick: () -> Unit
 ) {
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -40,7 +43,7 @@ fun CalendarTransactionFilter(
                     append(stringResource(R.string.label_about_name))
                 }
                 withStyle(style = SpanStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold)) {
-                    append(filterType.label.toString())
+                    append(stringResource(filterType.label))
                 }
                 withStyle(style = SpanStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold)) {
                     append(stringResource(R.string.label_transaction_history))
@@ -54,7 +57,7 @@ fun CalendarTransactionFilter(
             horizontalAlignment = Alignment.End
         ) {
             CustomFilterButton(
-                onClick = {  },
+                onClick = onFilterClick,
                 contentDescription = "Filter",
             )
         }
