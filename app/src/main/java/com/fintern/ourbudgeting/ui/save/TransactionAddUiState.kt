@@ -1,7 +1,10 @@
 package com.fintern.ourbudgeting.ui.save
 
 import android.net.Uri
+import androidx.annotation.StringRes
 import androidx.compose.ui.text.input.TextFieldValue
+import com.fintern.ourbudgeting.R
+import com.fintern.ourbudgeting.ui.common.model.FirebaseError
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 
 data class TransactionAddUiState(
@@ -14,5 +17,9 @@ data class TransactionAddUiState(
     val amount: Long = 0L,
     val content: String = "",
     val location: String = "",
-    val photoUri: Uri? = null
+    val photoUri: Uri? = null,
+    val isLoading: Boolean = false,
+    val isSuccess: Boolean = false,
+    val error: FirebaseError? = null,
+    @StringRes val successMessageResId: Int = R.string.save_success,
 )
