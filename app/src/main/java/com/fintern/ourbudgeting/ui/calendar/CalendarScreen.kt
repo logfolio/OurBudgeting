@@ -35,6 +35,7 @@ import com.fintern.ourbudgeting.ui.calendar.component.CalendarTopAppbar
 import com.fintern.ourbudgeting.ui.calendar.component.CategoryListSection
 import com.fintern.ourbudgeting.ui.calendar.component.FilterType
 import com.fintern.ourbudgeting.ui.calendar.component.LabeledAmount
+import com.fintern.ourbudgeting.ui.calendar.extensions.toLocalDate
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -87,6 +88,27 @@ fun CalendarScreen(
 
     val categoryListsForUi: List<CategoryList> = remember(transactions) {
         transactions
+            .groupBy { it.transaction.category }
+            .map { (categoryName, transactionList) ->
+                CategoryList(
+                    category = CategoryDefinition(
+                        id = categoryName,
+                        emoji = "🍔",
+                        displayName = "식비"
+                    ),
+                    items = transactionList
+                )
+            }
+    }
+
+    val selectedDayTransactions: List<TransactionWithId> = remember(transactions, selectedDate) {
+        transactions.filter {
+            it.transaction.date?.toLocalDate() == selectedDate
+        }
+    }
+
+    val selectedDayCategoryLists: List<CategoryList> = remember(selectedDayTransactions) {
+        selectedDayTransactions
             .groupBy { it.transaction.category }
             .map { (categoryName, transactionList) ->
                 CategoryList(
@@ -163,7 +185,7 @@ fun CalendarScreen(
                 )
 
                 CategoryListSection(
-                    categories = categoryListsForUi
+                    categories = selectedDayCategoryLists
                 )
             }
         }
