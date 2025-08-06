@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,69 +22,79 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.data.calendar.CategoryDefinition
-import com.fintern.ourbudgeting.data.calendar.CategoryItemData
 import com.fintern.ourbudgeting.data.calendar.CategoryList
+import com.fintern.ourbudgeting.data.calendar.TransactionWithId
 import com.fintern.ourbudgeting.ui.calendar.component.Calendar
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarAccountAndUser
+import com.fintern.ourbudgeting.ui.calendar.component.CalendarFilterControls
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarTopAppbar
-import com.fintern.ourbudgeting.ui.calendar.component.CalendarTransactionFilter
 import com.fintern.ourbudgeting.ui.calendar.component.CategoryListSection
 import com.fintern.ourbudgeting.ui.calendar.component.FilterType
 import com.fintern.ourbudgeting.ui.calendar.component.LabeledAmount
-import com.fintern.ourbudgeting.ui.calendar.component.toTimestamp
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
-import com.google.firebase.Timestamp
 import java.time.DayOfWeek
 import java.time.LocalDate
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalendarScreen() {
+fun CalendarScreen(
+    viewModel: TransactionViewModel = hiltViewModel()
+) {
 
-    val sampleIncomeAmount = 100_000_000L
-    val sampleExpenseAmount = 50_000_000L
+    val householdId = "dlmRP5U0pNhyH7oaIvTy"
 
     val nickname = "짱구"
-    var filterType by remember { mutableStateOf(FilterType.ALL) }
 
     val selectedAccount = remember { mutableStateOf("가계부") }
     val selectedUser = remember { mutableStateOf("조민환") }
 
-    val sampleCategoryLists = listOf(
-        CategoryList(
-            category = CategoryDefinition("food", "🍔", "식비"),
-            items = listOf(
-                CategoryItemData(
-                    id = "1",
-                    amount = 2000L,
-                    description = "햄버거",
-                    date = Timestamp.now(),
-                    userName = "짱구",
-                    type = TransactionType.EXPENSE,
-                    categoryId = "food"
-                ),
-                CategoryItemData(
-                    id = "2",
-                    amount = 3000L,
-                    description = "햄버거",
-                    date = Timestamp.now(),
-                    userName = "짱구",
-                    type = TransactionType.INCOME,
-                    categoryId = "food"
-                ),
-                CategoryItemData(
-                    id = "3",
-                    amount = 3000L,
-                    description = "햄버거",
-                    date = toTimestamp("2025/07/21"),
-                    userName = "짱구",
-                    type = TransactionType.EXPENSE,
-                    categoryId = "food"
+    var currentFilterType by remember { mutableStateOf(FilterType.ALL) }
+
+    val uiState = viewModel.transactionsUiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(householdId, currentFilterType) {
+        viewModel.loadTransactions(householdId, currentFilterType)
+    }
+
+    val transactions: List<TransactionWithId> = when (uiState.value) {
+        is TransactionUiState.Loading -> {
+            emptyList<TransactionWithId>()
+        }
+        is TransactionUiState.Success -> {
+            val successData = (uiState.value as TransactionUiState.Success).data
+            successData
+        }
+        is TransactionUiState.Error -> {
+            emptyList<TransactionWithId>()
+        }
+    }
+
+    val totalIncome = transactions.filter {
+        it.transaction.type == TransactionType.INCOME.name
+    }.sumOf { it.transaction.amount }
+
+    val totalExpense = transactions.filter {
+        it.transaction.type == TransactionType.EXPENSE.name
+    }.sumOf { it.transaction.amount }
+
+    val categoryListsForUi: List<CategoryList> = remember(transactions) {
+        transactions
+            .groupBy { it.transaction.category }
+            .map { (categoryName, transactionList) ->
+                CategoryList(
+                    category = CategoryDefinition(
+                        id = categoryName,
+                        emoji = "🍔",
+                        displayName = "식비"
+                    ),
+                    items = transactionList
                 )
-            )
-        )
-    )
+            }
+    }
 
     Scaffold(
         topBar = {
@@ -115,7 +127,7 @@ fun CalendarScreen() {
                     LabeledAmount(
                         label = stringResource(R.string.label_income),
                         labelColor = Color.Red,
-                        amount = sampleIncomeAmount,
+                        amount = totalIncome,
                         amountBoxWidth = 120.dp
                     )
 
@@ -124,7 +136,7 @@ fun CalendarScreen() {
                     LabeledAmount(
                         label = stringResource(R.string.label_expense),
                         labelColor = Color.Blue,
-                        amount = sampleExpenseAmount,
+                        amount = totalExpense,
                         amountBoxWidth = 120.dp
                     )
                 }
@@ -135,14 +147,18 @@ fun CalendarScreen() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 24.dp),
-                    categoryLists = sampleCategoryLists,
+                    categoryLists = categoryListsForUi,
                 )
-                CalendarTransactionFilter(
+                CalendarFilterControls(
                     nickname = nickname,
-                    filterType = filterType,
+                    filterType = currentFilterType,
+                    onFilterTypeSelected = {newFilterType ->
+                        currentFilterType = newFilterType
+                    },
                 )
+
                 CategoryListSection(
-                    categories = sampleCategoryLists
+                    categories = categoryListsForUi
                 )
             }
         }
