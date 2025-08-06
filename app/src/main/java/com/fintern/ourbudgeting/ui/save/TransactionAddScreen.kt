@@ -119,7 +119,7 @@ fun TransactionAddScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             TransactionToggle(
-                transactionType = uiState.transactionType,
+                transactionType = initialTransactionType,
                 onTransactionTypeChange = {
                     viewModel.setTransactionType(it)
                 }
