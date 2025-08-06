@@ -55,7 +55,7 @@ fun TransactionSaveScreen(
     initialTransactionType: TransactionType,
     householdId: String,
     modifier: Modifier = Modifier,
-    viewModel: TransactionAddViewModel = hiltViewModel(),
+    viewModel: TransactionSaveViewModel = hiltViewModel(),
     userViewModel: UserViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()

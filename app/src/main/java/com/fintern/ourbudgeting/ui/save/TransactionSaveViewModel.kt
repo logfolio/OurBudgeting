@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TransactionAddViewModel @Inject constructor(
+class TransactionSaveViewModel @Inject constructor(
     private val repository: TransactionSaveRepository,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(TransactionAddUiState())
