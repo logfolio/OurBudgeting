@@ -4,8 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.fintern.ourbudgeting.ui.login.HomeScreen
 import com.fintern.ourbudgeting.ui.login.LoginScreen
+import com.fintern.ourbudgeting.ui.save.TransactionAddScreen
 
 @Composable
 fun AppNavHost(navController: NavHostController) {
@@ -26,6 +28,14 @@ fun AppNavHost(navController: NavHostController) {
 
         composable(Screen.Home.name) {
             HomeScreen()
+        }
+
+        composable(Screen.TransactionSave.name) {
+            TransactionAddScreen(
+                initialTransactionType = TransactionType.EXPENSE,
+                householdId = ""
+                // TODO: householdId 추가
+            )
         }
     }
 }
