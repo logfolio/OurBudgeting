@@ -52,6 +52,8 @@ fun CalendarScreen(
     val selectedAccount = remember { mutableStateOf("가계부") }
     val selectedUser = remember { mutableStateOf("조민환") }
 
+    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
+
     var currentFilterType by remember { mutableStateOf(FilterType.ALL) }
 
     val uiState = viewModel.transactionsUiState.collectAsStateWithLifecycle()
@@ -64,10 +66,12 @@ fun CalendarScreen(
         is TransactionUiState.Loading -> {
             emptyList<TransactionWithId>()
         }
+
         is TransactionUiState.Success -> {
             val successData = (uiState.value as TransactionUiState.Success).data
             successData
         }
+
         is TransactionUiState.Error -> {
             emptyList<TransactionWithId>()
         }
@@ -143,16 +147,17 @@ fun CalendarScreen(
 
                 Calendar(
                     startDayOfWeek = DayOfWeek.SUNDAY,
-                    selectedDate = LocalDate.now(),
+                    selectedDate = selectedDate,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 24.dp),
                     categoryLists = categoryListsForUi,
+                    onDateClick = { newDate -> selectedDate = newDate }
                 )
                 CalendarFilterControls(
                     nickname = nickname,
                     filterType = currentFilterType,
-                    onFilterTypeSelected = {newFilterType ->
+                    onFilterTypeSelected = { newFilterType ->
                         currentFilterType = newFilterType
                     },
                 )
