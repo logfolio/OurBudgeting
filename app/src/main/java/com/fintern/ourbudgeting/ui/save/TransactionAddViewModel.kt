@@ -4,18 +4,54 @@ import android.net.Uri
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.fintern.ourbudgeting.data.repository.TransactionRepository
+import com.fintern.ourbudgeting.ui.common.model.FirebaseError
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.fintern.ourbudgeting.util.NumberUtils
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.firestore.FirebaseFirestoreException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TransactionAddViewModel @Inject constructor() : ViewModel() {
+class TransactionAddViewModel @Inject constructor(
+    private val repository: TransactionRepository,
+) : ViewModel() {
     private val _uiState = MutableStateFlow(TransactionAddUiState())
     val uiState: StateFlow<TransactionAddUiState> = _uiState
+
+    fun saveTransaction(householdId: String) {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(
+                isLoading = true
+            )
+            repository.saveTransaction(
+                householdId = householdId,
+                uid = "",
+                uiState = _uiState.value
+            ).onSuccess {
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    isSuccess = true,
+                )
+            }.onFailure { e ->
+
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    error = when (e) {
+                        is FirebaseNetworkException -> FirebaseError.NetworkError
+                        is FirebaseFirestoreException -> FirebaseError.FirestoreError
+                        else -> FirebaseError.UnknownError
+                    }
+                )
+            }
+        }
+    }
 
     private fun updateSaveEnabledState() {
         val state = _uiState.value
