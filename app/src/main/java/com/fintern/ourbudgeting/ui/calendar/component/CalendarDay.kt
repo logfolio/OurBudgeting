@@ -53,9 +53,9 @@ fun CalendarDayContent(
     val currentDay = today.isEqual(date)
     val selected = date == selectedDate
     val dayBackgroundColor = when {
-        currentDay -> Color(0xFF964BFF) // 오늘 날짜
-        selected -> Color(0xFFeaeaea) // 선택된 날짜
-        else -> Color.Transparent // 평범한 날짜
+        currentDay -> Color(0xFF964BFF)
+        selected -> Color(0xFFeaeaea)
+        else -> Color.Transparent
     }
     val todayTextColor = if (currentDay) Color.White else dayConfig.textStyle.color
 
