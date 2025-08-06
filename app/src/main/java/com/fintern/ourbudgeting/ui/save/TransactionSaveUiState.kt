@@ -7,7 +7,7 @@ import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.common.model.FirebaseError
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 
-data class TransactionAddUiState(
+data class TransactionSaveUiState(
     val isSaveEnabled: Boolean = false,
     val transactionType: TransactionType = TransactionType.EXPENSE,
     val selectedDate: Long? = null,

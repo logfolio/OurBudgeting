@@ -1,7 +1,7 @@
 package com.fintern.ourbudgeting.data.repository
 
 import android.net.Uri
-import com.fintern.ourbudgeting.ui.save.TransactionAddUiState
+import com.fintern.ourbudgeting.ui.save.TransactionSaveUiState
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -18,7 +18,7 @@ class RemoteTransactionSaveRepository @Inject constructor(
     override suspend fun saveTransaction(
         householdId: String,
         uid: String,
-        uiState: TransactionAddUiState
+        uiState: TransactionSaveUiState
     ): Result<Unit> {
         return runCatching {
             val photoUrl = uiState.photoUri?.let { uploadPhoto(it) }

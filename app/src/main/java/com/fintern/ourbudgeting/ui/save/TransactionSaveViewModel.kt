@@ -24,8 +24,8 @@ import javax.inject.Inject
 class TransactionSaveViewModel @Inject constructor(
     private val repository: TransactionSaveRepository,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(TransactionAddUiState())
-    val uiState: StateFlow<TransactionAddUiState> = _uiState
+    private val _uiState = MutableStateFlow(TransactionSaveUiState())
+    val uiState: StateFlow<TransactionSaveUiState> = _uiState
 
     private val _eventFlow = MutableSharedFlow<TransactionUiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()

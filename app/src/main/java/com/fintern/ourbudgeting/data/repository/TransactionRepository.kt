@@ -2,7 +2,7 @@ package com.fintern.ourbudgeting.data.repository
 
 import com.fintern.ourbudgeting.ui.calendar.TransactionUiState
 import com.fintern.ourbudgeting.ui.calendar.component.FilterType
-import com.fintern.ourbudgeting.ui.save.TransactionAddUiState
+import com.fintern.ourbudgeting.ui.save.TransactionSaveUiState
 import kotlinx.coroutines.flow.Flow
 
 interface TransactionRepository {
@@ -16,6 +16,6 @@ interface TransactionSaveRepository {
     suspend fun saveTransaction(
         householdId: String,
         uid: String,
-        uiState: TransactionAddUiState
+        uiState: TransactionSaveUiState
     ): Result<Unit>
 }
