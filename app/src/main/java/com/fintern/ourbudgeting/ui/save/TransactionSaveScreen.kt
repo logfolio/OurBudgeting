@@ -51,7 +51,7 @@ import com.fintern.ourbudgeting.ui.save.componenet.TransactionToggle
 import com.fintern.ourbudgeting.ui.user.UserViewModel
 
 @Composable
-fun TransactionAddScreen(
+fun TransactionSaveScreen(
     initialTransactionType: TransactionType,
     householdId: String,
     modifier: Modifier = Modifier,
