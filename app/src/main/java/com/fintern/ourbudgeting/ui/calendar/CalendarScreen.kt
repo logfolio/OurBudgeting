@@ -47,19 +47,18 @@ fun CalendarScreen(
 ) {
 
     val householdId = "dlmRP5U0pNhyH7oaIvTy"
-
     val nickname = "짱구"
-
     val selectedAccount = remember { mutableStateOf("가계부") }
     val selectedUser = remember { mutableStateOf("조민환") }
 
+    var currentMonth by remember { mutableStateOf(LocalDate.now()) }
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
 
     var currentFilterType by remember { mutableStateOf(FilterType.ALL) }
 
     val uiState = viewModel.transactionsUiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(householdId, currentFilterType) {
+    LaunchedEffect(householdId, currentFilterType, currentMonth) {
         viewModel.loadTransactions(householdId, currentFilterType)
     }
 
@@ -78,16 +77,26 @@ fun CalendarScreen(
         }
     }
 
-    val totalIncome = transactions.filter {
+    val monthlyTransactionsForTotals = remember(transactions, currentMonth) {
+        transactions.filter {
+            it.transaction.date?.toLocalDate()?.year == currentMonth.year &&
+                    it.transaction.date.toLocalDate().month == currentMonth.month
+        }
+    }
+
+    val totalIncome = monthlyTransactionsForTotals.filter {
         it.transaction.type == TransactionType.INCOME.name
     }.sumOf { it.transaction.amount }
 
-    val totalExpense = transactions.filter {
+    val totalExpense = monthlyTransactionsForTotals.filter {
         it.transaction.type == TransactionType.EXPENSE.name
     }.sumOf { it.transaction.amount }
 
     val categoryListsForUi: List<CategoryList> = remember(transactions) {
-        transactions
+        transactions.filter {
+            it.transaction.date?.toLocalDate()?.year == currentMonth.year &&
+                    it.transaction.date.toLocalDate().month == currentMonth.month
+        }
             .groupBy { it.transaction.category }
             .map { (categoryName, transactionList) ->
                 CategoryList(
@@ -174,6 +183,9 @@ fun CalendarScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 24.dp),
                     categoryLists = categoryListsForUi,
+                    currentMonth = currentMonth,
+                    onPreviousClick = { currentMonth = currentMonth.minusMonths(1)},
+                    onNextClick = { currentMonth = currentMonth.plusMonths(1)},
                     onDateClick = { newDate -> selectedDate = newDate }
                 )
                 CalendarFilterControls(
