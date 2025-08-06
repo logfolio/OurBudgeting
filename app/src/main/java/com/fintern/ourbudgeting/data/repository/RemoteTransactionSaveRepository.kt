@@ -9,15 +9,13 @@ import kotlinx.coroutines.tasks.await
 import java.util.Date
 import java.util.UUID
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class RemoteTransactionSaveRepository @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val storage: FirebaseStorage
-) {
+) : TransactionSaveRepository {
 
-    suspend fun saveTransaction(
+    override suspend fun saveTransaction(
         householdId: String,
         uid: String,
         uiState: TransactionAddUiState
