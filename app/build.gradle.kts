@@ -98,6 +98,9 @@ dependencies {
     // Image
     implementation(libs.coil.compose)
 
+    // ML Kit
+    implementation(libs.text.recognition.korean)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
