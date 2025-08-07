@@ -29,8 +29,7 @@ fun CalendarDay(
     modifier: Modifier = Modifier,
     dayConfig: CalendarDayConfig = CalendarDayConfig.default(),
     transactions: List<TransactionWithId> = emptyList(),
-    selectedDate: LocalDate? = date,
-
+    selectedDate: LocalDate? = null,
 ) {
     CalendarDayContent(
         date = date,
@@ -51,7 +50,7 @@ fun CalendarDayContent(
 ) {
     val today = remember { LocalDate.now() }
     val currentDay = today.isEqual(date)
-    val selected = date == selectedDate
+    val selected = selectedDate?.isEqual(date) == true
     val dayBackgroundColor = when {
         currentDay -> Color(0xFF964BFF)
         selected -> Color(0xFFeaeaea)

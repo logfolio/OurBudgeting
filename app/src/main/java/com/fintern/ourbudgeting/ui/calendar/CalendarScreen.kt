@@ -58,8 +58,8 @@ fun CalendarScreen(
 
     val uiState = viewModel.transactionsUiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(householdId, currentFilterType, currentMonth) {
-        viewModel.loadTransactions(householdId, currentFilterType)
+    LaunchedEffect(householdId) {
+        viewModel.loadTransactions(householdId)
     }
 
     val transactions: List<TransactionWithId> = when (uiState.value) {
@@ -111,8 +111,8 @@ fun CalendarScreen(
     }
 
     val selectedDayTransactions: List<TransactionWithId> =
-        remember(transactions, currentMonth, selectedDate) {
-            if (selectedDate == null) {
+        remember(transactions, currentMonth, selectedDate, currentFilterType) {
+            val filteredByDate = if (selectedDate == null) {
                 transactions.filter {
                     it.transaction.date?.toLocalDate()?.year == currentMonth.year &&
                             it.transaction.date?.toLocalDate()?.month == currentMonth.month
@@ -121,6 +121,12 @@ fun CalendarScreen(
                 transactions.filter {
                     it.transaction.date?.toLocalDate() == selectedDate
                 }
+            }
+
+            when (currentFilterType) {
+                FilterType.INCOME -> filteredByDate.filter { it.transaction.type == TransactionType.INCOME.name }
+                FilterType.EXPENSE -> filteredByDate.filter { it.transaction.type == TransactionType.EXPENSE.name }
+                FilterType.ALL -> filteredByDate
             }
         }
 
