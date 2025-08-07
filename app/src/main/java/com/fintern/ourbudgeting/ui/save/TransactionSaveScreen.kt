@@ -47,6 +47,7 @@ import com.fintern.ourbudgeting.ui.save.componenet.DatePickerField
 import com.fintern.ourbudgeting.ui.save.componenet.DropDownField
 import com.fintern.ourbudgeting.ui.save.componenet.ImagePreview
 import com.fintern.ourbudgeting.ui.save.componenet.TransactionToggle
+import com.fintern.ourbudgeting.ui.save.componenet.TransactionTopAppBar
 import com.fintern.ourbudgeting.ui.user.UserViewModel
 
 @Composable
@@ -87,6 +88,13 @@ fun TransactionSaveScreen(
     }
 
     Scaffold(
+        topBar = {
+            TransactionTopAppBar(
+                uiState = uiState,
+                onNavigateToBack = onNavigateToBack,
+                onCameraClick = { }
+            )
+        },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         },

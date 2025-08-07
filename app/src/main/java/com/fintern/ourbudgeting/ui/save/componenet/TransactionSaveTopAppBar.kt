@@ -19,6 +19,7 @@ import com.fintern.ourbudgeting.ui.save.TransactionSaveUiState
 fun TransactionTopAppBar(
     uiState: TransactionSaveUiState,
     onNavigateToBack: () -> Unit,
+    onCameraClick: () -> Unit,
 ) {
     TopAppBar(
         title = { Text(stringResource(id = uiState.transactionType.labelRes)) },
@@ -31,7 +32,7 @@ fun TransactionTopAppBar(
             }
         },
         actions = {
-            IconButton(onClick = { }) {
+            IconButton(onClick = onCameraClick) {
                 Icon(
                     painter = painterResource(R.drawable.ic_camera),
                     contentDescription = stringResource(R.string.action_back),
