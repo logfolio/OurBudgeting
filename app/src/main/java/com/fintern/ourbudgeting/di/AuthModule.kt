@@ -36,9 +36,8 @@ object AuthModule {
     @Provides
     @Singleton
     fun provideGoogleAuthRepository(
-        credentialManager: CredentialManager,
         firebaseAuth: FirebaseAuth
     ): GoogleAuthRepository {
-        return GoogleAuthRepository(credentialManager, firebaseAuth)
+        return GoogleAuthRepository(firebaseAuth)
     }
 }
