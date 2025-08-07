@@ -1,16 +1,17 @@
 package com.fintern.ourbudgeting.navigation
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.fintern.ourbudgeting.R
 
 enum class BottomNavigationItem(
-    val label: String,
+    @StringRes val label: Int,
     @DrawableRes val icon: Int,
-    val contentDescription: String
+    @StringRes val contentDescription: Int
 ) {
-    HOME("홈", R.drawable.ic_home, "홈"),
-    CALENDAR("캘린더", R.drawable.ic_calendar, "캘린더"),
-    STATISTICS("통계", R.drawable.ic_statistic, "통계"),
-    ASSETMANAGEMENT("자산", R.drawable.ic_asset, "자산"),
-    SETTING("설정", R.drawable.ic_setting, "설정"),
+    HOME(R.string.home, R.drawable.ic_home, R.string.home),
+    CALENDAR(R.string.calendar, R.drawable.ic_calendar, R.string.calendar),
+    STATISTICS(R.string.statistics, R.drawable.ic_statistic, R.string.statistics),
+    ASSETMANAGEMENT(R.string.asset, R.drawable.ic_asset, R.string.asset),
+    SETTING(R.string.setting, R.drawable.ic_setting, R.string.setting),
 }
