@@ -1,5 +1,6 @@
 package com.fintern.ourbudgeting.data.repository
 
+import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.AssetRepositoryException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -12,7 +13,8 @@ class AssetAdditionRepository @Inject constructor(
     private val auth: FirebaseAuth
 ) {
     suspend fun initializeUserHousehold(): Result<Unit> {
-        val user = auth.currentUser ?: return Result.failure(Exception("로그인 안됨"))
+        val user =
+            auth.currentUser ?: return Result.failure(AssetRepositoryException.UserNotAuthenticated)
         val householdRef = db.collection("users").document(user.uid)
         return try {
             val snapshot = householdRef.get().await()
@@ -26,12 +28,13 @@ class AssetAdditionRepository @Inject constructor(
             }
             Result.success(Unit)
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(AssetRepositoryException.DatabaseError(e))
         }
     }
 
     suspend fun addAssetType(assetType: String): Result<Unit> {
-        val user = auth.currentUser ?: return Result.failure(Exception("로그인 안됨"))
+        val user =
+            auth.currentUser ?: return Result.failure(AssetRepositoryException.UserNotAuthenticated)
         val householdRef = db.collection("users").document(user.uid)
         return try {
             // 먼저 households 문서 초기화 확인
@@ -40,7 +43,7 @@ class AssetAdditionRepository @Inject constructor(
             householdRef.update("assetType", FieldValue.arrayUnion(assetType)).await()
             Result.success(Unit)
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(AssetRepositoryException.DatabaseError(e))
         }
     }
 }
