@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.data.calendar.CategoryDefinition
-import com.fintern.ourbudgeting.data.calendar.CategoryItemData
+import com.fintern.ourbudgeting.data.calendar.TransactionWithId
 import com.fintern.ourbudgeting.ui.calendar.extensions.toFormatterDate
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import java.text.NumberFormat
@@ -30,7 +30,7 @@ import java.util.Locale
 
 @Composable
 fun CategoryItemListItem(
-    item: CategoryItemData,
+    item: TransactionWithId,
     categoryDefinition: CategoryDefinition?
 ) {
     Row(
@@ -58,13 +58,14 @@ fun CategoryItemListItem(
         Column(
             modifier = Modifier.weight(1f)
         ) {
-            val amountColor = if (item.type == TransactionType.INCOME) Color.Red else Color.Blue
-            val amountPrefix = if (item.type == TransactionType.INCOME) stringResource(R.string.prefix_plus) else stringResource(
-                R.string.prefix_minus
-            )
+            val amountColor = if (item.transaction.type == TransactionType.INCOME.name) Color.Red else Color.Blue
+            val amountPrefix =
+                if (item.transaction.type == TransactionType.INCOME.name) stringResource(R.string.prefix_plus) else stringResource(
+                    R.string.prefix_minus
+                )
 
             val formatter = NumberFormat.getNumberInstance(Locale.getDefault())
-            val formattedAmount = formatter.format(item.amount)
+            val formattedAmount = formatter.format(item.transaction.amount)
 
             Text(
                 text = stringResource(R.string.item_amount, amountPrefix, formattedAmount),
@@ -73,7 +74,7 @@ fun CategoryItemListItem(
                 color = amountColor
             )
             Text(
-                text = item.description,
+                text = item.transaction.description,
                 fontSize = 14.sp,
                 color = Color.DarkGray
             )
@@ -83,12 +84,12 @@ fun CategoryItemListItem(
             horizontalAlignment = Alignment.End
         ) {
             Text(
-                text = item.userName,
+                text = item.transaction.createdBy,
                 fontSize = 14.sp,
                 color = Color.Gray
             )
             Text(
-                text = item.date.toFormatterDate(),
+                text = item.transaction.date?.toFormatterDate() ?: "",
                 fontSize = 11.sp,
                 color = Color.Gray
             )

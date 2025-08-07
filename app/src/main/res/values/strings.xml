@@ -1,12 +1,18 @@
 <resources>
-    <!--    common-->
+    <!--  Common Message  -->
     <string name="app_name">OurBudgeting</string>
     <string name="calendar_label_app_name">가계부 쓰고 가게</string>
+    <string name="expense">지출</string>
+    <string name="income">수입</string>
+    <string name="confirm">확인</string>
+    <string name="cancel">취소</string>
+    <string name="category">분류</string>
     <string name="add">추가 하기</string>
     <string name="amount_won">%1$s원</string>
     <string name="asset">자산</string>
     <string name="debt">부채</string>
     <string name="total">합계</string>
+    <string name="image">이미지</string>
 
     <!--  Calendar  -->
     <string name="item_amount">%1$s %2$s원</string>
@@ -35,10 +41,12 @@
     <string name="label_filter_expense">지출</string>
     <string name="currency_format">%1$,d원</string>
 
+
     <!--   Asset Management-->
     <string name="asset_management">자산 관리</string>
     <string name="cash">현금</string>
     <string name="card">카드</string>
+
     <!--    Add Asset-->
     <string name="add_asset">자산 추가</string>
     <string name="asset_cash_amount">현금 금액</string>
@@ -48,10 +56,12 @@
     <string name="select_bank">은행을 선택해주세요.</string>
     <string name="input_amount">금액을 입력해주세요.</string>
     <string name="type_asset_type">자산유형을 입력해주세요.</string>
+
     <!--    Modify Asset-->
     <string name="modify_asset">자산 수정</string>
     <string name="modify">수정</string>
     <string name="delete">삭제</string>
+
     <!--    Statistic Asset-->
     <string name="cumulative_balance">누적잔액</string>
     <string name="income_expense">수입/지출</string>
@@ -59,10 +69,6 @@
     <string name="total_statistic">전체통계</string>
     <string name="next_year">다음 연도</string>
     <string name="previous_year">이전 연도</string>
-
-    <!--  Common Message  -->
-    <string name="expense">지출</string>
-    <string name="income">수입</string>
 
     <!--  Common Error Message  -->
     <string name="error_message">오류가 발생했어요!</string>
@@ -101,4 +107,15 @@
 
     <!--  AI Analysis Screen  -->
     <string name="ai_analysis">AI 패턴 분석</string>
+
+    <!--  Add Transaction Screen  -->
+    <string name="select_date_label">날짜 선택</string>
+    <string name="calendar_open_button">달력 열기</string>
+    <string name="date_picker_format">yyyy년 MM월 dd일</string>
+    <string name="add_image">이미지 추가</string>
+    <string name="location">위치</string>
+    <string name="save">저장하기</string>
+    <string name="content">내용</string>
+    <string name="delete_image">이미지 삭제</string>
+    <string name="date_picker">날짜 선택</string>
 </resources>
