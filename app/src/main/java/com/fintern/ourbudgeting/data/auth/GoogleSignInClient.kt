@@ -1,6 +1,7 @@
 package com.fintern.ourbudgeting.data.auth
 
 import android.content.Context
+import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import com.fintern.ourbudgeting.BuildConfig
@@ -27,5 +28,11 @@ class GoogleSignInClient @Inject constructor(
 
         val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
         return googleIdTokenCredential.idToken
+    }
+
+    suspend fun clearCredentialState() {
+        credentialManager.clearCredentialState(
+            ClearCredentialStateRequest()
+        )
     }
 }

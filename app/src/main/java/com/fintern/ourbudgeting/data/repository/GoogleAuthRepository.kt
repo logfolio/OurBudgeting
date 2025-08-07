@@ -1,7 +1,5 @@
 package com.fintern.ourbudgeting.data.repository
 
-import androidx.credentials.ClearCredentialStateRequest
-import androidx.credentials.CredentialManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -9,7 +7,6 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class GoogleAuthRepository @Inject constructor(
-    private val credentialManager: CredentialManager,
     private val auth: FirebaseAuth
 ) {
 
@@ -23,11 +20,8 @@ class GoogleAuthRepository @Inject constructor(
         }
     }
 
-    suspend fun signOutWithGoogle() {
+    fun signOutWithGoogle() {
         auth.signOut()
-        credentialManager.clearCredentialState(
-            ClearCredentialStateRequest()
-        )
     }
 
     fun getCurrentUser(): FirebaseUser? {
