@@ -16,7 +16,7 @@ class AssetAdditionRepository @Inject constructor(
         val user =
             auth.currentUser ?: return Result.failure(AssetRepositoryException.UserNotAuthenticated)
         val householdRef = db.collection("users").document(user.uid)
-        return try {
+        return runCatching {
             val snapshot = householdRef.get().await()
             if (!snapshot.exists()) {
                 val initialData = mapOf(
@@ -26,9 +26,6 @@ class AssetAdditionRepository @Inject constructor(
                 )
                 householdRef.set(initialData).await()
             }
-            Result.success(Unit)
-        } catch (e: Exception) {
-            Result.failure(AssetRepositoryException.DatabaseError(e))
         }
     }
 
@@ -36,14 +33,9 @@ class AssetAdditionRepository @Inject constructor(
         val user =
             auth.currentUser ?: return Result.failure(AssetRepositoryException.UserNotAuthenticated)
         val householdRef = db.collection("users").document(user.uid)
-        return try {
-            // 먼저 households 문서 초기화 확인
-            initializeUserHousehold()
-            // assetType 필드에 새로운 값 추가
+        return runCatching {
+            initializeUserHousehold().getOrThrow() //Result<Unit>을 반환해서 exception 발생하지 않음. 그래서 getOrThrow() 사용
             householdRef.update("assetType", FieldValue.arrayUnion(assetType)).await()
-            Result.success(Unit)
-        } catch (e: Exception) {
-            Result.failure(AssetRepositoryException.DatabaseError(e))
         }
     }
 }
