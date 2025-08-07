@@ -41,6 +41,7 @@ class LoginViewModel @Inject constructor(
     fun signOutWithGoogle() {
         viewModelScope.launch {
             authRepository.signOutWithGoogle()
+            signInClient.clearCredentialState()
             _uiState.value = _uiState.value.copy(currentUser = null)
         }
     }
