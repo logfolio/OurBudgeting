@@ -59,15 +59,29 @@ fun TransactionSaveScreen(
     viewModel: TransactionSaveViewModel = hiltViewModel(),
     userViewModel: UserViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    val launcher =
-        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            viewModel.setPhotoUri(uri)
-        }
-    val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
+    val uiState by viewModel.uiState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     val uid by userViewModel.uid.collectAsState()
+
+    // 이미지 업데이트용
+    val imageOnlyLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            uri?.let {
+                viewModel.setPhotoUri(it)
+            }
+        }
+
+    // OCR 수행용
+    val ocrLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            uri?.let {
+                processReceiptImage(context, it) { result ->
+                    viewModel.applyScannedReceipt(result)
+                }
+            }
+        }
 
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collect { event ->
@@ -181,7 +195,7 @@ fun TransactionSaveScreen(
                 trailingIcon = {
                     IconButton(
                         onClick = {
-                            launcher.launch(
+                            imageOnlyLauncher.launch(
                                 PickVisualMediaRequest(
                                     mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly
                                 )
