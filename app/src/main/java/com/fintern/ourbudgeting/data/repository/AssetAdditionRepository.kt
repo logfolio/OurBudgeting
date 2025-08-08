@@ -1,6 +1,9 @@
 package com.fintern.ourbudgeting.data.repository
 
+import androidx.compose.ui.res.stringResource
+import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.AssetRepositoryException
+import com.fintern.ourbudgeting.ui.assetmanagement.data.AssetConstants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -20,7 +23,7 @@ class AssetAdditionRepository @Inject constructor(
             val snapshot = householdRef.get().await()
             if (!snapshot.exists()) {
                 val initialData = mapOf(
-                    "assetType" to listOf("현금"),
+                    "assetType" to listOf(AssetConstants.DEFAULT_ASSET_TYPE),
                     "createdAt" to System.currentTimeMillis(),
                     "userId" to user.uid
                 )
