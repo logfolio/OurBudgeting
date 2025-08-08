@@ -2,6 +2,7 @@ package com.fintern.ourbudgeting.di
 
 import android.content.Context
 import androidx.credentials.CredentialManager
+import com.fintern.ourbudgeting.data.auth.GoogleSignInClient
 import com.fintern.ourbudgeting.data.repository.GoogleAuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
@@ -25,10 +26,18 @@ object AuthModule {
 
     @Provides
     @Singleton
+    fun provideGoogleSignInClient(
+        @ApplicationContext context: Context,
+        credentialManager: CredentialManager
+    ): GoogleSignInClient {
+        return GoogleSignInClient(context, credentialManager)
+    }
+
+    @Provides
+    @Singleton
     fun provideGoogleAuthRepository(
-        credentialManager: CredentialManager,
         firebaseAuth: FirebaseAuth
     ): GoogleAuthRepository {
-        return GoogleAuthRepository(credentialManager, firebaseAuth)
+        return GoogleAuthRepository(firebaseAuth)
     }
 }

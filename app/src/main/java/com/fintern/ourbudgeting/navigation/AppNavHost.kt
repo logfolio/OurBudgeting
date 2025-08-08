@@ -1,36 +1,64 @@
 package com.fintern.ourbudgeting.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.fintern.ourbudgeting.ui.assetmanagement.screen.AssetManagementScreen
+import com.fintern.ourbudgeting.ui.calendar.CalendarScreen
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.fintern.ourbudgeting.ui.login.HomeScreen
 import com.fintern.ourbudgeting.ui.login.LoginScreen
+import com.fintern.ourbudgeting.ui.login.LoginViewModel
 import com.fintern.ourbudgeting.ui.save.TransactionSaveScreen
+import com.fintern.ourbudgeting.ui.statistics.chart.StatisticsScreen
 
 @Composable
-fun AppNavHost(navController: NavHostController) {
+fun AppNavHost(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    loginViewModel: LoginViewModel = hiltViewModel(),
+) {
+    val uiState by loginViewModel.uiState.collectAsState()
+    val isLoggedIn = uiState.currentUser != null
+
+    val startDestination = if (isLoggedIn) BottomNavigationItem.HOME.name else Screen.LOGIN.name
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Login.name
+        startDestination = startDestination,
+        modifier = modifier
     ) {
-        composable(Screen.Login.name) {
+        composable(Screen.LOGIN.name) {
             LoginScreen(
                 onNavigateToHome = {
-                    navController.navigate(Screen.Home.name) {
-                        popUpTo(Screen.Login.name) { inclusive = true }
+                    navController.navigate(BottomNavigationItem.HOME.name) {
+                        popUpTo(Screen.LOGIN.name) { inclusive = true }
                     }
                 }
             )
         }
 
-        composable(Screen.Home.name) {
-            HomeScreen()
+        composable(BottomNavigationItem.HOME.name) { HomeScreen() }
+        composable(BottomNavigationItem.CALENDAR.name) { CalendarScreen() }
+        composable(BottomNavigationItem.STATISTICS.name) {
+            StatisticsScreen(
+                uid = "",
+                householdId = ""
+            )
         }
-
-        composable(Screen.TransactionSave.name) {
+        composable(BottomNavigationItem.ASSETMANAGEMENT.name) {
+            AssetManagementScreen(
+                asset = 0,
+                dept = 0
+            )
+        }
+        composable(BottomNavigationItem.SETTING.name) { }
+        composable(Screen.TRANSACTIONSAVE.name) {
             TransactionSaveScreen(
                 initialTransactionType = TransactionType.EXPENSE,
                 householdId = ""
