@@ -16,7 +16,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,7 +27,6 @@ fun LoginScreen(
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val uiState by loginViewModel.uiState.collectAsState()
-    val context = LocalContext.current
 
     LaunchedEffect(uiState.currentUser) {
         if (uiState.currentUser != null) {
@@ -48,7 +46,7 @@ fun LoginScreen(
         Image(
             painter = painterResource(R.drawable.ic_google_login),
             contentDescription = "로그인 버튼",
-            modifier = Modifier.clickable { loginViewModel.signInWithGoogle(context) }
+            modifier = Modifier.clickable { loginViewModel.signInWithGoogle() }
         )
     }
 }
