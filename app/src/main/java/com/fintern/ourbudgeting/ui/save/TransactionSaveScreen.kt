@@ -1,5 +1,7 @@
 package com.fintern.ourbudgeting.ui.save
 
+import android.content.Context
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -49,6 +51,9 @@ import com.fintern.ourbudgeting.ui.save.componenet.ImagePreview
 import com.fintern.ourbudgeting.ui.save.componenet.TransactionToggle
 import com.fintern.ourbudgeting.ui.save.componenet.TransactionTopAppBar
 import com.fintern.ourbudgeting.ui.user.UserViewModel
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions
 
 @Composable
 fun TransactionSaveScreen(
@@ -106,7 +111,11 @@ fun TransactionSaveScreen(
             TransactionTopAppBar(
                 uiState = uiState,
                 onNavigateToBack = onNavigateToBack,
-                onCameraClick = { }
+                onCameraClick = {
+                    ocrLauncher.launch(
+                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                    )
+                }
             )
         },
         snackbarHost = {
@@ -257,4 +266,14 @@ fun TransactionSaveScreen(
             }
         }
     }
+}
+
+private fun processReceiptImage(context: Context, imageUri: Uri, onSuccess: (String) -> Unit) {
+    val recognizer = TextRecognition.getClient(KoreanTextRecognizerOptions.Builder().build())
+    val image = InputImage.fromFilePath(context, imageUri)
+
+    recognizer.process(image)
+        .addOnSuccessListener { result ->
+            onSuccess(result.text)
+        }
 }
