@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.ui.user.UserViewModel
 
-
 @Composable
 fun HomeScreen(
     viewModel: UserViewModel = hiltViewModel()
