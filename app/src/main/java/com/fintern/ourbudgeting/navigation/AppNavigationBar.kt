@@ -9,45 +9,47 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun AppNavigationBar(
-    modifier: Modifier = Modifier,
-    navHostController: NavHostController
-) {
-    val startDestination = BottomNavigationItem.HOME
-    var selectedDestination by rememberSaveable { mutableIntStateOf(startDestination.ordinal) }
+fun AppNavigationBar() {
+    val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
     Scaffold(
-        modifier = modifier,
         bottomBar = {
-            NavigationBar(windowInsets = NavigationBarDefaults.windowInsets) {
-                BottomNavigationItem.entries.forEachIndexed { index, screen ->
-                    NavigationBarItem(
-                        selected = selectedDestination == index,
-                        onClick = {
-                            navHostController.navigate(route = screen.name)
-                            selectedDestination = index
-                        },
-                        icon = {
-                            Icon(
-                                painter = painterResource(screen.icon),
-                                contentDescription = stringResource(screen.contentDescription),
-                            )
-                        },
-                        label = { Text(stringResource(screen.label)) }
-                    )
+            if (currentRoute != Screen.LOGIN.name) {
+                NavigationBar(windowInsets = NavigationBarDefaults.windowInsets) {
+                    BottomNavigationItem.entries.forEach { screen ->
+                        NavigationBarItem(
+                            selected = currentRoute == screen.name,
+                            onClick = {
+                                navController.navigate(route = screen.name) {
+                                    popUpTo(navController.currentDestination?.route ?: screen.name) {
+                                        inclusive = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            },
+                            icon = {
+                                Icon(
+                                    painter = painterResource(screen.icon),
+                                    contentDescription = stringResource(screen.contentDescription),
+                                )
+                            },
+                            label = { Text(stringResource(screen.label)) }
+                        )
+                    }
                 }
             }
         }
     ) { contentPadding ->
-        AppNavHost(navController = navHostController, modifier.padding(contentPadding))
+        AppNavHost(navController = navController, modifier = Modifier.padding(contentPadding))
     }
 }

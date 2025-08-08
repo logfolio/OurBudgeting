@@ -1,7 +1,10 @@
 package com.fintern.ourbudgeting.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,49 +12,39 @@ import com.fintern.ourbudgeting.ui.assetmanagement.screen.AssetManagementScreen
 import com.fintern.ourbudgeting.ui.calendar.CalendarScreen
 import com.fintern.ourbudgeting.ui.login.HomeScreen
 import com.fintern.ourbudgeting.ui.login.LoginScreen
+import com.fintern.ourbudgeting.ui.login.LoginViewModel
 import com.fintern.ourbudgeting.ui.statistics.chart.StatisticsScreen
 
 @Composable
-fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+fun AppNavHost(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    loginViewModel: LoginViewModel = hiltViewModel(),
+) {
+    val uiState by loginViewModel.uiState.collectAsState()
+    val isLoggedIn = uiState.currentUser != null
+
+    val startDestination = if (isLoggedIn) BottomNavigationItem.HOME.name else Screen.LOGIN.name
 
     NavHost(
         navController = navController,
-        startDestination = Screen.LOGIN.name
+        startDestination = startDestination,
+        modifier = modifier
     ) {
         composable(Screen.LOGIN.name) {
             LoginScreen(
                 onNavigateToHome = {
-                    navController.navigate(Screen.HOME.name) {
+                    navController.navigate(BottomNavigationItem.HOME.name) {
                         popUpTo(Screen.LOGIN.name) { inclusive = true }
                     }
                 }
             )
         }
 
-        composable(BottomNavigationItem.HOME.name) {
-            HomeScreen()
-        }
-
-        composable(BottomNavigationItem.CALENDAR.name) {
-            CalendarScreen()
-        }
-
-        composable(BottomNavigationItem.STATISTICS.name) {
-            StatisticsScreen(
-                uid = "",
-                householdId = "",
-            )
-        }
-
-        composable(BottomNavigationItem.ASSETMANAGEMENT.name) {
-            AssetManagementScreen(
-                asset = 0,
-                dept = 0
-            )
-        }
-
-        composable(BottomNavigationItem.SETTING.name) {
-
-        }
+        composable(BottomNavigationItem.HOME.name) { HomeScreen() }
+        composable(BottomNavigationItem.CALENDAR.name) { CalendarScreen() }
+        composable(BottomNavigationItem.STATISTICS.name) { StatisticsScreen(uid = "", householdId = "") }
+        composable(BottomNavigationItem.ASSETMANAGEMENT.name) { AssetManagementScreen(asset = 0, dept = 0) }
+        composable(BottomNavigationItem.SETTING.name) { }
     }
 }
