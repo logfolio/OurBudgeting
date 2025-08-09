@@ -18,9 +18,9 @@ class AssetAdditionViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(AssetTypeUiState())
     val uiState: StateFlow<AssetTypeUiState> = _uiState.asStateFlow()
 
-    init {
+    fun initializeUserHousehold(defaultAssetType: String) {
         viewModelScope.launch {
-            repository.initializeUserHousehold()
+            repository.initializeUserHousehold(defaultAssetType)
         }
     }
 
@@ -29,13 +29,13 @@ class AssetAdditionViewModel @Inject constructor(
     }
 
     fun clearMessage() {
-        _uiState.value = _uiState.value.copy(message = "")
+        _uiState.value = _uiState.value.copy(message = null)
     }
 
     fun submitAssetType() {
         val text = _uiState.value.input.trim() // 띄어쓰기는 입력으로 취급 안하겠다
         if (text.isBlank()) {
-            _uiState.value = _uiState.value.copy(message = "입력값이 비어있습니다")
+            _uiState.value = _uiState.value.copy(message = AssetViewModelMessage.EmptyInput)
             return
         }
         _uiState.value = _uiState.value.copy(isLoading = true)
@@ -44,12 +44,12 @@ class AssetAdditionViewModel @Inject constructor(
             if (result.isSuccess) {
                 _uiState.value = _uiState.value.copy(
                     input = "",
-                    message = "자산유형이 추가되었습니다!",
+                    message = AssetViewModelMessage.AssetTypeAdded,
                     isLoading = false
                 )
             } else {
                 _uiState.value = _uiState.value.copy(
-                    message = "저장 실패: ${result.exceptionOrNull()?.message}",
+                    message = AssetViewModelMessage.SaveFailed,
                     isLoading = false
                 )
             }

@@ -15,7 +15,7 @@ class AssetAdditionRepository @Inject constructor(
     private val db: FirebaseFirestore,
     private val auth: FirebaseAuth
 ) {
-    suspend fun initializeUserHousehold(): Result<Unit> {
+    suspend fun initializeUserHousehold(defaultAssetType: String): Result<Unit> {
         val user =
             auth.currentUser ?: return Result.failure(AssetRepositoryException.UserNotAuthenticated)
         val householdRef = db.collection("users").document(user.uid)
@@ -23,7 +23,7 @@ class AssetAdditionRepository @Inject constructor(
             val snapshot = householdRef.get().await()
             if (!snapshot.exists()) {
                 val initialData = mapOf(
-                    "assetType" to listOf(AssetConstants.DEFAULT_ASSET_TYPE),
+                    "assetType" to listOf(defaultAssetType),
                     "createdAt" to System.currentTimeMillis(),
                     "userId" to user.uid
                 )
@@ -37,7 +37,6 @@ class AssetAdditionRepository @Inject constructor(
             auth.currentUser ?: return Result.failure(AssetRepositoryException.UserNotAuthenticated)
         val householdRef = db.collection("users").document(user.uid)
         return runCatching {
-            initializeUserHousehold().getOrThrow() //Result<Unit>을 반환해서 exception 발생하지 않음. 그래서 getOrThrow() 사용
             householdRef.update("assetType", FieldValue.arrayUnion(assetType)).await()
         }
     }

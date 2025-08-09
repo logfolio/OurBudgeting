@@ -27,16 +27,23 @@ fun AssetAdditionScreen(
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
-
     LaunchedEffect(uiState.message) {
-        if (uiState.message.isNotEmpty()) {
-            Toast.makeText(context, uiState.message, Toast.LENGTH_SHORT).show()
+        if (uiState.message != null) {
+            Toast.makeText(
+                context,
+                context.getString(uiState.message!!.messageResId),
+                Toast.LENGTH_SHORT
+            ).show()
             viewModel.clearMessage()
         }
     }
+    val defaultAssetType = stringResource(id = R.string.cash)
+    LaunchedEffect(Unit) {
+        viewModel.initializeUserHousehold(defaultAssetType)
+    }
     Scaffold(
         modifier = Modifier.background(Color.White),
-        topBar = { AssetAdditionTopAppBar () }
+        topBar = { AssetAdditionTopAppBar() }
     ) { paddingValue ->
         Column(
             modifier = Modifier
@@ -48,7 +55,7 @@ fun AssetAdditionScreen(
                 label = stringResource(R.string.type_asset_type),
                 placeHolder = stringResource(R.string.type_asset_type),
                 value = uiState.input,
-                onValueChanged ={ newValue->
+                onValueChanged = { newValue ->
                     viewModel.updateInput(newValue)
                 }
             )
