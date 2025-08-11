@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
-
 @Composable
 fun FABMenuItem(
     onClick: () -> Unit,
@@ -42,7 +41,6 @@ fun FABMenuItem(
                 tint = Color.White,
                 modifier = Modifier.size(24.dp)
             )
-
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodyMedium,
