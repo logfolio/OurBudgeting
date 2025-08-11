@@ -2,7 +2,9 @@ package com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fintern.ourbudgeting.data.repository.StatisticsRepository
+import com.fintern.ourbudgeting.data.repository.AssetDisplayRepository
+import com.fintern.ourbudgeting.ui.assetmanagement.data.AssetDetail
+import com.fintern.ourbudgeting.ui.assetmanagement.data.AssetSummary
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -37,7 +39,6 @@ class AssetDisplayViewModel @Inject constructor(
     fun getAssetDetailByName(assetName: String): AssetDetail? {
         return _assetSummary.value.assetDetails.find { it.assetName == assetName }
     }
-
     fun getAssetDetailContaining(keyword: String): List<AssetDetail> {
         return _assetSummary.value.assetDetails.filter { it.assetName.contains(keyword) }
     }
