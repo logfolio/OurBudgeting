@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.component.AssetDisplayTopAppBar
+import com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.component.FABMenu
 import com.fintern.ourbudgeting.ui.assetmanagement.common.component.AssetBody
 import com.fintern.ourbudgeting.ui.assetmanagement.common.component.AssetDivider
 import com.fintern.ourbudgeting.ui.assetmanagement.common.component.AssetTitle
@@ -53,19 +54,19 @@ fun AssetDisplayScreen(
             ) {
                 AssetTopSection(asset = assetSummary.totalAsset, debt = assetSummary.totalDebt)
                 AssetDivider()
-                val a = viewModel.getAssetDetailByName("현금")
+                val cashResult = viewModel.getAssetDetailByName(stringResource(R.string.cash))
 
-                a?.let {
+                cashResult?.let {
                     AssetTitle(name = stringResource(R.string.cash), amount = it.totalAmount)
                     AssetBody(name = stringResource(R.string.cash), amount = it.totalAmount)
                 }
 
                 AssetTitle(
                     name = stringResource(R.string.card),
-                    amount = viewModel.getAssetDetailContainingTotalAmount("은행")
+                    amount = viewModel.getAssetDetailContainingTotalAmount(stringResource(R.string.bank))
                 )
 
-                val bankAssetDetail = viewModel.getAssetDetailContaining("은행")
+                val bankAssetDetail = viewModel.getAssetDetailContaining(stringResource(R.string.bank))
 
                 if (bankAssetDetail.isNotEmpty()) {
                     LazyColumn(
@@ -80,18 +81,16 @@ fun AssetDisplayScreen(
                         }
                     }
                 }
-                Log.d("AssetDisplayScreen", "은행  $bankAssetDetail")
             }
         }
 
-        // FABMenu를 Box 레벨에서 오버레이로 추가
         FABMenu(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(end = 16.dp, bottom = 80.dp),
             onAddAssetTypeClick = {
             },
-            onEditAssetTypelick = {
+            onEditAssetTypeClick = {
             }
         )
     }
