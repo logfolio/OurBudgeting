@@ -34,7 +34,9 @@ import com.fintern.ourbudgeting.ui.assetmanagement.common.component.AssetTopSect
 @Composable
 fun AssetDisplayScreen(
     householdId: String,
-    viewModel: AssetDisplayViewModel = hiltViewModel()
+    viewModel: AssetDisplayViewModel = hiltViewModel(),
+    onAddAssetTypeClick: () -> Unit = {},
+    onEditAssetTypeClick:()->Unit = {}
 ) {
     val assetSummary by viewModel.assetSummary.collectAsState()
 
@@ -55,23 +57,14 @@ fun AssetDisplayScreen(
                 AssetTopSection(asset = assetSummary.totalAsset, debt = assetSummary.totalDebt)
                 AssetDivider()
                 val cashResult = viewModel.getAssetDetailByName(stringResource(R.string.cash))
-
                 cashResult?.let {
-                    AssetTitle(name = stringResource(R.string.cash), amount = it.totalAmount)
-                    AssetBody(name = stringResource(R.string.cash), amount = it.totalAmount)
+                    AssetBody(name = stringResource(R.string.cash), amount = it.totalAmount, modifier = Modifier.fillMaxWidth())
                 }
 
-                AssetTitle(
-                    name = stringResource(R.string.card),
-                    amount = viewModel.getAssetDetailContainingTotalAmount(stringResource(R.string.bank))
-                )
-
                 val bankAssetDetail = viewModel.getAssetDetailContaining(stringResource(R.string.bank))
-
                 if (bankAssetDetail.isNotEmpty()) {
                     LazyColumn(
                         modifier = Modifier.fillMaxWidth(),
-                        contentPadding = PaddingValues(16.dp)
                     ) {
                         items(bankAssetDetail) { bankAsset ->
                             AssetBody(
@@ -88,10 +81,8 @@ fun AssetDisplayScreen(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(end = 16.dp, bottom = 80.dp),
-            onAddAssetTypeClick = {
-            },
-            onEditAssetTypeClick = {
-            }
+            onAddAssetTypeClick = onAddAssetTypeClick,
+            onEditAssetTypeClick = onEditAssetTypeClick
         )
     }
 }
