@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.screen
+package com.fintern.ourbudgeting.ui.assetmanagement.assetedition
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -11,14 +11,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.fintern.ourbudgeting.R
-import com.fintern.ourbudgeting.ui.assetmanagement.component.AssetEditBody
-import com.fintern.ourbudgeting.ui.assetmanagement.component.AssetEditTopAppBar
-import com.fintern.ourbudgeting.ui.assetmanagement.component.AssetTitle
-import com.fintern.ourbudgeting.ui.assetmanagement.component.AssetTopSection
+import com.fintern.ourbudgeting.ui.assetmanagement.assetedition.component.AssetEditBody
+import com.fintern.ourbudgeting.ui.assetmanagement.assetedition.component.AssetEditTopAppBar
+import com.fintern.ourbudgeting.ui.assetmanagement.common.component.AssetTitle
+import com.fintern.ourbudgeting.ui.assetmanagement.common.component.AssetTopSection
 import com.fintern.ourbudgeting.ui.theme.OurBudgetingTheme
 
 @Composable
-fun AssetEditManagement(
+fun AssetEditScreen(
     modifier: Modifier = Modifier,
     asset: Long,
     debt: Long
@@ -46,6 +46,6 @@ fun AssetEditManagement(
 @Composable
 fun ModifyAssetManagementScreenPreview() {
     OurBudgetingTheme {
-        AssetEditManagement(asset = 300, debt = 2000)
+        AssetEditScreen(asset = 300, debt = 2000)
     }
 }

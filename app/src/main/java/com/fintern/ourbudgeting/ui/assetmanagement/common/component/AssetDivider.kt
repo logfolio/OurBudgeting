@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.component
+package com.fintern.ourbudgeting.ui.assetmanagement.common.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AssetHorizontalDivider(
+fun AssetDivider(
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -30,6 +30,6 @@ fun AssetHorizontalDivider(
 @Composable
 fun HorizontalDividerPreview() {
     MaterialTheme {
-        AssetHorizontalDivider()
+        AssetDivider()
     }
 }

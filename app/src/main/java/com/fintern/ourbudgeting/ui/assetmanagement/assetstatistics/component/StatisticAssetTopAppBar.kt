@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.component
+package com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding

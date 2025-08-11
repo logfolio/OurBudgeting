@@ -44,7 +44,7 @@
     <string name="label_filter_income">수입</string>
     <string name="label_filter_expense">지출</string>
     <string name="currency_format">%1$,d원</string>
-    <string name="label_select_filter">필터 선택</string>
+    <string name="label_select_filter">필터선택</string>
 
     <!--   Asset Management-->
     <string name="asset_management">자산 관리</string>
@@ -59,11 +59,20 @@
     <string name="amount">금액</string>
     <string name="select_bank">은행을 선택해주세요.</string>
     <string name="input_amount">금액을 입력해주세요.</string>
+    <string name="type_asset_type">자산유형을 입력해주세요.</string>
 
     <!--    Modify Asset-->
     <string name="modify_asset">자산 수정</string>
     <string name="modify">수정</string>
     <string name="delete">삭제</string>
+    <!-- Asset Management -->
+    <string name="default_cash_type">현금</string>
+    <string name="empty_input_message">입력값이 비어있습니다</string>
+    <string name="addition_success_message">자산유형이 추가되었습니다!</string>
+    <string name="save_failed_message">저장에 실패했습니다</string>
+
+    <!-- Asset Repository Exceptions -->
+    <string name="database_error_occurred">데이터베이스 오류가 발생했습니다</string>
 
     <!--    Statistic Asset-->
     <string name="cumulative_balance">누적잔액</string>
@@ -121,4 +130,7 @@
     <string name="content">내용</string>
     <string name="delete_image">이미지 삭제</string>
     <string name="date_picker">날짜 선택</string>
+    <string name="login_is_not_success">로그인이 되지 않았습니다.</string>
+    <string name="asset_type_added">자산이 추가되었습니다</string>
+    <string name="failed_to_save">저장에 실패하였습니다.</string>
 </resources>
