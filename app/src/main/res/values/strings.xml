@@ -74,6 +74,10 @@
     <!-- Asset Repository Exceptions -->
     <string name="database_error_occurred">데이터베이스 오류가 발생했습니다</string>
 
+
+    <string name="edit_asset_type">자산유형 수정</string>
+    <string name="add_asset_type">자산유형 추가</string>
+
     <!--    Statistic Asset-->
     <string name="cumulative_balance">누적잔액</string>
     <string name="income_expense">수입/지출</string>

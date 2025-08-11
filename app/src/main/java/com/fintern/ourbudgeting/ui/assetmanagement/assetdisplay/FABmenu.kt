@@ -25,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.R
 
@@ -65,18 +66,18 @@ fun FABMenu(
                         onAddAssetClick()
                         isExpanded = false
                     },
-                    text = "자산유형 추가",
+                    text = stringResource(R.string.add_asset_type),
                     backgroundColor = Color(0xFF4CAF50),
-                    iconRes = R.drawable.ic_add // 자산용 아이콘
+                    iconRes = R.drawable.ic_add
                 )
                 FABMenuItem(
                     onClick = {
                         onAddDebtClick()
                         isExpanded = false
                     },
-                    text = "   자산 수정   ",
+                    text = stringResource(R.string.edit_asset_type),
                     backgroundColor = Color(0xFFF44336),
-                    iconRes = R.drawable.ic_edit // 부채용 아이콘 (다른 아이콘 사용)
+                    iconRes = R.drawable.ic_edit
                 )
             }
         }
