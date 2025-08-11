@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay
+package com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -33,7 +33,7 @@ import com.fintern.ourbudgeting.R
 fun FABMenu(
     modifier: Modifier = Modifier,
     onAddAssetTypeClick: () -> Unit = {},
-    onEditAssetTypelick: () -> Unit = {}
+    onEditAssetTypeClick: () -> Unit = {}
 ) {
     var isExpanded by remember { mutableStateOf(false) }
 
@@ -67,16 +67,14 @@ fun FABMenu(
                         isExpanded = false
                     },
                     text = stringResource(R.string.add_asset_type),
-                    backgroundColor = Color(0xFF4CAF50),
                     iconRes = R.drawable.ic_add
                 )
                 FABMenuItem(
                     onClick = {
-                        onEditAssetTypelick()
+                        onEditAssetTypeClick()
                         isExpanded = false
                     },
                     text = stringResource(R.string.edit_asset_type),
-                    backgroundColor = Color(0xFFF44336),
                     iconRes = R.drawable.ic_edit
                 )
             }

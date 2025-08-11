@@ -1,5 +1,8 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay
+package com.fintern.ourbudgeting.data.repository
 
+import com.fintern.ourbudgeting.ui.assetmanagement.data.AssetDetail
+import com.fintern.ourbudgeting.ui.assetmanagement.data.AssetSummary
+import com.fintern.ourbudgeting.ui.assetmanagement.data.AssetTransaction
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.awaitClose

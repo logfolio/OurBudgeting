@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay
+package com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,13 +18,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
-// FAB 메뉴 아이템 컴포넌트
+
 @Composable
 fun FABMenuItem(
     onClick: () -> Unit,
     text: String,
-    backgroundColor: Color,
-    iconRes: Int, // 아이콘 리소스 ID 추가
+    iconRes: Int,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -40,7 +39,7 @@ fun FABMenuItem(
             Icon(
                 painter = painterResource(iconRes),
                 contentDescription = text,
-                tint = Color.White, // 배경색을 아이콘 색상으로 사용
+                tint = Color.White,
                 modifier = Modifier.size(24.dp)
             )
 

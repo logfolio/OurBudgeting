@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay
+package com.fintern.ourbudgeting.ui.assetmanagement.data
 
 import com.google.firebase.Timestamp
 
