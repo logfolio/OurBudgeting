@@ -31,7 +31,7 @@ class AssetAdditionRepository @Inject constructor(
             } else {
                 val data = snapshot.data
                 if (data?.containsKey("assetType") != true) {
-                    householdRef.update("assetType", listOf("현금")).await()
+                    householdRef.update("assetType", listOf(defaultAssetType)).await()
                 }
             }
         }
