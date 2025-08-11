@@ -32,8 +32,8 @@ import com.fintern.ourbudgeting.R
 @Composable
 fun FABMenu(
     modifier: Modifier = Modifier,
-    onAddAssetClick: () -> Unit = {},
-    onAddDebtClick: () -> Unit = {}
+    onAddAssetTypeClick: () -> Unit = {},
+    onEditAssetTypelick: () -> Unit = {}
 ) {
     var isExpanded by remember { mutableStateOf(false) }
 
@@ -63,7 +63,7 @@ fun FABMenu(
             ) {
                 FABMenuItem(
                     onClick = {
-                        onAddAssetClick()
+                        onAddAssetTypeClick()
                         isExpanded = false
                     },
                     text = stringResource(R.string.add_asset_type),
@@ -72,7 +72,7 @@ fun FABMenu(
                 )
                 FABMenuItem(
                     onClick = {
-                        onAddDebtClick()
+                        onEditAssetTypelick()
                         isExpanded = false
                     },
                     text = stringResource(R.string.edit_asset_type),
