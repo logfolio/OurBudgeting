@@ -42,10 +42,6 @@
     <string name="currency_format">%1$,d원</string>
     <string name="label_select_filter">필터선택</string>
 
-
-
-
-
     <!--   Asset Management-->
     <string name="asset_management">자산 관리</string>
     <string name="cash">현금</string>
