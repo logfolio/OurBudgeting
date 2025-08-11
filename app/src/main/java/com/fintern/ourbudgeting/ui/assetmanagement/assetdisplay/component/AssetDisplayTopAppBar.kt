@@ -3,6 +3,7 @@ package com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.component
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -30,6 +31,7 @@ fun AssetDisplayTopAppBar(
         actions = {
             IconButton(onClick = onActionClick) {
                 Icon(
+                    tint = Color.Black,
                     painter = painterResource(R.drawable.ic_graph),
                     contentDescription = stringResource(R.string.graph)
                 )
