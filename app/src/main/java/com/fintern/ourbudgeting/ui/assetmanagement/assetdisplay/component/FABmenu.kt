@@ -87,7 +87,9 @@ fun FABMenu(
         ) {
             Icon(
                 imageVector = if (isExpanded) Icons.Default.Close else Icons.Default.Add,
-                contentDescription = if (isExpanded) "Close" else "Open menu",
+                contentDescription = if (isExpanded) stringResource(R.string.description_close) else stringResource(
+                    R.string.description_open_menu
+                ),
                 modifier = Modifier.size(24.dp)
             )
         }

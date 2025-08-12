@@ -50,6 +50,8 @@
     <string name="asset_management">자산 관리</string>
     <string name="cash">현금</string>
     <string name="card">카드</string>
+    <string name="description_close">Close</string>
+    <string name="description_open_menu">Open menu</string>
 
     <!--    Add Asset-->
     <string name="add_asset">자산 추가</string>
@@ -137,4 +139,5 @@
     <string name="login_is_not_success">로그인이 되지 않았습니다.</string>
     <string name="asset_type_added">자산이 추가되었습니다</string>
     <string name="failed_to_save">저장에 실패하였습니다.</string>
+
 </resources>
