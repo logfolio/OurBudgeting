@@ -121,5 +121,5 @@
     <string name="content">내용</string>
     <string name="delete_image">이미지 삭제</string>
     <string name="date_picker">날짜 선택</string>
-    <string name="save_success">저장이 성공하였습니다!</string>
+    <string name="save_success">저장 완료!</string>
 </resources>
