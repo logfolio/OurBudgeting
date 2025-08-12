@@ -36,7 +36,7 @@ fun AssetDisplayScreen(
     householdId: String,
     viewModel: AssetDisplayViewModel = hiltViewModel(),
     onAddAssetTypeClick: () -> Unit = {},
-    onEditAssetTypeClick:()->Unit = {}
+    onEditAssetTypeClick: () -> Unit = {}
 ) {
     val assetSummary by viewModel.assetSummary.collectAsState()
 
@@ -58,10 +58,15 @@ fun AssetDisplayScreen(
                 AssetDivider()
                 val cashResult = viewModel.getAssetDetailByName(stringResource(R.string.cash))
                 cashResult?.let {
-                    AssetBody(name = stringResource(R.string.cash), amount = it.totalAmount, modifier = Modifier.fillMaxWidth())
+                    AssetBody(
+                        name = stringResource(R.string.cash),
+                        amount = it.totalAmount,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
 
-                val bankAssetDetail = viewModel.getAssetDetailContaining(stringResource(R.string.bank))
+                val bankAssetDetail =
+                    viewModel.getAssetDetailContaining(stringResource(R.string.bank))
                 if (bankAssetDetail.isNotEmpty()) {
                     LazyColumn(
                         modifier = Modifier.fillMaxWidth(),
