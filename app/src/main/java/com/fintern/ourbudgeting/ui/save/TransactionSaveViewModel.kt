@@ -9,6 +9,7 @@ import com.fintern.ourbudgeting.data.repository.TransactionSaveRepository
 import com.fintern.ourbudgeting.ui.common.model.FirebaseError
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.fintern.ourbudgeting.util.NumberUtils
+import com.fintern.ourbudgeting.util.ReceiptOcrParser
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.storage.StorageException
@@ -61,6 +62,17 @@ class TransactionSaveViewModel @Inject constructor(
 
                 _eventFlow.emit(TransactionUiEvent.ShowSnackbar(error.messageResId))
             }
+        }
+    }
+
+    fun applyScannedReceipt(text: String) {
+        val parsed = ReceiptOcrParser.parseFields(text)
+
+        parsed.amount?.let {
+            setAmountTextFieldValue(TextFieldValue(it))
+        }
+        parsed.storeName?.let {
+            setContent(it)
         }
     }
 

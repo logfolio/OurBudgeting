@@ -1,5 +1,7 @@
 package com.fintern.ourbudgeting.ui.save
 
+import android.content.Context
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -47,25 +49,44 @@ import com.fintern.ourbudgeting.ui.save.componenet.DatePickerField
 import com.fintern.ourbudgeting.ui.save.componenet.DropDownField
 import com.fintern.ourbudgeting.ui.save.componenet.ImagePreview
 import com.fintern.ourbudgeting.ui.save.componenet.TransactionToggle
+import com.fintern.ourbudgeting.ui.save.componenet.TransactionTopAppBar
 import com.fintern.ourbudgeting.ui.user.UserViewModel
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions
 
 @Composable
 fun TransactionSaveScreen(
     initialTransactionType: TransactionType,
     householdId: String,
+    onNavigateToBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TransactionSaveViewModel = hiltViewModel(),
     userViewModel: UserViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    val launcher =
-        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            viewModel.setPhotoUri(uri)
-        }
-    val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
+    val uiState by viewModel.uiState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     val uid by userViewModel.uid.collectAsState()
+
+    // 이미지 업데이트용
+    val imageOnlyLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            uri?.let {
+                viewModel.setPhotoUri(it)
+            }
+        }
+
+    // OCR 수행용
+    val ocrLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            uri?.let {
+                processReceiptImage(context, it) { result ->
+                    viewModel.applyScannedReceipt(result)
+                }
+            }
+        }
 
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collect { event ->
@@ -86,6 +107,17 @@ fun TransactionSaveScreen(
     }
 
     Scaffold(
+        topBar = {
+            TransactionTopAppBar(
+                uiState = uiState,
+                onNavigateToBack = onNavigateToBack,
+                onCameraClick = {
+                    ocrLauncher.launch(
+                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                    )
+                }
+            )
+        },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         },
@@ -172,7 +204,7 @@ fun TransactionSaveScreen(
                 trailingIcon = {
                     IconButton(
                         onClick = {
-                            launcher.launch(
+                            imageOnlyLauncher.launch(
                                 PickVisualMediaRequest(
                                     mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly
                                 )
@@ -234,4 +266,14 @@ fun TransactionSaveScreen(
             }
         }
     }
+}
+
+private fun processReceiptImage(context: Context, imageUri: Uri, onSuccess: (String) -> Unit) {
+    val recognizer = TextRecognition.getClient(KoreanTextRecognizerOptions.Builder().build())
+    val image = InputImage.fromFilePath(context, imageUri)
+
+    recognizer.process(image)
+        .addOnSuccessListener { result ->
+            onSuccess(result.text)
+        }
 }
