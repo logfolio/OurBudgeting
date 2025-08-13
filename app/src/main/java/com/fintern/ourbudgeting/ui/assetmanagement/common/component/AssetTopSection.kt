@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,22 +36,22 @@ fun AssetTopSection(
             modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(stringResource(R.string.asset))
-            Text(stringResource(R.string.amount_won,asset), color = Color.Blue)
+            Text(stringResource(R.string.asset), color = Black)
+            Text(stringResource(R.string.amount_won, asset), color = Color.Blue)
         }
         Column(
             modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(stringResource(R.string.debt))
-            Text(stringResource(R.string.amount_won,debt), color = Red)
+            Text(stringResource(R.string.debt), color = Black)
+            Text(stringResource(R.string.amount_won, debt), color = Red)
         }
         Column(
             modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(stringResource(R.string.total))
-            Text(stringResource(R.string.amount_won,asset-debt))
+            Text(stringResource(R.string.total), color = Black)
+            Text(stringResource(R.string.amount_won, asset - debt), color = Black)
         }
     }
 }

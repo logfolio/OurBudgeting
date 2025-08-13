@@ -30,6 +30,7 @@ fun AssetDisplayTopAppBar(
         actions = {
             IconButton(onClick = onActionClick) {
                 Icon(
+                    tint = Color.Black,
                     painter = painterResource(R.drawable.ic_graph),
                     contentDescription = stringResource(R.string.graph)
                 )

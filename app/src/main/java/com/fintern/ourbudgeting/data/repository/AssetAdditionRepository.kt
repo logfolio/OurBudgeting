@@ -28,6 +28,11 @@ class AssetAdditionRepository @Inject constructor(
                     "userId" to user.uid
                 )
                 householdRef.set(initialData).await()
+            } else {
+                val data = snapshot.data
+                if (data?.containsKey("assetType") != true) {
+                    householdRef.update("assetType", listOf(defaultAssetType)).await()
+                }
             }
         }
     }
