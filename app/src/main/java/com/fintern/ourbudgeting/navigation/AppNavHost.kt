@@ -9,6 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.AssetDisplayScreen
+import com.fintern.ourbudgeting.ui.assetmanagement.assetedition.AssetEditScreen
+import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.AssetAdditionScreen
 import com.fintern.ourbudgeting.ui.calendar.CalendarScreen
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.fintern.ourbudgeting.ui.login.HomeScreen
@@ -46,7 +48,12 @@ fun AppNavHost(
         composable(BottomNavigationItem.HOME.name) { HomeScreen() }
         composable(BottomNavigationItem.CALENDAR.name) { CalendarScreen() }
         composable(BottomNavigationItem.STATISTICS.name) { StatisticsScreen(uid = "", householdId = "") }
-        composable(BottomNavigationItem.ASSETMANAGEMENT.name) { AssetDisplayScreen(householdId ="" ) }
+        composable(BottomNavigationItem.ASSETMANAGEMENT.name) {
+            AssetDisplayScreen(
+                householdId ="",
+                onEditAssetTypeClick = {navController.navigate("edit_asset")},
+                onAddAssetTypeClick = {navController.navigate("add_asset")}
+            ) }
         composable(BottomNavigationItem.SETTING.name) { }
         composable(Screen.TRANSACTIONSAVE.name) {
             TransactionSaveScreen(
@@ -56,6 +63,13 @@ fun AppNavHost(
                     navController.popBackStack()
                 },
                 // TODO: householdId 추가
+            )
+        }
+
+        composable("edit_asset"){
+            AssetEditScreen(
+                householdId = "",
+                onNavigateBack = {navController.navigateUp()}
             )
         }
     }
