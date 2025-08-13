@@ -12,6 +12,7 @@ import com.fintern.ourbudgeting.util.NumberUtils
 import com.fintern.ourbudgeting.util.ReceiptOcrParser
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.storage.StorageException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,6 +51,7 @@ class TransactionSaveViewModel @Inject constructor(
                 val error = when (e) {
                     is FirebaseNetworkException -> FirebaseError.NetworkError
                     is FirebaseFirestoreException -> FirebaseError.FirestoreError
+                    is StorageException -> FirebaseError.ImageUploadError
                     else -> FirebaseError.UnknownError
                 }
 

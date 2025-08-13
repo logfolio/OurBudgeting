@@ -49,7 +49,11 @@ class RemoteTransactionSaveRepository @Inject constructor(
         val fileName = "photos/${UUID.randomUUID()}.jpg"
         val ref = storage.reference.child(fileName)
 
-        ref.putFile(uri).await()
-        return ref.downloadUrl.await().toString()
+        try {
+            ref.putFile(uri).await()
+            return ref.downloadUrl.await().toString()
+        } catch (e: Exception) {
+            throw e
+        }
     }
 }

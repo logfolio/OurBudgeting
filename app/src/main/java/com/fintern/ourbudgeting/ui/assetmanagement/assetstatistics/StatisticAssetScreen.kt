@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.screen
+package com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,16 +15,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.R
-import com.fintern.ourbudgeting.ui.assetmanagement.component.LineChart
-import com.fintern.ourbudgeting.ui.assetmanagement.component.StatisticAssetChartTitle
-import com.fintern.ourbudgeting.ui.assetmanagement.component.StatisticAssetTopSection
-import com.fintern.ourbudgeting.ui.assetmanagement.component.StatisticsAssetTopAppBar
-import com.fintern.ourbudgeting.ui.assetmanagement.component.TwoLineChart
+import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.LineChart
+import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.StatisticAssetChartTitle
+import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.StatisticAssetTopSection
+import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.StatisticsAssetTopAppBar
+import com.fintern.ourbudgeting.ui.assetmanagement.assetstatistics.component.TwoLineChart
 import com.fintern.ourbudgeting.ui.assetmanagement.data.LineChartConfig
 import com.fintern.ourbudgeting.ui.assetmanagement.data.Point
 
 @Composable
-fun StatisticAssetManagementScreen(
+fun StatisticAssetScreen(
     modifier: Modifier = Modifier,
     totalPrice: Long,
     data: List<Point>,
@@ -81,7 +81,7 @@ fun StatisticAssetManagementScreen(
 @Composable
 fun StatisticAssetManagementScreenPreview() {
     MaterialTheme {
-        StatisticAssetManagementScreen(
+        StatisticAssetScreen(
             data = listOf(
                 Point(1, 10.0),
                 Point(2, 15.0),
