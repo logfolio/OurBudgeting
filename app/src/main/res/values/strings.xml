@@ -18,6 +18,11 @@
     <string name="statistics">통계</string>
     <string name="setting">설정</string>
 
+    <!--  Home  -->
+    <string name="total_asset">전체 자산</string>
+    <string name="add_income">수입 기록</string>
+    <string name="add_expense">지출 기록</string>
+
     <!--  Calendar  -->
     <string name="item_amount">%1$s %2$s원</string>
     <string name="calendar_year_month_format">%1$s년%2$s월</string>
