@@ -75,6 +75,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
     implementation(libs.firebase.auth)
 
     // Google Auth
@@ -96,6 +97,9 @@ dependencies {
 
     // Image
     implementation(libs.coil.compose)
+
+    // ML Kit
+    implementation(libs.text.recognition.korean)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
