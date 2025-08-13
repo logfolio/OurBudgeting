@@ -10,9 +10,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.fintern.ourbudgeting.ui.assetmanagement.screen.AssetManagementScreen
 import com.fintern.ourbudgeting.ui.calendar.CalendarScreen
+import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.fintern.ourbudgeting.ui.login.HomeScreen
 import com.fintern.ourbudgeting.ui.login.LoginScreen
 import com.fintern.ourbudgeting.ui.login.LoginViewModel
+import com.fintern.ourbudgeting.ui.save.TransactionSaveScreen
 import com.fintern.ourbudgeting.ui.statistics.chart.StatisticsScreen
 
 @Composable
@@ -43,8 +45,25 @@ fun AppNavHost(
 
         composable(BottomNavigationItem.HOME.name) { HomeScreen() }
         composable(BottomNavigationItem.CALENDAR.name) { CalendarScreen() }
-        composable(BottomNavigationItem.STATISTICS.name) { StatisticsScreen(uid = "", householdId = "") }
-        composable(BottomNavigationItem.ASSETMANAGEMENT.name) { AssetManagementScreen(asset = 0, dept = 0) }
+        composable(BottomNavigationItem.STATISTICS.name) {
+            StatisticsScreen(
+                uid = "",
+                householdId = ""
+            )
+        }
+        composable(BottomNavigationItem.ASSETMANAGEMENT.name) {
+            AssetManagementScreen(
+                asset = 0,
+                dept = 0
+            )
+        }
         composable(BottomNavigationItem.SETTING.name) { }
+        composable(Screen.TRANSACTIONSAVE.name) {
+            TransactionSaveScreen(
+                initialTransactionType = TransactionType.EXPENSE,
+                householdId = ""
+                // TODO: householdId 추가
+            )
+        }
     }
 }

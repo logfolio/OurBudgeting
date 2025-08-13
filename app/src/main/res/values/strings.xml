@@ -133,4 +133,6 @@
     <string name="login_is_not_success">로그인이 되지 않았습니다.</string>
     <string name="asset_type_added">자산이 추가되었습니다</string>
     <string name="failed_to_save">저장에 실패하였습니다.</string>
+    <string name="save_success">저장 완료!</string>
+    <string name="error_image_upload">이미지 업로드에 실패했습니다. 다시 시도해 주세요!</string>
 </resources>

@@ -4,8 +4,10 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,21 +16,26 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.R
@@ -40,27 +47,67 @@ import com.fintern.ourbudgeting.ui.save.componenet.DatePickerField
 import com.fintern.ourbudgeting.ui.save.componenet.DropDownField
 import com.fintern.ourbudgeting.ui.save.componenet.ImagePreview
 import com.fintern.ourbudgeting.ui.save.componenet.TransactionToggle
-import com.fintern.ourbudgeting.ui.theme.OurBudgetingTheme
+import com.fintern.ourbudgeting.ui.user.UserViewModel
 
 @Composable
-fun TransactionAddScreen(
+fun TransactionSaveScreen(
     initialTransactionType: TransactionType,
+    householdId: String,
     modifier: Modifier = Modifier,
-    viewModel: TransactionAddViewModel = hiltViewModel()
+    viewModel: TransactionSaveViewModel = hiltViewModel(),
+    userViewModel: UserViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             viewModel.setPhotoUri(uri)
         }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
-    Scaffold { innerPadding ->
+    val uid by userViewModel.uid.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.eventFlow.collect { event ->
+            when (event) {
+                is TransactionUiEvent.ShowSnackbar -> {
+                    snackbarHostState.showSnackbar(
+                        message = context.getString(event.messageResId)
+                    )
+                }
+
+                TransactionUiEvent.Success -> {
+                    snackbarHostState.showSnackbar(
+                        message = context.getString(R.string.save_success)
+                    )
+                }
+            }
+        }
+    }
+
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
+    ) { innerPadding ->
         val categoryOptions = when (uiState.transactionType) {
             TransactionType.EXPENSE -> ExpenseCategoryType.entries
                 .map { stringResource(id = it.labelRes) }
 
             TransactionType.INCOME -> IncomeCategoryType.entries
                 .map { stringResource(id = it.labelRes) }
+        }
+
+        if (uiState.isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    color = Color(0xFF964BFF)
+                )
+            }
         }
 
         Column(
@@ -71,7 +118,7 @@ fun TransactionAddScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             TransactionToggle(
-                transactionType = uiState.transactionType,
+                transactionType = initialTransactionType,
                 onTransactionTypeChange = {
                     viewModel.setTransactionType(it)
                 }
@@ -169,7 +216,7 @@ fun TransactionAddScreen(
             // 저장 버튼
             Button(
                 onClick = {
-                    // TODO: 저장
+                    viewModel.saveTransaction(householdId, uid)
                 },
                 enabled = uiState.isSaveEnabled,
                 modifier = modifier
@@ -186,13 +233,5 @@ fun TransactionAddScreen(
                 )
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun Preview() {
-    OurBudgetingTheme {
-        TransactionAddScreen(TransactionType.EXPENSE)
     }
 }
