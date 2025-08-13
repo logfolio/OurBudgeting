@@ -3,6 +3,7 @@ package com.fintern.ourbudgeting.data.repository
 import com.fintern.ourbudgeting.ui.assetmanagement.data.AssetDetail
 import com.fintern.ourbudgeting.ui.assetmanagement.data.AssetSummary
 import com.fintern.ourbudgeting.ui.assetmanagement.data.AssetTransaction
+import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.awaitClose
@@ -33,22 +34,22 @@ class AssetDisplayRepository @Inject constructor(
                         doc.toObject(AssetTransaction::class.java)?.copy(id = doc.id)
                     }
                     val totalAsset = transactions
-                        .filter { it.type == "INCOME" }
+                        .filter { it.type == TransactionType.INCOME }
                         .sumOf { it.amount }
 
                     val totalDebt = transactions
-                        .filter { it.type == "EXPENSE" }
+                        .filter { it.type == TransactionType.EXPENSE }
                         .sumOf { it.amount }
 
                     val assetDetails = transactions
                         .groupBy { it.assetId }
                         .map { (assetName, assetTransactions) ->
                             val incomeAmount = assetTransactions
-                                .filter { it.type == "INCOME" }
+                                .filter { it.type == TransactionType.INCOME }
                                 .sumOf { it.amount }
 
                             val expenseAmount = assetTransactions
-                                .filter { it.type == "EXPENSE" }
+                                .filter { it.type == TransactionType.EXPENSE }
                                 .sumOf { it.amount }
 
                             val totalAmount = incomeAmount - expenseAmount
