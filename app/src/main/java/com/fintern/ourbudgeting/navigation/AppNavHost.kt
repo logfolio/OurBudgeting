@@ -18,6 +18,8 @@ import com.fintern.ourbudgeting.ui.login.LoginScreen
 import com.fintern.ourbudgeting.ui.login.LoginViewModel
 import com.fintern.ourbudgeting.ui.save.TransactionSaveScreen
 import com.fintern.ourbudgeting.ui.statistics.chart.StatisticsScreen
+import com.fintern.ourbudgeting.ui.user.UserViewModel
+import com.google.firebase.firestore.core.FirestoreClient
 
 @Composable
 fun AppNavHost(
