@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.login
+package com.fintern.ourbudgeting.ui.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

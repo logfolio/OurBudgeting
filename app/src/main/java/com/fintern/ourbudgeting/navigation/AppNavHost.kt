@@ -13,7 +13,7 @@ import com.fintern.ourbudgeting.ui.assetmanagement.assetedition.AssetEditScreen
 import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.AssetAdditionScreen
 import com.fintern.ourbudgeting.ui.calendar.CalendarScreen
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
-import com.fintern.ourbudgeting.ui.login.HomeScreen
+import com.fintern.ourbudgeting.ui.home.HomeScreen
 import com.fintern.ourbudgeting.ui.login.LoginScreen
 import com.fintern.ourbudgeting.ui.login.LoginViewModel
 import com.fintern.ourbudgeting.ui.save.TransactionSaveScreen
