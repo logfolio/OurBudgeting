@@ -1,19 +1,24 @@
 package com.fintern.ourbudgeting.ui.home
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.fintern.ourbudgeting.R
+import com.fintern.ourbudgeting.ui.home.components.AssetSummaryCard
 import com.fintern.ourbudgeting.ui.user.UserViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    onAddIncomeClick: () -> Unit,
+    onAddExpenseClick: () -> Unit,
     viewModel: UserViewModel = hiltViewModel()
 ) {
     val uid by viewModel.uid.collectAsState()
@@ -28,21 +33,14 @@ fun HomeScreen(
         }
     }
 
-    Scaffold { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)) {
-
-            Text(
-                text = "홈 화면",
-                modifier = Modifier.padding(innerPadding)
-            )
-            Text(
-                text = uid,
-                modifier = Modifier.padding(innerPadding)
-            )
-            Text(
-                text = nickname,
-                modifier = Modifier.padding(innerPadding)
-            )
-        }
+    Column {
+        TopAppBar(
+            title = { Text(stringResource(R.string.calendar_label_app_name)) }
+        )
+        AssetSummaryCard(
+            amount = "100,000",
+            onAddIncomeClick = onAddIncomeClick,
+            onAddExpenseClick = onAddExpenseClick,
+        )
     }
 }
