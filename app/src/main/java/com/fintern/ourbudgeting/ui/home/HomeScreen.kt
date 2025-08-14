@@ -43,6 +43,9 @@ fun HomeScreen(
             onAddIncomeClick = onAddIncomeClick,
             onAddExpenseClick = onAddExpenseClick,
         )
+
+        Text(stringResource(R.string.latest_transaction_content))
+
         LatestTransactionCard(
             content = "롯데리아",
             amount = "5,000",
