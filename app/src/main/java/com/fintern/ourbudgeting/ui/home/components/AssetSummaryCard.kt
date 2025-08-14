@@ -32,8 +32,7 @@ fun AssetSummaryCard(
 ) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .fillMaxWidth(),
         colors = CardDefaults.cardColors(Color(0xFFE1CBFF)),
         shape = RoundedCornerShape(8.dp)
     ) {
