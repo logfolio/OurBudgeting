@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.home.components.AssetSummaryCard
+import com.fintern.ourbudgeting.ui.home.components.LatestTransactionCard
 import com.fintern.ourbudgeting.ui.user.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,6 +42,11 @@ fun HomeScreen(
             amount = "100,000",
             onAddIncomeClick = onAddIncomeClick,
             onAddExpenseClick = onAddExpenseClick,
+        )
+        LatestTransactionCard(
+            content = "롯데리아",
+            amount = "5,000",
+            imageUri = TODO(),
         )
     }
 }
