@@ -23,6 +23,7 @@
     <string name="add_income">수입 기록</string>
     <string name="add_expense">지출 기록</string>
     <string name="latest_transaction_content">최근 거래 내역</string>
+    <string name="exchange_rate">환율</string>
 
     <!--  Calendar  -->
     <string name="item_amount">%1$s %2$s원</string>
