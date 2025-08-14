@@ -1,5 +1,6 @@
 package com.fintern.ourbudgeting.data.repository
 
+import com.fintern.ourbudgeting.data.model.FirebaseConstants
 import com.fintern.ourbudgeting.ui.assetmanagement.data.AssetDetail
 import com.fintern.ourbudgeting.ui.assetmanagement.data.AssetSummary
 import com.fintern.ourbudgeting.ui.assetmanagement.data.AssetTransaction
@@ -18,9 +19,9 @@ class AssetDisplayRepository @Inject constructor(
 ) {
     fun getAssetSummary(householdId: String): Flow<Result<AssetSummary>> = callbackFlow {
         val transactionsRef = db
-            .collection("households")
+            .collection(FirebaseConstants.COLLECTION_HOUSEHOLDS)
             .document(householdId)
-            .collection("transactions")
+            .collection(FirebaseConstants.COLLECTION_TRANSACTIONS)
 
         val listener = transactionsRef.addSnapshotListener { snapshot, error ->
             if (error != null) {

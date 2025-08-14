@@ -1,5 +1,6 @@
 package com.fintern.ourbudgeting.data.repository
 
+import com.fintern.ourbudgeting.data.model.FirebaseConstants
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -18,21 +19,21 @@ class StatisticsRepository(
         val startTimestamp = getStartTimestamp(year, month)
         val endTimestamp = getEndTimestamp(year, month)
 
-        val query = firestore.collection("households")
+        val query = firestore.collection(FirebaseConstants.COLLECTION_HOUSEHOLDS)
             .document(householdId)
-            .collection("transactions")
-            .whereEqualTo("type", type)
-            .whereEqualTo("createdBy", uid)
-            .whereGreaterThanOrEqualTo("date", startTimestamp)
-            .whereLessThan("date", endTimestamp)
+            .collection(FirebaseConstants.COLLECTION_TRANSACTIONS)
+            .whereEqualTo(FirebaseConstants.FIELD_TYPE, type)
+            .whereEqualTo(FirebaseConstants.FIELD_CREATED_BY, uid)
+            .whereGreaterThanOrEqualTo(FirebaseConstants.FIELD_DATE, startTimestamp)
+            .whereLessThan(FirebaseConstants.FIELD_DATE, endTimestamp)
 
         val snapshot = query.get().await()
 
         return snapshot.documents
             .mapNotNull { it.data }
-            .groupBy { it["category"] as? String ?: "Uncategorized" }
+            .groupBy { it[FirebaseConstants.FIELD_CATEGORY] as? String ?: "Uncategorized" }
             .mapValues { (_, docs) ->
-                docs.sumOf { (it["amount"] as? Number)?.toDouble() ?: 0.0 }
+                docs.sumOf { (it[FirebaseConstants.FIELD_AMOUNT] as? Number)?.toDouble() ?: 0.0 }
             }
     }
 
