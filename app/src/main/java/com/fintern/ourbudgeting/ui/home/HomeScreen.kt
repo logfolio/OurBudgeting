@@ -1,6 +1,8 @@
 package com.fintern.ourbudgeting.ui.home
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -8,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.R
@@ -34,10 +37,14 @@ fun HomeScreen(
         }
     }
 
-    Column {
+    Column(
+        modifier = Modifier.padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
         TopAppBar(
             title = { Text(stringResource(R.string.calendar_label_app_name)) }
         )
+
         AssetSummaryCard(
             amount = "100,000",
             onAddIncomeClick = onAddIncomeClick,
