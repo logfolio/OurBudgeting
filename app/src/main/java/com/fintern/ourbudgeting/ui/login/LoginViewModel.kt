@@ -1,5 +1,6 @@
 package com.fintern.ourbudgeting.ui.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fintern.ourbudgeting.data.auth.GoogleSignInClient
@@ -31,7 +32,8 @@ class LoginViewModel @Inject constructor(
                 val googleIdToken = signInClient.getGoogleIdToken()
                 val user = authRepository.signInWithGoogle(googleIdToken)
                 _uiState.value = _uiState.value.copy(currentUser = user)
-                user?.uid?.let { userViewModel.updateUser(it, user.displayName.toString()) }
+                user?.uid?.let { userViewModel
+                    .updateUser(it, user.displayName.toString(), user.email.toString()) }
             } catch (e: Exception) {
                 // TODO: 에러 처리
             }
