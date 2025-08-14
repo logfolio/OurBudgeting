@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.data.api
+package com.fintern.ourbudgeting.data.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName

@@ -1,9 +1,11 @@
-package com.fintern.ourbudgeting.data.api
+package com.fintern.ourbudgeting.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.State
+import com.fintern.ourbudgeting.data.model.ExchangeRate
+import com.fintern.ourbudgeting.data.repository.ExchangeRateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -1,5 +1,7 @@
-package com.fintern.ourbudgeting.data.api
+package com.fintern.ourbudgeting.data.repository
 
+import com.fintern.ourbudgeting.data.model.ExchangeRate
+import com.fintern.ourbudgeting.data.api.ExchangeRateApiService
 import javax.inject.Inject
 
 class ExchangeRateRepository @Inject constructor(
