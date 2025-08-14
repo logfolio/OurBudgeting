@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fintern.ourbudgeting.R
-import com.fintern.ourbudgeting.data.calendar.CategoryDefinition
+import com.fintern.ourbudgeting.data.calendar.CategoryType
 import com.fintern.ourbudgeting.data.calendar.CategoryList
 import com.fintern.ourbudgeting.data.calendar.TransactionWithId
 import com.fintern.ourbudgeting.ui.calendar.component.Calendar
@@ -99,12 +99,11 @@ fun CalendarScreen(
         }
             .groupBy { it.transaction.category }
             .map { (categoryName, transactionList) ->
+                val categoryType = CategoryType.entries.find {
+                    it.name == categoryName
+                } ?: CategoryType.ETC
                 CategoryList(
-                    category = CategoryDefinition(
-                        id = categoryName,
-                        emoji = "🍔",
-                        displayName = "식비"
-                    ),
+                    category = categoryType,
                     items = transactionList
                 )
             }
@@ -134,12 +133,11 @@ fun CalendarScreen(
         selectedDayTransactions
             .groupBy { it.transaction.category }
             .map { (categoryName, transactionList) ->
+                val categoryType = CategoryType.entries.find {
+                    it.name == categoryName
+                } ?: CategoryType.ETC
                 CategoryList(
-                    category = CategoryDefinition(
-                        id = categoryName,
-                        emoji = "🍔",
-                        displayName = "식비"
-                    ),
+                    category = categoryType,
                     items = transactionList
                 )
             }
