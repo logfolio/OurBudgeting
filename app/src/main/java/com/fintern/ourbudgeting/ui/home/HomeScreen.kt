@@ -27,8 +27,11 @@ import com.fintern.ourbudgeting.ui.user.UserViewModel
 fun HomeScreen(
     onAddIncomeClick: () -> Unit,
     onAddExpenseClick: () -> Unit,
-    viewModel: UserViewModel = hiltViewModel()
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    viewModel: UserViewModel = hiltViewModel(),
 ) {
+    val uiState by homeViewModel.uiState.collectAsState()
+
     val uid by viewModel.uid.collectAsState()
     val nickname by viewModel.nickname.collectAsState()
     val household by viewModel.household.collectAsState()
@@ -51,7 +54,7 @@ fun HomeScreen(
         )
 
         AssetSummaryCard(
-            amount = "100,000",
+            amount = uiState.totalAssetText,
             onAddIncomeClick = onAddIncomeClick,
             onAddExpenseClick = onAddExpenseClick,
         )
@@ -62,13 +65,13 @@ fun HomeScreen(
             style = MaterialTheme.typography.titleMedium,
         )
 
-        LatestTransactionCard(
-            content = "롯데리아",
-            amount = "5,000",
-            imageUri = TODO(),
-        )
-
-        Spacer(modifier = Modifier.padding(vertical = 4.dp))
+        uiState.latestTransaction.forEach { transaction ->
+            LatestTransactionCard(
+                content = transaction.content,
+                amount = transaction.amountText,
+                imageUri = transaction.imageUri
+            )
+        }
 
         Text(
             text = stringResource(R.string.exchange_rate),
@@ -76,10 +79,12 @@ fun HomeScreen(
             style = MaterialTheme.typography.titleMedium,
         )
 
-        ExchangeRateCard(
-            countryName = "TODO()",
-            currencyCode = "TODO()",
-            exchangeRate = "TODO()",
-        )
+        uiState.exchangeRates.forEach { r ->
+            ExchangeRateCard(
+                countryName = r.countryName,
+                currencyCode = r.currencyCode,
+                exchangeRate = r.rateText,
+            )
+        }
     }
 }
