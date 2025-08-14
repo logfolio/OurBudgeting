@@ -1,6 +1,7 @@
 package com.fintern.ourbudgeting.ui.calendar.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -16,6 +17,7 @@ import com.fintern.ourbudgeting.ui.calendar.CalendarGrid
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarConfig
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayConfig
 import com.fintern.ourbudgeting.ui.calendar.component.config.CalendarDayLabelConfig
+import com.fintern.ourbudgeting.ui.calendar.extensions.onDayClick
 import com.fintern.ourbudgeting.ui.calendar.extensions.toLocalDate
 import com.fintern.ourbudgeting.util.CalendarConstants
 import java.time.DayOfWeek
@@ -23,11 +25,15 @@ import java.time.LocalDate
 
 @Composable
 fun Calendar(
-    selectedDate: LocalDate,
     modifier: Modifier = Modifier,
+    selectedDate: LocalDate?,
+    onDateClick: (LocalDate) -> Unit,
     calendarConfig: CalendarConfig = CalendarConfig(),
     startDayOfWeek: DayOfWeek = DayOfWeek.SUNDAY,
     categoryLists: List<CategoryList> = emptyList(),
+    currentMonth: LocalDate,
+    onPreviousClick: () -> Unit,
+    onNextClick: () -> Unit,
 ) {
     CalendarContent(
         selectedDate = selectedDate,
@@ -35,24 +41,27 @@ fun Calendar(
         startDayOfWeek = startDayOfWeek,
         dayLabelConfig = calendarConfig.calendarDayLabelConfig,
         dayConfig = calendarConfig.calendarDayConfig,
-        categoryLists = categoryLists
+        categoryLists = categoryLists,
+        onDateClick = onDateClick,
+        currentMonth = currentMonth,
+        onPreviousClick = onPreviousClick,
+        onNextClick = onNextClick,
     )
 }
 
 @Composable
 fun CalendarContent(
-    selectedDate: LocalDate,
+    selectedDate: LocalDate?,
     modifier: Modifier = Modifier,
     startDayOfWeek: DayOfWeek,
     dayLabelConfig: CalendarDayLabelConfig,
     dayConfig: CalendarDayConfig,
-    categoryLists: List<CategoryList>
+    categoryLists: List<CategoryList>,
+    onDateClick: (LocalDate) -> Unit,
+    currentMonth: LocalDate,
+    onPreviousClick: () -> Unit,
+    onNextClick: () -> Unit,
 ) {
-    var currentMonth by remember {
-        mutableStateOf(
-            selectedDate.withDayOfMonth(1)
-        )
-    }
 
     val daysOfWeek = DayOfWeek.entries.let {
         it.drop(startDayOfWeek.ordinal) + it.take(startDayOfWeek.ordinal)
@@ -70,8 +79,8 @@ fun CalendarContent(
             month = currentMonth.month,
             year = currentMonth.year,
             modifier = Modifier,
-            onPreviousClick = { currentMonth = currentMonth.minusMonths(1) },
-            onNextClick = { currentMonth = currentMonth.plusMonths(1) }
+            onPreviousClick = onPreviousClick,
+            onNextClick = onNextClick
         )
         CalendarGrid(
             modifier = Modifier.fillMaxWidth(),
@@ -83,6 +92,10 @@ fun CalendarContent(
             val filteredItems = categoryLists.flatMap { it.items }.filter {
                 val itemDate = it.transaction.date?.toLocalDate()
                 itemDate == date
+            }
+
+            val clickableModifier = Modifier.clickable {
+                date.onDayClick(onClickedNewDate = onDateClick)
             }
 
             if (date.month == currentMonth.month) {
@@ -100,7 +113,9 @@ fun CalendarContent(
                         dayConfig.copy(
                             textStyle = dayConfig.textStyle
                         )
-                    }
+                    },
+                    selectedDate = selectedDate,
+                    modifier = clickableModifier
                 )
             } else {
                 CalendarDay(
@@ -109,7 +124,8 @@ fun CalendarContent(
                     dayConfig = dayConfig.copy(
                         textStyle = dayConfig.textStyle
                             .copy(color = Color.LightGray)
-                    )
+                    ),
+                    selectedDate = selectedDate
                 )
             }
         }
@@ -123,7 +139,8 @@ fun getMonthDates(
 ): List<LocalDate> {
     val firstDayOfMonth = currentMonth.withDayOfMonth(1)
 
-    val firstDayOffset = (firstDayOfMonth.dayOfWeek.ordinal - startDayOfWeek.ordinal + CalendarConstants.DAYS_IN_WEEK) % CalendarConstants.DAYS_IN_WEEK
+    val firstDayOffset =
+        (firstDayOfMonth.dayOfWeek.ordinal - startDayOfWeek.ordinal + CalendarConstants.DAYS_IN_WEEK) % CalendarConstants.DAYS_IN_WEEK
     val calendarStartDate = firstDayOfMonth.minusDays(firstDayOffset.toLong())
 
     return (0 until CalendarConstants.CALENDAR_TOTAL_CELL_COUNT).map { i ->
