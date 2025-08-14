@@ -73,6 +73,8 @@ fun HomeScreen(
             )
         }
 
+        Spacer(modifier = Modifier.padding(vertical = 8.dp))
+
         Text(
             text = stringResource(R.string.exchange_rate),
             fontWeight = FontWeight.SemiBold,
