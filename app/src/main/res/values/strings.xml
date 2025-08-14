@@ -139,4 +139,10 @@
     <string name="failed_to_save">저장에 실패하였습니다.</string>
     <string name="save_success">저장 완료!</string>
     <string name="error_image_upload">이미지 업로드에 실패했습니다. 다시 시도해 주세요!</string>
+
+    <!--  Setting  -->
+    <string name="move_action">이동</string>
+    <string name="top_bar_label_setting">설정</string>
+    <string name="title_householde_management">가계부 관리</string>
+    <string name="subtitle_household_management">가계부 관리</string>
 </resources>
