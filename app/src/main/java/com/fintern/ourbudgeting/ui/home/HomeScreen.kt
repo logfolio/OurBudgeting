@@ -56,7 +56,11 @@ fun HomeScreen(
             onAddExpenseClick = onAddExpenseClick,
         )
 
-        Text(stringResource(R.string.latest_transaction_content))
+        Text(
+            text = stringResource(R.string.latest_transaction_content),
+            fontWeight = FontWeight.SemiBold,
+            style = MaterialTheme.typography.titleLarge,
+        )
 
         LatestTransactionCard(
             content = "롯데리아",
