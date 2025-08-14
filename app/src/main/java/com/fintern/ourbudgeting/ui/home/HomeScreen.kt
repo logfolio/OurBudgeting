@@ -2,8 +2,10 @@ package com.fintern.ourbudgeting.ui.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -12,9 +14,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.home.components.AssetSummaryCard
+import com.fintern.ourbudgeting.ui.home.components.ExchangeRateCard
 import com.fintern.ourbudgeting.ui.home.components.LatestTransactionCard
 import com.fintern.ourbudgeting.ui.user.UserViewModel
 
@@ -57,6 +62,20 @@ fun HomeScreen(
             content = "롯데리아",
             amount = "5,000",
             imageUri = TODO(),
+        )
+
+        Spacer(modifier = Modifier.padding(vertical = 4.dp))
+
+        Text(
+            text = stringResource(R.string.exchange_rate),
+            fontWeight = FontWeight.SemiBold,
+            style = MaterialTheme.typography.titleLarge,
+        )
+
+        ExchangeRateCard(
+            countryName = "TODO()",
+            currencyCode = "TODO()",
+            exchangeRate = "TODO()",
         )
     }
 }
