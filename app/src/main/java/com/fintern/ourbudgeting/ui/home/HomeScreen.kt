@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -46,8 +45,9 @@ fun HomeScreen(
         modifier = Modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        TopAppBar(
-            title = { Text(stringResource(R.string.calendar_label_app_name)) }
+        Text(
+            stringResource(R.string.calendar_label_app_name),
+            style = MaterialTheme.typography.titleLarge
         )
 
         AssetSummaryCard(
@@ -59,7 +59,7 @@ fun HomeScreen(
         Text(
             text = stringResource(R.string.latest_transaction_content),
             fontWeight = FontWeight.SemiBold,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
         )
 
         LatestTransactionCard(
@@ -73,7 +73,7 @@ fun HomeScreen(
         Text(
             text = stringResource(R.string.exchange_rate),
             fontWeight = FontWeight.SemiBold,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
         )
 
         ExchangeRateCard(
