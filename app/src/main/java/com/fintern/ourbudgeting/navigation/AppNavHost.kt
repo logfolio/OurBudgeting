@@ -15,6 +15,7 @@ import com.fintern.ourbudgeting.ui.login.HomeScreen
 import com.fintern.ourbudgeting.ui.login.LoginScreen
 import com.fintern.ourbudgeting.ui.login.LoginViewModel
 import com.fintern.ourbudgeting.ui.save.TransactionSaveScreen
+import com.fintern.ourbudgeting.ui.setting.SettingScreen
 import com.fintern.ourbudgeting.ui.statistics.chart.StatisticsScreen
 
 @Composable
@@ -47,7 +48,7 @@ fun AppNavHost(
         composable(BottomNavigationItem.CALENDAR.name) { CalendarScreen() }
         composable(BottomNavigationItem.STATISTICS.name) { StatisticsScreen(uid = "", householdId = "") }
         composable(BottomNavigationItem.ASSETMANAGEMENT.name) { AssetDisplayScreen(householdId ="" ) }
-        composable(BottomNavigationItem.SETTING.name) { }
+        composable(BottomNavigationItem.SETTING.name) { SettingScreen() }
         composable(Screen.TRANSACTIONSAVE.name) {
             TransactionSaveScreen(
                 initialTransactionType = TransactionType.EXPENSE,
