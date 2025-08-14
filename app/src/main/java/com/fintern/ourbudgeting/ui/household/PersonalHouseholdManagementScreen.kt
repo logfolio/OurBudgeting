@@ -23,16 +23,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.household.component.HouseHoldTopAppbar
 import com.fintern.ourbudgeting.ui.save.componenet.CommonOutlinedTextField
 
+@Preview
 @Composable
-fun PersonalHouseholdManagementScreen(
-    modifier: Modifier = Modifier,
-) {
+fun PersonalHouseholdManagementScreen() {
 
     var textFieldValue by remember { mutableStateOf("ㅁㅁ가계부") }
     val isSaveEnabled = textFieldValue.isNotEmpty()
@@ -44,7 +44,7 @@ fun PersonalHouseholdManagementScreen(
         contentWindowInsets = WindowInsets(0.dp)
     ) { innerPadding ->
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth(),
@@ -74,7 +74,7 @@ fun PersonalHouseholdManagementScreen(
                     // TODO: 수정
                 },
                 enabled = isSaveEnabled,
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp),
                 shape = RoundedCornerShape(4.dp),
@@ -94,7 +94,7 @@ fun PersonalHouseholdManagementScreen(
                 onClick = {
                     // TODO: 초기화
                 },
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp),
                 shape = RoundedCornerShape(4.dp),
