@@ -6,8 +6,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.AssetDisplayScreen
 import com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.AssetDisplayScreen
 import com.fintern.ourbudgeting.ui.assetmanagement.assetedition.AssetEditScreen
 import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.AssetAdditionScreen
@@ -51,7 +54,16 @@ fun AppNavHost(
             )
         }
 
-        composable(BottomNavigationItem.HOME.name) { HomeScreen() }
+        composable(BottomNavigationItem.HOME.name) {
+            HomeScreen(
+                onAddIncomeClick = {
+                    navController.navigate("${Screen.TRANSACTIONSAVE.name}?type=${TransactionType.INCOME.name}&householdId=")
+                },
+                onAddExpenseClick = {
+                    navController.navigate("${Screen.TRANSACTIONSAVE.name}?type=${TransactionType.EXPENSE.name}&householdId=")
+                },
+            )
+        }
         composable(BottomNavigationItem.CALENDAR.name) { CalendarScreen() }
         composable(BottomNavigationItem.STATISTICS.name) {
             StatisticsScreen(
@@ -67,14 +79,29 @@ fun AppNavHost(
             )
         }
         composable(BottomNavigationItem.SETTING.name) { }
-        composable(Screen.TRANSACTIONSAVE.name) {
-            TransactionSaveScreen(
-                initialTransactionType = TransactionType.EXPENSE,
-                householdId = "",
-                onNavigateToBack = {
-                    navController.popBackStack()
+        composable(
+            route = "${Screen.TRANSACTIONSAVE.name}?type={type}&householdId={householdId}",
+            arguments = listOf(
+                navArgument("type") {
+                    type = NavType.StringType
+                    defaultValue = TransactionType.EXPENSE.name
                 },
-                // TODO: householdId 추가
+                navArgument("householdId") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
+            )
+        ) { backStackEntry ->
+            val typeArg = backStackEntry.arguments?.getString("type")
+            val initialType = runCatching { TransactionType.valueOf(typeArg ?: "") }
+                .getOrDefault(TransactionType.EXPENSE)
+
+            val householdId = backStackEntry.arguments?.getString("householdId").orEmpty()
+
+            TransactionSaveScreen(
+                initialTransactionType = initialType,
+                householdId = householdId,
+                onNavigateToBack = { navController.popBackStack() }
             )
         }
         composable("edit_asset") {
