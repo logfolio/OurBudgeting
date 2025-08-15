@@ -18,7 +18,7 @@ class AssetEditViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(AssetEditUiState())
     val uiState: StateFlow<AssetEditUiState> = _uiState.asStateFlow()
 
-    fun observeAssetTypes(householdId: String) {
+    fun observeAndGetAssetTypes(householdId: String) {
         viewModelScope.launch {
             repository.getAssetTypesFlow(householdId)
                 .collect { assetTypes ->
