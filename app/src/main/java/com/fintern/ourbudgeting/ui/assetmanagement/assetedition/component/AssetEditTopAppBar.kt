@@ -23,10 +23,11 @@ fun AssetEditTopAppBar(
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
+            navigationIconContentColor = Color.Black,
             containerColor = Color.White,
             titleContentColor = Color.Black,
         ),
-        title = { Text(stringResource(R.string.modify_asset)) },
+        title = { Text(stringResource(R.string.edit_asset_type)) },
         navigationIcon = {
             IconButton(onClick = onActionClick) {
                 Icon(
