@@ -77,10 +77,15 @@ fun AppNavHost(
                 // TODO: householdId 추가
             )
         }
-
         composable("edit_asset") {
             AssetEditScreen(
-                householdId = "",
+                householdId = householdId,
+                onNavigateBack = { navController.navigateUp() }
+            )
+        }
+        composable("add_asset") {
+            AssetAdditionScreen(
+                householdId = householdId,
                 onNavigateBack = { navController.navigateUp() }
             )
         }
