@@ -35,10 +35,10 @@ class AssetEditRepository @Inject constructor(
 
     suspend fun updateAssetType(householdId: String, oldAssetType: String, newAssetType: String): Result<Unit> {
         return runCatching {
-            val documentRef = db.collection("households").document(householdId)
-            val transactionsCollectionRef = db.collection("households")
+            val documentRef = db.collection(FirebaseConstants.COLLECTION_HOUSEHOLDS).document(householdId)
+            val transactionsCollectionRef = db.collection(FirebaseConstants.COLLECTION_HOUSEHOLDS)
                 .document(householdId)
-                .collection("transactions")
+                .collection(FirebaseConstants.COLLECTION_TRANSACTIONS)
 
             val transactionsWithOldAssetType = transactionsCollectionRef
                 .get()
@@ -46,7 +46,7 @@ class AssetEditRepository @Inject constructor(
 
             db.runTransaction { transaction ->
                 val snapshot = transaction.get(documentRef)
-                val currentAssetTypes = snapshot.get("assetType") as? List<String> ?: emptyList()
+                val currentAssetTypes = snapshot.get(FirebaseConstants.FIELD_ASSET_TYPE) as? List<String> ?: emptyList()
 
                 if (currentAssetTypes.contains(newAssetType) && oldAssetType != newAssetType) {
                     throw Exception()
@@ -56,14 +56,14 @@ class AssetEditRepository @Inject constructor(
                     if (it == oldAssetType) newAssetType else it
                 }
 
-                transaction.update(documentRef, "assetType", updatedAssetTypes)
+                transaction.update(documentRef, FirebaseConstants.FIELD_ASSET_TYPE, updatedAssetTypes)
 
                 transactionsWithOldAssetType.documents.forEach { transactionDoc ->
                     val data = transactionDoc.data ?: return@forEach
                     var needsUpdate = false
                     val updatedData = mutableMapOf<String, Any>()
                     data.forEach { (key, value) ->
-                        if (key == "assetId" && value == oldAssetType) {
+                        if (key == FirebaseConstants.FIELD_ASSET_ID && value == oldAssetType) {
                             updatedData[key] = newAssetType
                             needsUpdate = true
                         }
