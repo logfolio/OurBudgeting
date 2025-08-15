@@ -3,6 +3,7 @@ package com.fintern.ourbudgeting.ui.assetmanagement.assetedition
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -11,7 +12,7 @@ class AssetEditRepository @Inject constructor(
     private val db : FirebaseFirestore
 ) {
     fun getAssetTypesFlow(householdId: String): Flow<List<String>> {
-        return kotlinx.coroutines.flow.callbackFlow {
+        return callbackFlow {
             val listener = db.collection("households")
                 .document(householdId)
                 .addSnapshotListener { snapshot, error ->
