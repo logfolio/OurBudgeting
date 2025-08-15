@@ -35,7 +35,7 @@ fun AssetEditScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(householdId) {
-        viewModel.observeAssetTypes(householdId)
+        viewModel.observeAndGetAssetTypes(householdId)
     }
     Scaffold(
         modifier = modifier.background(Color.White),
