@@ -64,7 +64,6 @@ class UserViewModel @Inject constructor(
                 _isHouseholdLoading.value = false
             }
         }
-
     }
 
     private suspend fun createNewHousehold(userId: String) {
@@ -74,10 +73,14 @@ class UserViewModel @Inject constructor(
                     onSuccess = { household ->
                         _household.value = household
                     },
-                    onFailure = { }
+                    onFailure = {
+                        _household.value = null
+                    }
                 )
             },
-            onFailure = { }
+            onFailure = {
+                _household.value = null
+            }
         )
     }
 }
