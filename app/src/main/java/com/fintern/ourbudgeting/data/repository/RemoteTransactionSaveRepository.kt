@@ -1,6 +1,7 @@
 package com.fintern.ourbudgeting.data.repository
 
 import android.net.Uri
+import com.fintern.ourbudgeting.data.model.FirebaseConstants
 import com.fintern.ourbudgeting.ui.save.TransactionSaveUiState
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
@@ -24,20 +25,20 @@ class RemoteTransactionSaveRepository @Inject constructor(
             val photoUrl = uiState.photoUri?.let { uploadPhoto(it) }
 
             val transactionData = mapOf(
-                "type" to uiState.transactionType.name,
-                "date" to uiState.selectedDate?.let { Timestamp(Date(it)) },
-                "assetId" to uiState.selectedAsset,
-                "category" to uiState.selectedCategory,
-                "amount" to uiState.amount,
-                "description" to uiState.content,
-                "photoUrl" to photoUrl,
-                "createdBy" to uid,
-                "createdAt" to Timestamp.now()
+                FirebaseConstants.FIELD_TYPE to uiState.transactionType.name,
+                FirebaseConstants.FIELD_DATE to uiState.selectedDate?.let { Timestamp(Date(it)) },
+                FirebaseConstants.FIELD_ASSET_ID to uiState.selectedAsset,
+                FirebaseConstants.FIELD_CATEGORY to uiState.selectedCategory,
+                FirebaseConstants.FIELD_AMOUNT to uiState.amount,
+                FirebaseConstants.FIELD_DESCRIPTION to uiState.content,
+                FirebaseConstants.FIELD_PHOTO_URL to photoUrl,
+                FirebaseConstants.FIELD_CREATED_BY to uid,
+                FirebaseConstants.FIELD_CREATED_AT to Timestamp.now()
             )
 
-            firestore.collection("households")
+            firestore.collection(FirebaseConstants.COLLECTION_HOUSEHOLDS)
                 .document(householdId)
-                .collection("transactions")
+                .collection(FirebaseConstants.COLLECTION_TRANSACTIONS)
                 .add(transactionData)
                 .await()
 

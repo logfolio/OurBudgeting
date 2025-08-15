@@ -2,6 +2,7 @@ package com.fintern.ourbudgeting.data.repository
 
 import androidx.compose.ui.res.stringResource
 import com.fintern.ourbudgeting.R
+import com.fintern.ourbudgeting.data.model.FirebaseConstants
 import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.AssetRepositoryException
 import com.fintern.ourbudgeting.ui.assetmanagement.data.AssetConstants
 import com.google.firebase.auth.FirebaseAuth
@@ -18,20 +19,20 @@ class AssetAdditionRepository @Inject constructor(
     suspend fun initializeUserHousehold(defaultAssetType: String): Result<Unit> {
         val user =
             auth.currentUser ?: return Result.failure(AssetRepositoryException.UserNotAuthenticated)
-        val householdRef = db.collection("users").document(user.uid)
+        val householdRef = db.collection(FirebaseConstants.COLLECTION_USERS).document(user.uid)
         return runCatching {
             val snapshot = householdRef.get().await()
             if (!snapshot.exists()) {
                 val initialData = mapOf(
-                    "assetType" to listOf(defaultAssetType),
-                    "createdAt" to System.currentTimeMillis(),
-                    "userId" to user.uid
+                    FirebaseConstants.FIELD_ASSET_TYPE to listOf(defaultAssetType),
+                    FirebaseConstants.FIELD_CREATED_AT to System.currentTimeMillis(),
+                    FirebaseConstants.FIELD_USER_ID to user.uid
                 )
                 householdRef.set(initialData).await()
             } else {
                 val data = snapshot.data
-                if (data?.containsKey("assetType") != true) {
-                    householdRef.update("assetType", listOf(defaultAssetType)).await()
+                if (data?.containsKey(FirebaseConstants.FIELD_ASSET_TYPE) != true) {
+                    householdRef.update(FirebaseConstants.FIELD_ASSET_TYPE, listOf(defaultAssetType)).await()
                 }
             }
         }
