@@ -41,9 +41,9 @@ class AssetAdditionRepository @Inject constructor(
     suspend fun addAssetType(assetType: String, householdId: String): Result<Unit> {
         val user =
             auth.currentUser ?: return Result.failure(AssetRepositoryException.UserNotAuthenticated)
-        val householdRef = db.collection("households").document(householdId)
+        val householdRef = db.collection(FirebaseConstants.COLLECTION_HOUSEHOLDS).document(householdId)
         return runCatching {
-            householdRef.update("assetType", FieldValue.arrayUnion(assetType)).await()
+            householdRef.update(FirebaseConstants.FIELD_ASSET_TYPE, FieldValue.arrayUnion(assetType)).await()
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.fintern.ourbudgeting.data.repository
 
+import com.fintern.ourbudgeting.data.model.FirebaseConstants
 import com.fintern.ourbudgeting.ui.common.model.Household
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -9,7 +10,7 @@ import javax.inject.Inject
 class HouseholdRepository @Inject constructor(
     private val firestore: FirebaseFirestore
 ) {
-    private val householdsCollection = firestore.collection("households")
+    private val householdsCollection = firestore.collection(FirebaseConstants.COLLECTION_HOUSEHOLDS)
 
     suspend fun createInitialHousehold(userId: String): Result<String> {
         return try {
@@ -30,7 +31,7 @@ class HouseholdRepository @Inject constructor(
     suspend fun getUserHousehold(userId: String): Result<Household?> {
         return try {
             val querySnapshot = householdsCollection
-                .whereEqualTo("ownerId", userId)
+                .whereEqualTo(FirebaseConstants.FIELD_OWNER_ID, userId)
                 .limit(1)
                 .get()
                 .await()
