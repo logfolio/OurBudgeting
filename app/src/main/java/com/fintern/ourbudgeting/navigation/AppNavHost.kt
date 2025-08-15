@@ -19,16 +19,20 @@ import com.fintern.ourbudgeting.ui.login.LoginViewModel
 import com.fintern.ourbudgeting.ui.save.TransactionSaveScreen
 import com.fintern.ourbudgeting.ui.statistics.chart.StatisticsScreen
 import com.fintern.ourbudgeting.ui.user.UserViewModel
-import com.google.firebase.firestore.core.FirestoreClient
 
 @Composable
 fun AppNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     loginViewModel: LoginViewModel = hiltViewModel(),
+    userViewModel: UserViewModel = hiltViewModel()
 ) {
     val uiState by loginViewModel.uiState.collectAsState()
     val isLoggedIn = uiState.currentUser != null
+
+    val uid by userViewModel.uid.collectAsState()
+    val household by userViewModel.household.collectAsState()
+    val householdId = household?.id ?: ""
 
     val startDestination = if (isLoggedIn) BottomNavigationItem.HOME.name else Screen.LOGIN.name
 
@@ -49,13 +53,19 @@ fun AppNavHost(
 
         composable(BottomNavigationItem.HOME.name) { HomeScreen() }
         composable(BottomNavigationItem.CALENDAR.name) { CalendarScreen() }
-        composable(BottomNavigationItem.STATISTICS.name) { StatisticsScreen(uid = "", householdId = "") }
+        composable(BottomNavigationItem.STATISTICS.name) {
+            StatisticsScreen(
+                uid = "",
+                householdId = ""
+            )
+        }
         composable(BottomNavigationItem.ASSETMANAGEMENT.name) {
             AssetDisplayScreen(
-                householdId ="",
-                onEditAssetTypeClick = {navController.navigate("edit_asset")},
-                onAddAssetTypeClick = {navController.navigate("add_asset")}
-            ) }
+                householdId = householdId,
+                onEditAssetTypeClick = { navController.navigate("edit_asset") },
+                onAddAssetTypeClick = { navController.navigate("add_asset") }
+            )
+        }
         composable(BottomNavigationItem.SETTING.name) { }
         composable(Screen.TRANSACTIONSAVE.name) {
             TransactionSaveScreen(
@@ -68,10 +78,10 @@ fun AppNavHost(
             )
         }
 
-        composable("edit_asset"){
+        composable("edit_asset") {
             AssetEditScreen(
                 householdId = "",
-                onNavigateBack = {navController.navigateUp()}
+                onNavigateBack = { navController.navigateUp() }
             )
         }
     }
