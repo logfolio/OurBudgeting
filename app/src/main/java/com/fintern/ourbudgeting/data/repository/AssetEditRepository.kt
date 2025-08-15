@@ -1,5 +1,6 @@
 package com.fintern.ourbudgeting.data.repository
 
+import com.fintern.ourbudgeting.data.model.FirebaseConstants
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +14,7 @@ class AssetEditRepository @Inject constructor(
 ) {
     fun getAssetTypesFlow(householdId: String): Flow<List<String>> {
         return callbackFlow {
-            val listener = db.collection("households")
+            val listener = db.collection(FirebaseConstants.COLLECTION_HOUSEHOLDS)
                 .document(householdId)
                 .addSnapshotListener { snapshot, error ->
                     if (error != null) {
@@ -22,7 +23,7 @@ class AssetEditRepository @Inject constructor(
                     }
 
                     if (snapshot != null && snapshot.exists()) {
-                        val assetTypes = snapshot.get("assetType") as? List<String> ?: emptyList()
+                        val assetTypes = snapshot.get(FirebaseConstants.FIELD_ASSET_TYPE) as? List<String> ?: emptyList()
                         trySend(assetTypes)
                     } else {
                         trySend(emptyList())
