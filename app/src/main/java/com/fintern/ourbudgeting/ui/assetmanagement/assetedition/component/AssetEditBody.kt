@@ -37,7 +37,7 @@ fun AssetEditBody(
     isUpdating: Boolean = false,
     onEditingChange: (Boolean) -> Unit = {},
     onEditTextChange: (String) -> Unit = {},
-    onEditComplete: (String, String) -> Unit = { _, _ -> } // 수정 완료 시 호출되는 콜백
+    onEditComplete: (String, String) -> Unit = { _, _ -> }
 ) {
 
     fun handleEditComplete() {
