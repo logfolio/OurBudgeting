@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.assetedition
+package com.fintern.ourbudgeting.data.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.awaitClose
