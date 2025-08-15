@@ -18,7 +18,7 @@ class HouseholdRepository @Inject constructor(
                 assetType = listOf("현금"),
                 currency = "KRW",
                 isPrivate = true,
-                name = "우리집 가계부",
+                name = "개인 가계부",
                 ownerId = userId
             )
             val documentRef = householdsCollection.add(household).await()
