@@ -13,6 +13,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,8 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fintern.ourbudgeting.R
-import com.fintern.ourbudgeting.data.calendar.CategoryType
 import com.fintern.ourbudgeting.data.calendar.CategoryList
+import com.fintern.ourbudgeting.data.calendar.CategoryType
 import com.fintern.ourbudgeting.data.calendar.TransactionWithId
 import com.fintern.ourbudgeting.ui.calendar.component.Calendar
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarAccountAndUser
@@ -37,19 +38,21 @@ import com.fintern.ourbudgeting.ui.calendar.component.FilterType
 import com.fintern.ourbudgeting.ui.calendar.component.LabeledAmount
 import com.fintern.ourbudgeting.ui.calendar.extensions.toLocalDate
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
+import com.fintern.ourbudgeting.ui.user.UserViewModel
 import java.time.DayOfWeek
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalendarScreen(
-    viewModel: TransactionViewModel = hiltViewModel()
+    viewModel: TransactionViewModel = hiltViewModel(),
+    userViewModel: UserViewModel = hiltViewModel()
 ) {
 
     val householdId = "dlmRP5U0pNhyH7oaIvTy"
-    val nickname = "짱구"
+    val nickname by userViewModel.nickname.collectAsState()
     val selectedAccount = remember { mutableStateOf("가계부") }
-    val selectedUser = remember { mutableStateOf("조민환") }
+    val selectedUser = remember { mutableStateOf(nickname) }
 
     var currentMonth by remember { mutableStateOf(LocalDate.now()) }
     var selectedDate: LocalDate? by remember { mutableStateOf(null) }
@@ -207,7 +210,7 @@ fun CalendarScreen(
                     onDateClick = { newDate -> selectedDate = newDate }
                 )
                 CalendarFilterControls(
-                    nickname = nickname,
+                    nickname = nickname.toString(),
                     filterType = currentFilterType,
                     onFilterTypeSelected = { newFilterType ->
                         currentFilterType = newFilterType
