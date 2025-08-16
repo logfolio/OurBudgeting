@@ -3,7 +3,9 @@ package com.fintern.ourbudgeting.ui.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -11,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -42,6 +45,10 @@ fun HomeScreen(
         if (uid.isNotEmpty()) {
             viewModel.initializeUserHousehold()
         }
+    }
+
+    LaunchedEffect(Unit) {
+        homeViewModel.loadExchangeRates()
     }
 
     Column(
@@ -81,12 +88,45 @@ fun HomeScreen(
             style = MaterialTheme.typography.titleMedium,
         )
 
-        uiState.exchangeRates.forEach { r ->
-            ExchangeRateCard(
-                countryName = r.countryName,
-                currencyCode = r.currencyCode,
-                exchangeRate = r.rateText,
-            )
+        when {
+            uiState.isLoading -> {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+
+            uiState.error != null -> {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(
+                        text = stringResource(uiState.error!!.messageResId),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Spacer(modifier = Modifier.padding(4.dp))
+                }
+            }
+
+            uiState.exchangeRates.isEmpty() -> {
+                Text(
+                    text = stringResource(R.string.error_exchange_no_data),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+
+            else -> {
+                uiState.exchangeRates.forEach { exchangeRates ->
+                    ExchangeRateCard(
+                        countryName = exchangeRates.countryName,
+                        currencyCode = exchangeRates.currencyCode,
+                        exchangeRate = exchangeRates.rateText,
+                    )
+                }
+            }
         }
     }
 }
