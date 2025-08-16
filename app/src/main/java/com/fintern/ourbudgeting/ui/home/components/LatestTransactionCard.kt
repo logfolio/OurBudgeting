@@ -22,7 +22,7 @@ import com.fintern.ourbudgeting.R
 fun LatestTransactionCard(
     content: String,
     amount: String,
-    imageUri: Uri,
+    imageUri: Uri?,
     modifier: Modifier = Modifier,
 ) {
     Card(
