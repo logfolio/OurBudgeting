@@ -1,6 +1,5 @@
 package com.fintern.ourbudgeting.ui.login
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fintern.ourbudgeting.data.auth.GoogleSignInClient
