@@ -3,13 +3,14 @@ package com.fintern.ourbudgeting.ui.user
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fintern.ourbudgeting.data.repository.HouseholdRepository
-import com.fintern.ourbudgeting.data.repository.UserPreferencesRepository
 import com.fintern.ourbudgeting.data.repository.UserPreferences
 import com.fintern.ourbudgeting.data.repository.UserPreferencesRepository
 import com.fintern.ourbudgeting.ui.common.model.Household
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
