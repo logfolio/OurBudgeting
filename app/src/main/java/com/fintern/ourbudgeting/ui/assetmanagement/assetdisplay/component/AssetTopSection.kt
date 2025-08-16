@@ -1,4 +1,4 @@
-package com.fintern.ourbudgeting.ui.assetmanagement.common.component
+package com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

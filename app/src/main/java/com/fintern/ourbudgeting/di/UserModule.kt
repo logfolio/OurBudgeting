@@ -2,6 +2,7 @@ package com.fintern.ourbudgeting.di
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import com.fintern.ourbudgeting.data.repository.HouseholdRepository
 import com.fintern.ourbudgeting.data.repository.UserPreferencesRepository
 import com.fintern.ourbudgeting.ui.user.UserViewModel
 import dagger.Module
@@ -25,8 +26,9 @@ object UserModule {
     @Provides
     @Singleton
     fun provideUserViewModel(
-        userPreferencesRepository: UserPreferencesRepository
+        userPreferencesRepository: UserPreferencesRepository,
+        householdRepository: HouseholdRepository
     ): UserViewModel {
-        return UserViewModel(userPreferencesRepository)
+        return UserViewModel(userPreferencesRepository, householdRepository)
     }
 }
