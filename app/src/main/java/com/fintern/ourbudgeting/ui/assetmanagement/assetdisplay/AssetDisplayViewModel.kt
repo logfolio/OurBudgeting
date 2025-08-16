@@ -36,13 +36,7 @@ class AssetDisplayViewModel @Inject constructor(
             }
             .launchIn(viewModelScope)
     }
-    fun getAssetDetailByName(assetName: String): AssetDetail? {
-        return _assetSummary.value.assetDetails.find { it.assetName == assetName }
-    }
-    fun getAssetDetailContaining(keyword: String): List<AssetDetail> {
-        return _assetSummary.value.assetDetails.filter { it.assetName.contains(keyword) }
-    }
-    fun getAssetDetailContainingTotalAmount(keyword: String): Long {
-        return _assetSummary.value.assetDetails.filter { it.assetName.contains(keyword) }.sumOf { it.totalAmount }
+    fun getAssetDetail(): List<AssetDetail> {
+        return _assetSummary.value.assetDetails
     }
 }

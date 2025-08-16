@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @HiltViewModel
 class AssetAdditionViewModel @Inject constructor(
     private val repository: AssetAdditionRepository
@@ -18,9 +17,9 @@ class AssetAdditionViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(AssetTypeUiState())
     val uiState: StateFlow<AssetTypeUiState> = _uiState.asStateFlow()
 
-    fun initializeUserHousehold(defaultAssetType: String) {
+    fun initializeUserHousehold(defaultAssetType: String, householdId: String) {
         viewModelScope.launch {
-            repository.initializeUserHousehold(defaultAssetType)
+            repository.initializeUserHousehold(defaultAssetType, householdId)
         }
     }
 
@@ -32,7 +31,7 @@ class AssetAdditionViewModel @Inject constructor(
         _uiState.value = _uiState.value.copy(message = null)
     }
 
-    fun submitAssetType() {
+    fun submitAssetType(householdId: String) {
         val text = _uiState.value.input.trim() // 띄어쓰기는 입력으로 취급 안하겠다
         if (text.isBlank()) {
             _uiState.value = _uiState.value.copy(message = AssetViewModelMessage.EmptyInput)
@@ -40,7 +39,7 @@ class AssetAdditionViewModel @Inject constructor(
         }
         _uiState.value = _uiState.value.copy(isLoading = true)
         viewModelScope.launch {
-            val result = repository.addAssetType(text)
+            val result = repository.addAssetType(text, householdId)
             if (result.isSuccess) {
                 _uiState.value = _uiState.value.copy(
                     input = "",

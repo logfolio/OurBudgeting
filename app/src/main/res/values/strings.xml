@@ -51,10 +51,6 @@
     <string name="asset_management">자산 관리</string>
     <string name="cash">현금</string>
     <string name="card">카드</string>
-    <string name="description_close">닫기</string>
-    <string name="description_open_menu">메뉴 열기</string>
-    <string name="edit_asset_type">자산유형 수정</string>
-    <string name="add_asset_type">자산유형 추가</string>
 
     <!--    Add Asset-->
     <string name="add_asset">자산 추가</string>
@@ -78,6 +74,9 @@
 
     <!-- Asset Repository Exceptions -->
     <string name="database_error_occurred">데이터베이스 오류가 발생했습니다</string>
+    <string name="edit_asset_type">자산 유형 수정</string>
+    <string name="add_asset_type">자산 유형 추가</string>
+
     <!--    Statistic Asset-->
     <string name="cumulative_balance">누적잔액</string>
     <string name="income_expense">수입/지출</string>
@@ -137,8 +136,11 @@
     <string name="login_is_not_success">로그인이 되지 않았습니다.</string>
     <string name="asset_type_added">자산이 추가되었습니다</string>
     <string name="failed_to_save">저장에 실패하였습니다.</string>
+    <string name="current_asset_type_list">현재 자산 유형 목록</string>
     <string name="save_success">저장 완료!</string>
     <string name="error_image_upload">이미지 업로드에 실패했습니다. 다시 시도해 주세요!</string>
+    <string name="description_close">닫기</string>
+    <string name="description_open_menu">메뉴 열기</string>
 
     <!--  Setting  -->
     <string name="move_action">이동</string>
