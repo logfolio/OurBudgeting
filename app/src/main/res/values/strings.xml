@@ -45,6 +45,7 @@
     <string name="label_filter_expense">지출</string>
     <string name="currency_format">%1$,d원</string>
     <string name="label_select_filter">필터선택</string>
+    <string name="max_text">%1$s...</string>
 
     <!--   Asset Management-->
     <string name="asset_management">자산 관리</string>

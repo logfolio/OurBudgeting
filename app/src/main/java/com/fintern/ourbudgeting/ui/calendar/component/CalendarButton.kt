@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -83,13 +84,21 @@ fun CustomDropDownButton(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            val maxText = if (text.length > 6) {
+                stringResource(R.string.max_text, text.take(6))
+            } else {
+                text
+            }
+
             Text(
-                text = text,
+                text = maxText,
                 fontSize = fontSize,
                 fontWeight = FontWeight.Bold,
                 modifier = modifier.weight(1f),
                 textAlign = TextAlign.Center,
-                color = Color.Black
+                color = Color.Black,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
 
             Icon(

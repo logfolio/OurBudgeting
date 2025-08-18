@@ -32,7 +32,7 @@ fun CalendarAccountAndUser(
                 .weight(1f),
         )
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.weight(0.5f))
 
         CustomDropDownButton(
             text = selectedUser,
