@@ -2,6 +2,7 @@
     <!--  Common Message  -->
     <string name="app_name">OurBudgeting</string>
     <string name="calendar_label_app_name">가계부 쓰고 가게</string>
+    <string name="action_back">뒤로 가기</string>
     <string name="expense">지출</string>
     <string name="income">수입</string>
     <string name="confirm">확인</string>
@@ -140,5 +141,10 @@
     <string name="error_image_upload">이미지 업로드에 실패했습니다. 다시 시도해 주세요!</string>
     <string name="description_close">닫기</string>
     <string name="description_open_menu">메뉴 열기</string>
-    <string name="action_back">뒤로가기</string>
+
+    <!--  Setting  -->
+    <string name="move_action">이동</string>
+    <string name="top_bar_label_setting">설정</string>
+    <string name="title_householde_management">가계부 관리</string>
+    <string name="subtitle_household_management">가계부 관리</string>
 </resources>
