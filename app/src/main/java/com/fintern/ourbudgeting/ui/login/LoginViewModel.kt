@@ -31,7 +31,8 @@ class LoginViewModel @Inject constructor(
                 val googleIdToken = signInClient.getGoogleIdToken()
                 val user = authRepository.signInWithGoogle(googleIdToken)
                 _uiState.value = _uiState.value.copy(currentUser = user)
-                user?.uid?.let { userViewModel.updateUser(it, user.displayName.toString()) }
+                user?.uid?.let { userViewModel
+                    .updateUser(it, user.displayName.toString(), user.email.toString()) }
             } catch (e: Exception) {
                 // TODO: 에러 처리
             }

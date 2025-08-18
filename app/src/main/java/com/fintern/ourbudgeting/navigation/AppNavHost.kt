@@ -17,6 +17,7 @@ import com.fintern.ourbudgeting.ui.login.HomeScreen
 import com.fintern.ourbudgeting.ui.login.LoginScreen
 import com.fintern.ourbudgeting.ui.login.LoginViewModel
 import com.fintern.ourbudgeting.ui.save.TransactionSaveScreen
+import com.fintern.ourbudgeting.ui.setting.SettingScreen
 import com.fintern.ourbudgeting.ui.statistics.chart.StatisticsScreen
 import com.fintern.ourbudgeting.ui.user.UserViewModel
 
@@ -66,7 +67,7 @@ fun AppNavHost(
                 onAddAssetTypeClick = { navController.navigate("add_asset") }
             )
         }
-        composable(BottomNavigationItem.SETTING.name) { }
+        composable(BottomNavigationItem.SETTING.name) { SettingScreen() }
         composable(Screen.TRANSACTIONSAVE.name) {
             TransactionSaveScreen(
                 initialTransactionType = TransactionType.EXPENSE,
@@ -75,18 +76,6 @@ fun AppNavHost(
                     navController.popBackStack()
                 },
                 // TODO: householdId 추가
-            )
-        }
-        composable("edit_asset") {
-            AssetEditScreen(
-                householdId = householdId,
-                onNavigateBack = { navController.navigateUp() }
-            )
-        }
-        composable("add_asset") {
-            AssetAdditionScreen(
-                householdId = householdId,
-                onNavigateBack = { navController.navigateUp() }
             )
         }
     }

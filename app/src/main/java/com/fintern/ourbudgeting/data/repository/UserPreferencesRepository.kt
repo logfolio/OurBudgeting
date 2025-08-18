@@ -17,12 +17,14 @@ class UserPreferencesRepository @Inject constructor(
     private object PreferencesKeys {
         val UID = stringPreferencesKey("uid")
         val NICKNAME = stringPreferencesKey("nickname")
+        val EMAIL = stringPreferencesKey("email")
     }
 
-    suspend fun updateUser(uid: String, nickname: String) {
+    suspend fun updateUser(uid: String, nickname: String, email: String) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.UID] = uid
             preferences[PreferencesKeys.NICKNAME] = nickname
+            preferences[PreferencesKeys.EMAIL] = email
         }
     }
 
@@ -37,9 +39,10 @@ class UserPreferencesRepository @Inject constructor(
             }.map { preferences ->
                 val uid = preferences[PreferencesKeys.UID] ?: ""
                 val nickname = preferences[PreferencesKeys.NICKNAME] ?: ""
-                UserPreferences(uid, nickname)
+                val email = preferences[PreferencesKeys.EMAIL] ?: ""
+                UserPreferences(uid, nickname, email)
             }
     }
 }
 
-data class UserPreferences(val uid: String = "", val nickname: String = "")
+data class UserPreferences(val uid: String = "", val nickname: String = "", val email: String = "")
