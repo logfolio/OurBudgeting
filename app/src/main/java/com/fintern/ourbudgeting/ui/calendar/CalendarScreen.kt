@@ -49,9 +49,14 @@ fun CalendarScreen(
     userViewModel: UserViewModel = hiltViewModel()
 ) {
 
-    val householdId = "dlmRP5U0pNhyH7oaIvTy"
+    LaunchedEffect(Unit) {
+        userViewModel.initializeUserHousehold()
+    }
+
+    val household by userViewModel.household.collectAsStateWithLifecycle()
     val nickname by userViewModel.nickname.collectAsState()
-    val selectedAccount = remember { mutableStateOf("가계부") }
+
+    val selectedAccount = household?.name ?: ""
     val selectedUser = remember { mutableStateOf(nickname) }
 
     var currentMonth by remember { mutableStateOf(LocalDate.now()) }
@@ -61,8 +66,11 @@ fun CalendarScreen(
 
     val uiState = viewModel.transactionsUiState.collectAsStateWithLifecycle()
 
+    val householdId = household?.id
     LaunchedEffect(householdId) {
-        viewModel.loadTransactions(householdId)
+        if (householdId != null) {
+            viewModel.loadTransactions(householdId)
+        }
     }
 
     val transactions: List<TransactionWithId> = when (uiState.value) {
@@ -162,7 +170,7 @@ fun CalendarScreen(
                     .background(Color.White)
             ) {
                 CalendarAccountAndUser(
-                    selectedAccount = selectedAccount.value,
+                    selectedAccount = selectedAccount,
                     selectedUser = selectedUser.value,
                     onAccountClick = { },
                     onUserClick = { }
