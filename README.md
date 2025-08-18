@@ -54,7 +54,8 @@ Compose,  Retrofit, OkHttp, Coil, Coroutine, Flow, DataStore, Firebasee storage,
 
 ## 프로젝트 설계
 [Figma 디자인](https://www.figma.com/design/yiCZpTjmaGjBgiqoFdxA2W/%EA%B0%80%EA%B3%84%EB%B6%80?node-id=26-95&p=f&t=Asz4g7h0HpaJKDet-0)<br>
-[기능명세서](https://www.notion.so/22b5e0031abd811fa291d9b9628cd3f7)
+[1차 MVP 기능명세서](https://www.notion.so/1-MVP-2535e0031abd805ba942f94309e818a0)<br>
+[2차 MVP 기능명세서](https://www.notion.so/2-MVP-22b5e0031abd811fa291d9b9628cd3f7)
 
 <br>
 
@@ -62,6 +63,42 @@ Compose,  Retrofit, OkHttp, Coil, Coroutine, Flow, DataStore, Firebasee storage,
 [그라운드 룰](https://github.com/logfolio/OurBudgeting/wiki/Ground-Rule)
 
 ### 팀원
-- [강민지](https://github.com/Meezzi)
-- [이규현](https://github.com/0508gyhun)
-- [조민환](https://github.com/mandol96)
+
+
+<table>
+  <tr>
+    <td align="center" width="180px"><b>강민지</b></td>
+    <td align="center" width="180px"><b>이규현</b></td>
+    <td align="center" width="180px"><b>조민환</b></td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Meezzi">Meezzi</a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/0508gyhun">0508gyhun</a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/mandol96">mandol96</a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/Meezzi.png" width="100" height="100">
+    </td>
+    <td align="center">
+      <img src="https://github.com/0508gyhun.png" width="100" height="100">
+    </td>
+    <td align="center">
+      <img src="https://github.com/mandol96.png" width="100" height="100">
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><b>통계, 수입/지출 작성</b></td>
+    <td align="center"><b>자산관리</b></td>
+    <td align="center"><b>캘린더</b></td>
+  </tr>
+  <tr>
+    <td align="center" colspan="3"><b>로그인, 환율 API 통신</b></td>
+  </tr>
+</table>
