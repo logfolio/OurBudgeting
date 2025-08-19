@@ -13,6 +13,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,15 +27,28 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.household.component.HouseHoldTopAppbar
 import com.fintern.ourbudgeting.ui.save.componenet.CommonOutlinedTextField
+import com.fintern.ourbudgeting.ui.user.UserViewModel
 
 @Preview
 @Composable
-fun PersonalHouseholdManagementScreen() {
+fun PersonalHouseholdManagementScreen(
+    viewModel: UserViewModel = hiltViewModel()
+) {
 
-    var textFieldValue by remember { mutableStateOf("ㅁㅁ가계부") }
+    LaunchedEffect(Unit) {
+        viewModel.initializeUserHousehold()
+    }
+
+    val household by viewModel.household.collectAsStateWithLifecycle()
+    val householdName = household!!.name
+
+    var textFieldValue by remember { mutableStateOf(householdName) }
+
     val isSaveEnabled = textFieldValue.isNotEmpty()
 
     Scaffold(
