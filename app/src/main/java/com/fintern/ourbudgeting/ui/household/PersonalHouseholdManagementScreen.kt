@@ -101,26 +101,6 @@ fun PersonalHouseholdManagementScreen(
                     color = Color.White
                 )
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(
-                onClick = {
-                    // TODO: 초기화
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp),
-                shape = RoundedCornerShape(4.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Red
-                )
-            ) {
-                Text(
-                    text = stringResource(R.string.label_reset),
-                    color = Color.White
-                )
-            }
         }
     }
 }
