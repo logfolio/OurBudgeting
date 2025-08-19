@@ -35,6 +35,7 @@ import com.fintern.ourbudgeting.ui.calendar.component.CalendarTopAppbar
 import com.fintern.ourbudgeting.ui.calendar.component.CategoryListSection
 import com.fintern.ourbudgeting.ui.calendar.component.FilterType
 import com.fintern.ourbudgeting.ui.calendar.component.LabeledAmount
+import com.fintern.ourbudgeting.ui.calendar.extensions.toLocalDate
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -46,43 +47,91 @@ fun CalendarScreen(
 ) {
 
     val householdId = "dlmRP5U0pNhyH7oaIvTy"
-
     val nickname = "짱구"
-
     val selectedAccount = remember { mutableStateOf("가계부") }
     val selectedUser = remember { mutableStateOf("조민환") }
+
+    var currentMonth by remember { mutableStateOf(LocalDate.now()) }
+    var selectedDate: LocalDate? by remember { mutableStateOf(null) }
 
     var currentFilterType by remember { mutableStateOf(FilterType.ALL) }
 
     val uiState = viewModel.transactionsUiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(householdId, currentFilterType) {
-        viewModel.loadTransactions(householdId, currentFilterType)
+    LaunchedEffect(householdId) {
+        viewModel.loadTransactions(householdId)
     }
 
     val transactions: List<TransactionWithId> = when (uiState.value) {
         is TransactionUiState.Loading -> {
             emptyList<TransactionWithId>()
         }
+
         is TransactionUiState.Success -> {
             val successData = (uiState.value as TransactionUiState.Success).data
             successData
         }
+
         is TransactionUiState.Error -> {
             emptyList<TransactionWithId>()
         }
     }
 
-    val totalIncome = transactions.filter {
+    val monthlyTransactionsForTotals = remember(transactions, currentMonth) {
+        transactions.filter {
+            it.transaction.date?.toLocalDate()?.year == currentMonth.year &&
+                    it.transaction.date.toLocalDate().month == currentMonth.month
+        }
+    }
+
+    val totalIncome = monthlyTransactionsForTotals.filter {
         it.transaction.type == TransactionType.INCOME.name
     }.sumOf { it.transaction.amount }
 
-    val totalExpense = transactions.filter {
+    val totalExpense = monthlyTransactionsForTotals.filter {
         it.transaction.type == TransactionType.EXPENSE.name
     }.sumOf { it.transaction.amount }
 
-    val categoryListsForUi: List<CategoryList> = remember(transactions) {
-        transactions
+    val categoryListsForUi: List<CategoryList> = remember(transactions, currentMonth) {
+        transactions.filter {
+            it.transaction.date?.toLocalDate()?.year == currentMonth.year &&
+                    it.transaction.date?.toLocalDate()?.month == currentMonth.month
+        }
+            .groupBy { it.transaction.category }
+            .map { (categoryName, transactionList) ->
+                CategoryList(
+                    category = CategoryDefinition(
+                        id = categoryName,
+                        emoji = "🍔",
+                        displayName = "식비"
+                    ),
+                    items = transactionList
+                )
+            }
+    }
+
+    val selectedDayTransactions: List<TransactionWithId> =
+        remember(transactions, currentMonth, selectedDate, currentFilterType) {
+            val filteredByDate = if (selectedDate == null) {
+                transactions.filter {
+                    it.transaction.date?.toLocalDate()?.year == currentMonth.year &&
+                            it.transaction.date?.toLocalDate()?.month == currentMonth.month
+                }
+            } else {
+                transactions.filter {
+                    it.transaction.date?.toLocalDate() == selectedDate
+                }
+            }
+
+            when (currentFilterType) {
+                FilterType.INCOME -> filteredByDate.filter { it.transaction.type == TransactionType.INCOME.name }
+                FilterType.EXPENSE -> filteredByDate.filter { it.transaction.type == TransactionType.EXPENSE.name }
+                FilterType.ALL -> filteredByDate
+            }
+        }
+
+    val selectedDayCategoryLists: List<CategoryList> = remember(selectedDayTransactions) {
+        selectedDayTransactions
             .groupBy { it.transaction.category }
             .map { (categoryName, transactionList) ->
                 CategoryList(
@@ -143,22 +192,32 @@ fun CalendarScreen(
 
                 Calendar(
                     startDayOfWeek = DayOfWeek.SUNDAY,
-                    selectedDate = LocalDate.now(),
+                    selectedDate = selectedDate,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 24.dp),
                     categoryLists = categoryListsForUi,
+                    currentMonth = currentMonth,
+                    onPreviousClick = {
+                        currentMonth = currentMonth.minusMonths(1)
+                        selectedDate = null
+                    },
+                    onNextClick = {
+                        currentMonth = currentMonth.plusMonths(1)
+                        selectedDate = null
+                    },
+                    onDateClick = { newDate -> selectedDate = newDate }
                 )
                 CalendarFilterControls(
                     nickname = nickname,
                     filterType = currentFilterType,
-                    onFilterTypeSelected = {newFilterType ->
+                    onFilterTypeSelected = { newFilterType ->
                         currentFilterType = newFilterType
                     },
                 )
 
                 CategoryListSection(
-                    categories = categoryListsForUi
+                    categories = selectedDayCategoryLists
                 )
             }
         }

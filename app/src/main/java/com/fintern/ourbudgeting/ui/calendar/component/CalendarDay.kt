@@ -28,13 +28,15 @@ fun CalendarDay(
     date: LocalDate,
     modifier: Modifier = Modifier,
     dayConfig: CalendarDayConfig = CalendarDayConfig.default(),
-    transactions: List<TransactionWithId> = emptyList()
+    transactions: List<TransactionWithId> = emptyList(),
+    selectedDate: LocalDate? = null,
 ) {
     CalendarDayContent(
         date = date,
         modifier = modifier,
         dayConfig = dayConfig,
-        transactions = transactions
+        transactions = transactions,
+        selectedDate = selectedDate,
     )
 }
 
@@ -44,10 +46,16 @@ fun CalendarDayContent(
     modifier: Modifier = Modifier,
     dayConfig: CalendarDayConfig = CalendarDayConfig.default(),
     transactions: List<TransactionWithId>,
+    selectedDate: LocalDate? = date,
 ) {
     val today = remember { LocalDate.now() }
     val currentDay = today.isEqual(date)
-    val todayBackgroundColor = if (currentDay) Color(0xFF964BFF) else Color.Transparent
+    val selected = selectedDate?.isEqual(date) == true
+    val dayBackgroundColor = when {
+        currentDay -> Color(0xFF964BFF)
+        selected -> Color(0xFFeaeaea)
+        else -> Color.Transparent
+    }
     val todayTextColor = if (currentDay) Color.White else dayConfig.textStyle.color
 
     val dailyTotal = remember(transactions) {
@@ -71,7 +79,7 @@ fun CalendarDayContent(
             modifier = Modifier
                 .size(20.dp)
                 .background(
-                    color = todayBackgroundColor,
+                    color = dayBackgroundColor,
                     shape = RoundedCornerShape(4.dp)
                 ),
             textAlign = TextAlign.Center,

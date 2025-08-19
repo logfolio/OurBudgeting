@@ -8,6 +8,7 @@ import com.fintern.ourbudgeting.data.chart.PieEntry
 import com.fintern.ourbudgeting.data.model.ExpenseCategoryType
 import com.fintern.ourbudgeting.data.model.IncomeCategoryType
 import com.fintern.ourbudgeting.data.repository.StatisticsRepository
+import com.fintern.ourbudgeting.ui.common.model.FirebaseError
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.firestore.FirebaseFirestoreException
@@ -126,15 +127,15 @@ class StatisticsViewModel @Inject constructor(
                 )
             } catch (e: FirebaseNetworkException) {
                 _uiState.value = _uiState.value.copy(
-                    error = StatisticsError.NetworkError
+                    error = FirebaseError.NetworkError
                 )
             } catch (e: FirebaseFirestoreException) {
                 _uiState.value = _uiState.value.copy(
-                    error = StatisticsError.FirestoreError
+                    error = FirebaseError.FirestoreError
                 )
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(
-                    error = StatisticsError.UnknownError
+                    error = FirebaseError.UnknownError
                 )
             } finally {
                 _uiState.value = _uiState.value.copy(

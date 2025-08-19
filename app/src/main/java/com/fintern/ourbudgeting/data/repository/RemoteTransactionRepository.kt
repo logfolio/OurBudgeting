@@ -2,6 +2,7 @@ package com.fintern.ourbudgeting.data.repository
 
 import com.fintern.ourbudgeting.data.calendar.Transaction
 import com.fintern.ourbudgeting.data.calendar.TransactionWithId
+import com.fintern.ourbudgeting.data.model.FirebaseConstants
 import com.fintern.ourbudgeting.ui.calendar.TransactionUiState
 import com.fintern.ourbudgeting.ui.calendar.component.FilterType
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
@@ -22,9 +23,9 @@ class RemoteTransactionRepository @Inject constructor(
         trySend(TransactionUiState.Loading)
 
         val collectionRef = firestore
-            .collection("households")
+            .collection(FirebaseConstants.COLLECTION_HOUSEHOLDS)
             .document(householdId)
-            .collection("transactions")
+            .collection(FirebaseConstants.COLLECTION_TRANSACTIONS)
 
         val listener = collectionRef.addSnapshotListener { snapshot, error ->
             if (error != null) {

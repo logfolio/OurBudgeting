@@ -1,6 +1,7 @@
 import java.util.Properties
 
 plugins {
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
@@ -75,6 +76,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
     implementation(libs.firebase.auth)
 
     // Google Auth
@@ -97,6 +99,9 @@ dependencies {
     // Image
     implementation(libs.coil.compose)
 
+    // ML Kit
+    implementation(libs.text.recognition.korean)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -104,4 +109,10 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Network
+    implementation(libs.retrofit)
+    implementation(libs.kotlinx.serialization.json)
+    implementation (libs.retrofit2.kotlinx.serialization.converter)
+    implementation (libs.logging.interceptor)
 }
