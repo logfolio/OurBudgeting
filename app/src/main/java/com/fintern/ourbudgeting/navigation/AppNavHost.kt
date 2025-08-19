@@ -9,10 +9,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.AssetDisplayScreen
-import com.fintern.ourbudgeting.ui.assetmanagement.assetedition.AssetEditScreen
-import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.AssetAdditionScreen
 import com.fintern.ourbudgeting.ui.calendar.CalendarScreen
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
+import com.fintern.ourbudgeting.ui.household.PersonalHouseholdManagementScreen
 import com.fintern.ourbudgeting.ui.login.HomeScreen
 import com.fintern.ourbudgeting.ui.login.LoginScreen
 import com.fintern.ourbudgeting.ui.login.LoginViewModel
@@ -67,7 +66,7 @@ fun AppNavHost(
                 onAddAssetTypeClick = { navController.navigate("add_asset") }
             )
         }
-        composable(BottomNavigationItem.SETTING.name) { SettingScreen() }
+        composable(BottomNavigationItem.SETTING.name) { SettingScreen(navController = navController) }
         composable(Screen.TRANSACTIONSAVE.name) {
             TransactionSaveScreen(
                 initialTransactionType = TransactionType.EXPENSE,
@@ -77,6 +76,9 @@ fun AppNavHost(
                 },
                 // TODO: householdId 추가
             )
+        }
+        composable(Screen.PERSONALHOUSEHOLDMANAGEMENT.name) {
+            PersonalHouseholdManagementScreen()
         }
     }
 }

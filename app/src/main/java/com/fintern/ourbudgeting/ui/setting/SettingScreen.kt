@@ -23,12 +23,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.fintern.ourbudgeting.R
+import com.fintern.ourbudgeting.navigation.Screen
 import com.fintern.ourbudgeting.ui.user.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingScreen(
+    navController: NavController,
     viewModel: UserViewModel = hiltViewModel()
 ) {
     val nickname by viewModel.nickname.collectAsState()
@@ -71,7 +74,9 @@ fun SettingScreen(
             SettingCategory(title = stringResource(R.string.title_householde_management))
             SettingMenuItem(
                 text = stringResource(R.string.subtitle_household_management),
-                onClick = { }
+                onClick = {
+                    navController.navigate(Screen.PERSONALHOUSEHOLDMANAGEMENT.name)
+                }
             )
         }
     }
