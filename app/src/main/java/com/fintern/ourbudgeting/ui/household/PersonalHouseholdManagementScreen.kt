@@ -24,7 +24,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -47,6 +46,7 @@ fun PersonalHouseholdManagementScreen(
 
     val household by viewModel.household.collectAsStateWithLifecycle()
     val householdName = household!!.name
+    val householdId = household!!.ownerId
 
     var textFieldValue by remember { mutableStateOf(householdName) }
 
@@ -90,7 +90,10 @@ fun PersonalHouseholdManagementScreen(
 
             Button(
                 onClick = {
-                    // TODO: 수정
+                    viewModel.updateHouseholdName(
+                        ownerId = householdId,
+                        newName = textFieldValue
+                    )
                 },
                 enabled = isSaveEnabled,
                 modifier = Modifier
