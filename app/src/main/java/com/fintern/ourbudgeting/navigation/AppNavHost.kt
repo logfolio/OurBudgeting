@@ -78,7 +78,7 @@ fun AppNavHost(
             )
         }
         composable(Screen.PERSONALHOUSEHOLDMANAGEMENT.name) {
-            PersonalHouseholdManagementScreen()
+            PersonalHouseholdManagementScreen(navController = navController)
         }
     }
 }
