@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -79,12 +81,17 @@ fun HomeScreen(
             style = MaterialTheme.typography.titleMedium,
         )
 
-        uiState.latestTransaction.forEach { transaction ->
-            LatestTransactionCard(
-                content = transaction.content,
-                amount = transaction.amountText,
-                imageUri = transaction.imageUri
-            )
+        LazyRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(uiState.latestTransaction) { transaction ->
+                LatestTransactionCard(
+                    content = transaction.content,
+                    amount = transaction.amountText,
+                    imageUri = transaction.imageUri,
+                )
+            }
         }
 
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
