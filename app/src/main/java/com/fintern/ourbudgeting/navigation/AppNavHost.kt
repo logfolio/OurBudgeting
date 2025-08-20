@@ -66,7 +66,13 @@ fun AppNavHost(
                 onAddAssetTypeClick = { navController.navigate("add_asset") }
             )
         }
-        composable(BottomNavigationItem.SETTING.name) { SettingScreen(navController = navController) }
+        composable(BottomNavigationItem.SETTING.name) {
+            SettingScreen(
+                onNavigateToPersonalHouseholdManagement = {
+                    navController.navigate(Screen.PERSONALHOUSEHOLDMANAGEMENT.name)
+                }
+            )
+        }
         composable(Screen.TRANSACTIONSAVE.name) {
             TransactionSaveScreen(
                 initialTransactionType = TransactionType.EXPENSE,
@@ -78,7 +84,11 @@ fun AppNavHost(
             )
         }
         composable(Screen.PERSONALHOUSEHOLDMANAGEMENT.name) {
-            PersonalHouseholdManagementScreen(navController = navController)
+            PersonalHouseholdManagementScreen(
+                onNavigateToBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }

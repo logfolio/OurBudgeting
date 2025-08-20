@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.household.component.HouseHoldTopAppbar
 import com.fintern.ourbudgeting.ui.save.componenet.CommonOutlinedTextField
@@ -36,7 +35,7 @@ import com.fintern.ourbudgeting.ui.user.UserViewModel
 
 @Composable
 fun PersonalHouseholdManagementScreen(
-    navController: NavController,
+    onNavigateToBack: () -> Unit,
     viewModel: UserViewModel = hiltViewModel()
 ) {
 
@@ -56,7 +55,7 @@ fun PersonalHouseholdManagementScreen(
         modifier = Modifier.background(Color.White),
         topBar = {
             HouseHoldTopAppbar(
-                onActionClick = { navController.popBackStack() }
+                onActionClick = { onNavigateToBack() }
             )
         },
         containerColor = Color.White,
