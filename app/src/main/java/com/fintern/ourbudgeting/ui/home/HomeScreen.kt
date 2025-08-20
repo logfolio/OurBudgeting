@@ -45,6 +45,15 @@ fun HomeScreen(
         }
     }
 
+    LaunchedEffect(householdId) {
+        val hid = householdId
+        if (hid.isNotEmpty()) {
+            homeViewModel.getLatestTransactions(
+                householdId = hid,
+            )
+        }
+    }
+
     LaunchedEffect(Unit) {
         homeViewModel.loadExchangeRates()
     }
