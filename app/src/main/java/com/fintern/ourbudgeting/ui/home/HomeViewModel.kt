@@ -1,9 +1,11 @@
 package com.fintern.ourbudgeting.ui.home
 
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fintern.ourbudgeting.data.repository.ExchangeRateRepository
 import com.fintern.ourbudgeting.data.repository.LatestTransactionRepository
+import com.fintern.ourbudgeting.data.repository.TotalAmountRepository
 import com.fintern.ourbudgeting.util.NumberUtils.formatAmount
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,12 +18,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
-import androidx.core.net.toUri
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: ExchangeRateRepository,
     private val latestTransactionRepository: LatestTransactionRepository,
+    private val totalAmountRepository: TotalAmountRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -84,6 +86,25 @@ class HomeViewModel @Inject constructor(
                 }
                 .collectLatest { transactionList ->
                     _uiState.update { it.copy(latestTransaction = transactionList) }
+                }
+        }
+    }
+
+    fun observeTotalAmount(householdId: String) {
+        viewModelScope.launch {
+            totalAmountRepository.observeTotalAmount(householdId)
+                .catch { e ->
+                    _uiState.update { it.copy(error = HomeError.Unknown) }
+                }
+                .collectLatest { result ->
+                    result.fold(
+                        onSuccess = { total ->
+                            _uiState.update { it.copy(totalAssetText = total) }
+                        },
+                        onFailure = { e ->
+                            _uiState.update { it.copy(error = HomeError.Unknown) }
+                        }
+                    )
                 }
         }
     }
