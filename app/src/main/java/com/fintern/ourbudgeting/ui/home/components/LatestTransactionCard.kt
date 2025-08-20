@@ -62,7 +62,7 @@ fun LatestTransactionCard(
                 )
             }
 
-            Spacer(modifier = Modifier.padding())
+            Spacer(modifier = Modifier.padding(4.dp))
 
             if (imageUri != null) {
                 AsyncImage(
@@ -74,7 +74,7 @@ fun LatestTransactionCard(
                     error = painterResource(R.drawable.ic_warning),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .size(48.dp)
+                        .size(36.dp)
                         .clip(CircleShape)
                 )
             }
