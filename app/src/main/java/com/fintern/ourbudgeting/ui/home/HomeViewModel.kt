@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
+import androidx.core.net.toUri
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -74,7 +75,7 @@ class HomeViewModel @Inject constructor(
                         LatestTransactionUi(
                             content = transaction.description,
                             amountText = formatAmount(transaction.amount),
-                            imageUri = null
+                            imageUri = transaction.photoUrl?.toUri()
                         )
                     }
                 }
