@@ -11,15 +11,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.AssetDisplayScreen
-import com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.AssetDisplayScreen
-import com.fintern.ourbudgeting.ui.assetmanagement.assetedition.AssetEditScreen
-import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.AssetAdditionScreen
 import com.fintern.ourbudgeting.ui.calendar.CalendarScreen
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.fintern.ourbudgeting.ui.home.HomeScreen
 import com.fintern.ourbudgeting.ui.login.LoginScreen
 import com.fintern.ourbudgeting.ui.login.LoginViewModel
 import com.fintern.ourbudgeting.ui.save.TransactionSaveScreen
+import com.fintern.ourbudgeting.ui.setting.SettingScreen
 import com.fintern.ourbudgeting.ui.statistics.chart.StatisticsScreen
 import com.fintern.ourbudgeting.ui.user.UserViewModel
 
@@ -78,7 +76,7 @@ fun AppNavHost(
                 onAddAssetTypeClick = { navController.navigate("add_asset") }
             )
         }
-        composable(BottomNavigationItem.SETTING.name) { }
+        composable(BottomNavigationItem.SETTING.name) { SettingScreen() }
         composable(
             route = "${Screen.TRANSACTIONSAVE.name}?type={type}&householdId={householdId}",
             arguments = listOf(
@@ -102,18 +100,6 @@ fun AppNavHost(
                 initialTransactionType = initialType,
                 householdId = householdId,
                 onNavigateToBack = { navController.popBackStack() }
-            )
-        }
-        composable("edit_asset") {
-            AssetEditScreen(
-                householdId = householdId,
-                onNavigateBack = { navController.navigateUp() }
-            )
-        }
-        composable("add_asset") {
-            AssetAdditionScreen(
-                householdId = householdId,
-                onNavigateBack = { navController.navigateUp() }
             )
         }
     }

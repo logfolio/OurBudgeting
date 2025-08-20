@@ -3,11 +3,16 @@ package com.fintern.ourbudgeting.ui.user
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fintern.ourbudgeting.data.repository.HouseholdRepository
-import com.fintern.ourbudgeting.data.repository.UserPreferencesRepository
 import com.fintern.ourbudgeting.data.repository.UserPreferences
+import com.fintern.ourbudgeting.data.repository.UserPreferencesRepository
 import com.fintern.ourbudgeting.ui.common.model.Household
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,10 +35,12 @@ class UserViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
     val nickname: StateFlow<String> = _user.map { it.nickname }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
+    val email: StateFlow<String> = _user.map { it.email }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
 
-    fun updateUser(uid: String, nickname: String) {
+    fun updateUser(uid: String, nickname: String, email: String) {
         viewModelScope.launch {
-            userPreferencesRepository.updateUser(uid, nickname)
+            userPreferencesRepository.updateUser(uid, nickname, email)
         }
     }
 
