@@ -28,6 +28,7 @@ import com.fintern.ourbudgeting.ui.user.UserViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    householdId: String,
     onAddIncomeClick: () -> Unit,
     onAddExpenseClick: () -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),

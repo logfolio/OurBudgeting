@@ -54,6 +54,7 @@ fun AppNavHost(
 
         composable(BottomNavigationItem.HOME.name) {
             HomeScreen(
+                householdId = householdId,
                 onAddIncomeClick = {
                     navController.navigate("${Screen.TRANSACTIONSAVE.name}?type=${TransactionType.INCOME.name}&householdId=")
                 },
