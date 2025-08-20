@@ -36,9 +36,6 @@ fun HomeScreen(
     val uiState by homeViewModel.uiState.collectAsState()
 
     val uid by viewModel.uid.collectAsState()
-    val nickname by viewModel.nickname.collectAsState()
-    val household by viewModel.household.collectAsState()
-    val isHouseholdLoading by viewModel.isHouseholdLoading.collectAsState()
 
     // 사용자가 화면에 들어왔을 때 household 초기화
     LaunchedEffect(uid) {
