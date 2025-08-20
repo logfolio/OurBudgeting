@@ -9,8 +9,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.AssetDisplayScreen
-import com.fintern.ourbudgeting.ui.assetmanagement.assetedition.AssetEditScreen
-import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.AssetAdditionScreen
 import com.fintern.ourbudgeting.ui.calendar.CalendarScreen
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.fintern.ourbudgeting.ui.login.HomeScreen
@@ -56,8 +54,8 @@ fun AppNavHost(
         composable(BottomNavigationItem.CALENDAR.name) { CalendarScreen() }
         composable(BottomNavigationItem.STATISTICS.name) {
             StatisticsScreen(
-                uid = "",
-                householdId = ""
+                uid = uid,
+                householdId = householdId,
             )
         }
         composable(BottomNavigationItem.ASSETMANAGEMENT.name) {
