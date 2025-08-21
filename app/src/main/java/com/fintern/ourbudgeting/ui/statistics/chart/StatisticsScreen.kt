@@ -8,7 +8,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PrimaryTabRow
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.statistics.chart.components.StatisticsContent
-import com.fintern.ourbudgeting.ui.statistics.chart.model.StatisticsTab
 import com.fintern.ourbudgeting.ui.statistics.chart.components.StatisticsTopBar
+import com.fintern.ourbudgeting.ui.statistics.chart.model.StatisticsTab
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,87 +43,79 @@ fun StatisticsScreen(
         statisticsViewModel.initialize(uid, householdId)
     }
 
-    Scaffold(
-        topBar = {
-            StatisticsTopBar(
-                year = uiState.currentYear,
-                month = uiState.currentMonth,
-                onPreviousMonth = {
-                    statisticsViewModel.updateMonthAndFetchData(
-                        offset = -1,
-                        uid = uid,
-                        householdId = householdId
-                    )
-                },
-                onNextMonth = {
-                    statisticsViewModel.updateMonthAndFetchData(
-                        offset = 1,
-                        uid = uid,
-                        householdId = householdId
-                    )
-                },
-                onAiAnalysisClick = {
-                    // TODO: AI 패턴 분석 화면 이동
-                }
-            )
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
+    Column {
+        StatisticsTopBar(
+            year = uiState.currentYear,
+            month = uiState.currentMonth,
+            onPreviousMonth = {
+                statisticsViewModel.updateMonthAndFetchData(
+                    offset = -1,
+                    uid = uid,
+                    householdId = householdId
+                )
+            },
+            onNextMonth = {
+                statisticsViewModel.updateMonthAndFetchData(
+                    offset = 1,
+                    uid = uid,
+                    householdId = householdId
+                )
+            },
+            onAiAnalysisClick = {
+                // TODO: AI 패턴 분석 화면 이동
+            }
+        )
+        PrimaryTabRow(
+            selectedTabIndex = selectedTabIndex,
         ) {
-            PrimaryTabRow(
-                selectedTabIndex = selectedTabIndex,
-            ) {
-                StatisticsTab.entries.forEachIndexed { index, destination ->
-                    Tab(
-                        selected = selectedTabIndex == index,
-                        onClick = {
-                            if (selectedTabIndex != index) {
-                                selectedTabIndex = index
-                                statisticsViewModel.updateTypeAndFetchData(
-                                    type = destination.type,
-                                    uid = uid,
-                                    householdId = householdId
-                                )
-                            }
-                        },
-                        text = {
-                            Text(
-                                text = stringResource(id = destination.labelResId),
-                                overflow = TextOverflow.Ellipsis
+            StatisticsTab.entries.forEachIndexed { index, destination ->
+                Tab(
+                    selected = selectedTabIndex == index,
+                    onClick = {
+                        if (selectedTabIndex != index) {
+                            selectedTabIndex = index
+                            statisticsViewModel.updateTypeAndFetchData(
+                                type = destination.type,
+                                uid = uid,
+                                householdId = householdId
                             )
                         }
-                    )
-                }
-            }
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
-            ) {
-                when {
-                    uiState.isLoading -> CircularProgressIndicator(
-                        modifier = Modifier.align(
-                            Alignment.Center
+                    },
+                    text = {
+                        Text(
+                            text = stringResource(id = destination.labelResId),
+                            overflow = TextOverflow.Ellipsis
                         )
+                    }
+                )
+            }
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp)
+        ) {
+            when {
+                uiState.isLoading -> CircularProgressIndicator(
+                    modifier = Modifier.align(
+                        Alignment.Center
                     )
+                )
 
-                    uiState.error != null -> Text(
-                        text = stringResource(id = uiState.error!!.messageResId),
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
+                uiState.error != null -> Text(
+                    text = stringResource(id = uiState.error!!.messageResId),
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.align(Alignment.Center)
+                )
 
-                    uiState.chartData.isEmpty() -> Text(
-                        text = stringResource(R.string.statistics_empty_transaction_message),
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
+                uiState.chartData.isEmpty() -> Text(
+                    text = stringResource(R.string.statistics_empty_transaction_message),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.align(Alignment.Center)
+                )
 
-                    else -> StatisticsContent(uiState = uiState)
-                }
+                else -> StatisticsContent(uiState = uiState)
             }
         }
     }

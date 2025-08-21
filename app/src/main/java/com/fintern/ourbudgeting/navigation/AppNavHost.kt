@@ -85,32 +85,30 @@ fun AppNavHost(
                 }
             )
         }
-        composable(Screen.TRANSACTIONSAVE.name) {
-            composable(
-                route = "${Screen.TRANSACTIONSAVE.name}?type={type}&householdId={householdId}",
-                arguments = listOf(
-                    navArgument("type") {
-                        type = NavType.StringType
-                        defaultValue = TransactionType.EXPENSE.name
-                    },
-                    navArgument("householdId") {
-                        type = NavType.StringType
-                        defaultValue = ""
-                    }
-                )
-            ) { backStackEntry ->
-                val typeArg = backStackEntry.arguments?.getString("type")
-                val initialType = runCatching { TransactionType.valueOf(typeArg ?: "") }
-                    .getOrDefault(TransactionType.EXPENSE)
+        composable(
+            route = "${Screen.TRANSACTIONSAVE.name}?type={type}&householdId={householdId}",
+            arguments = listOf(
+                navArgument("type") {
+                    type = NavType.StringType
+                    defaultValue = TransactionType.EXPENSE.name
+                },
+                navArgument("householdId") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
+            )
+        ) { backStackEntry ->
+            val typeArg = backStackEntry.arguments?.getString("type")
+            val initialType = runCatching { TransactionType.valueOf(typeArg ?: "") }
+                .getOrDefault(TransactionType.EXPENSE)
 
-                val householdId = backStackEntry.arguments?.getString("householdId").orEmpty()
+            val householdId = backStackEntry.arguments?.getString("householdId").orEmpty()
 
-                TransactionSaveScreen(
-                    initialTransactionType = initialType,
-                    householdId = householdId,
-                    onNavigateToBack = { navController.popBackStack() }
-                )
-            }
+            TransactionSaveScreen(
+                initialTransactionType = initialType,
+                householdId = householdId,
+                onNavigateToBack = { navController.popBackStack() }
+            )
         }
         composable(Screen.PERSONALHOUSEHOLDMANAGEMENT.name) {
             PersonalHouseholdManagementScreen(
