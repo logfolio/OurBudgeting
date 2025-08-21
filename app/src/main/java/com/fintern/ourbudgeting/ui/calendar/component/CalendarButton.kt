@@ -83,13 +83,20 @@ fun CustomDropDownButton(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            val maxText = if (text.length > 6) {
+                stringResource(R.string.max_text, text.take(6))
+            } else {
+                text
+            }
+
             Text(
-                text = text,
+                text = maxText,
                 fontSize = fontSize,
                 fontWeight = FontWeight.Bold,
                 modifier = modifier.weight(1f),
                 textAlign = TextAlign.Center,
-                color = Color.Black
+                color = Color.Black,
+                maxLines = 1,
             )
 
             Icon(
