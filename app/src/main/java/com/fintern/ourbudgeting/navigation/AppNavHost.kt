@@ -57,10 +57,10 @@ fun AppNavHost(
             HomeScreen(
                 householdId = householdId,
                 onAddIncomeClick = {
-                    navController.navigate("${Screen.TRANSACTIONSAVE.name}?type=${TransactionType.INCOME.name}&householdId=")
+                    navController.navigate("${Screen.TRANSACTIONSAVE.name}?type=${TransactionType.INCOME.name}")
                 },
                 onAddExpenseClick = {
-                    navController.navigate("${Screen.TRANSACTIONSAVE.name}?type=${TransactionType.EXPENSE.name}&householdId=")
+                    navController.navigate("${Screen.TRANSACTIONSAVE.name}?type=${TransactionType.EXPENSE.name}")
                 },
             )
         }
@@ -86,23 +86,17 @@ fun AppNavHost(
             )
         }
         composable(
-            route = "${Screen.TRANSACTIONSAVE.name}?type={type}&householdId={householdId}",
+            route = "${Screen.TRANSACTIONSAVE.name}?type={type}",
             arguments = listOf(
                 navArgument("type") {
                     type = NavType.StringType
                     defaultValue = TransactionType.EXPENSE.name
                 },
-                navArgument("householdId") {
-                    type = NavType.StringType
-                    defaultValue = ""
-                }
             )
         ) { backStackEntry ->
             val typeArg = backStackEntry.arguments?.getString("type")
             val initialType = runCatching { TransactionType.valueOf(typeArg ?: "") }
                 .getOrDefault(TransactionType.EXPENSE)
-
-            val householdId = backStackEntry.arguments?.getString("householdId").orEmpty()
 
             TransactionSaveScreen(
                 initialTransactionType = initialType,
