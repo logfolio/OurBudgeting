@@ -1,12 +1,10 @@
 package com.fintern.ourbudgeting.data.repository
 
-import android.util.Log
 import com.fintern.ourbudgeting.data.model.FirebaseConstants
 import com.fintern.ourbudgeting.ui.common.model.Household
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
-
 
 class HouseholdRepository @Inject constructor(
     private val firestore: FirebaseFirestore

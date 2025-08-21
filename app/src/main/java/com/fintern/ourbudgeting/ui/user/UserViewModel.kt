@@ -1,6 +1,5 @@
 package com.fintern.ourbudgeting.ui.user
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fintern.ourbudgeting.data.repository.HouseholdRepository
@@ -51,7 +50,7 @@ class UserViewModel @Inject constructor(
     private val _isHouseholdLoading = MutableStateFlow(false)
     val isHouseholdLoading: StateFlow<Boolean> = _isHouseholdLoading.asStateFlow()
 
-    private val _isInitializing = MutableStateFlow(false) // 추가
+    private val _isInitializing = MutableStateFlow(false)
 
     fun initializeUserHousehold() {
         viewModelScope.launch {
