@@ -42,7 +42,7 @@ fun HomeScreen(
     val uid by viewModel.uid.collectAsState()
 
     LaunchedEffect(uid) {
-        if (uid.isNotEmpty() && viewModel.household.value == null) {
+        if (uid.isNotEmpty()) {
             viewModel.initializeUserHousehold()
         }
     }
