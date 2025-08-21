@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,19 +21,26 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.data.calendar.CategoryType
 import com.fintern.ourbudgeting.data.calendar.TransactionWithId
 import com.fintern.ourbudgeting.ui.calendar.extensions.toFormatterDate
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
+import com.fintern.ourbudgeting.ui.user.UserViewModel
 import java.text.NumberFormat
 import java.util.Locale
 
 @Composable
 fun CategoryItemListItem(
     item: TransactionWithId,
-    categoryType: CategoryType?
+    categoryType: CategoryType?,
+    userViewModel: UserViewModel = hiltViewModel()
 ) {
+
+    val nickname by userViewModel.nickname.collectAsStateWithLifecycle()
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,7 +66,8 @@ fun CategoryItemListItem(
         Column(
             modifier = Modifier.weight(1f)
         ) {
-            val amountColor = if (item.transaction.type == TransactionType.INCOME.name) Color.Red else Color.Blue
+            val amountColor =
+                if (item.transaction.type == TransactionType.INCOME.name) Color.Red else Color.Blue
             val amountPrefix =
                 if (item.transaction.type == TransactionType.INCOME.name) stringResource(R.string.prefix_plus) else stringResource(
                     R.string.prefix_minus
@@ -84,7 +93,7 @@ fun CategoryItemListItem(
             horizontalAlignment = Alignment.End
         ) {
             Text(
-                text = item.transaction.createdBy,
+                text = nickname,
                 fontSize = 14.sp,
                 color = Color.Gray
             )
