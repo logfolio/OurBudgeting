@@ -106,6 +106,10 @@ fun TransactionSaveScreen(
         }
     }
 
+    LaunchedEffect(initialTransactionType) {
+        viewModel.setTransactionType(initialTransactionType)
+    }
+
     Scaffold(
         topBar = {
             TransactionTopAppBar(
@@ -150,7 +154,7 @@ fun TransactionSaveScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             TransactionToggle(
-                transactionType = initialTransactionType,
+                transactionType = uiState.transactionType,
                 onTransactionTypeChange = {
                     viewModel.setTransactionType(it)
                 }

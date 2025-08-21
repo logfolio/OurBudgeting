@@ -18,6 +18,7 @@ val localProperties = Properties().apply {
 }
 
 val googleClientId: String = localProperties.getProperty("GOOGLE_CLIENT_ID") ?: "\"\""
+val exchangeRateApiKey: String = localProperties.getProperty("EXCHANGE_RATE_API_KEY") ?: "\"\""
 
 android {
     namespace = "com.fintern.ourbudgeting"
@@ -33,6 +34,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "GOOGLE_CLIENT_ID", "\"$googleClientId\"")
+        buildConfigField("String", "EXCHANGE_RATE_API_KEY", "\"$exchangeRateApiKey\"")
     }
 
     buildTypes {
@@ -98,6 +100,7 @@ dependencies {
 
     // Image
     implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
     // ML Kit
     implementation(libs.text.recognition.korean)
