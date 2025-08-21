@@ -19,4 +19,7 @@ object FirebaseConstants {
     const val FIELD_DESCRIPTION = "description"
     const val FIELD_PHOTO_URL = "photoUrl"
     const val FIELD_NAME = "name"
+
+    const val INCOME = "INCOME"
+    const val EXPENSE = "EXPENSE"
 }

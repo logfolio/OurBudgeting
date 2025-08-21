@@ -26,6 +26,7 @@ import com.fintern.ourbudgeting.ui.home.components.AssetSummaryCard
 import com.fintern.ourbudgeting.ui.home.components.ExchangeRateCard
 import com.fintern.ourbudgeting.ui.home.components.LatestTransactionCard
 import com.fintern.ourbudgeting.ui.user.UserViewModel
+import com.fintern.ourbudgeting.util.NumberUtils.formatAmount
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,16 +49,15 @@ fun HomeScreen(
     }
 
     LaunchedEffect(householdId) {
-        val hid = householdId
-        if (hid.isNotEmpty()) {
-            homeViewModel.getLatestTransactions(
-                householdId = hid,
-            )
+        if (householdId.isNotEmpty()) {
+            homeViewModel.getLatestTransactions(householdId)
+            homeViewModel.observeTotalAmount(householdId)
         }
     }
 
     LaunchedEffect(Unit) {
         homeViewModel.loadExchangeRates()
+        homeViewModel.observeTotalAmount(householdId)
     }
 
     Column(
@@ -70,7 +70,7 @@ fun HomeScreen(
         )
 
         AssetSummaryCard(
-            amount = uiState.totalAssetText,
+            amount = formatAmount(uiState.totalAssetText),
             onAddIncomeClick = onAddIncomeClick,
             onAddExpenseClick = onAddExpenseClick,
         )

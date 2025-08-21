@@ -7,7 +7,7 @@ import com.fintern.ourbudgeting.R
 data class HomeUiState(
     val isLoading: Boolean = true,
     val error: HomeError? = null,
-    val totalAssetText: String = "",
+    val totalAssetText: Long = 0L,
     val latestTransaction: List<LatestTransactionUi> = emptyList(),
     val exchangeRates: List<ExchangeRateUi> = emptyList(),
 )
