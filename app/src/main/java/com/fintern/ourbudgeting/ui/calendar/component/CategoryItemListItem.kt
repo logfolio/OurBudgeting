@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fintern.ourbudgeting.R
-import com.fintern.ourbudgeting.data.calendar.CategoryDefinition
+import com.fintern.ourbudgeting.data.calendar.CategoryType
 import com.fintern.ourbudgeting.data.calendar.TransactionWithId
 import com.fintern.ourbudgeting.ui.calendar.extensions.toFormatterDate
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
@@ -31,7 +31,7 @@ import java.util.Locale
 @Composable
 fun CategoryItemListItem(
     item: TransactionWithId,
-    categoryDefinition: CategoryDefinition?
+    categoryType: CategoryType?
 ) {
     Row(
         modifier = Modifier
@@ -48,7 +48,7 @@ fun CategoryItemListItem(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = categoryDefinition?.emoji ?: stringResource(R.string.emoji_category_null),
+                text = stringResource(categoryType!!.labelRes),
                 fontSize = 16.sp
             )
         }

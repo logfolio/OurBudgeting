@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fintern.ourbudgeting.data.repository.ExchangeRateRepository
 import com.fintern.ourbudgeting.data.repository.LatestTransactionRepository
+import com.fintern.ourbudgeting.util.CurrencyDisplay.DISPLAY_NAME
 import com.fintern.ourbudgeting.data.repository.TotalAmountRepository
 import com.fintern.ourbudgeting.util.NumberUtils.formatAmount
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,15 +30,13 @@ class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
-    private val targetCurNames = setOf("미국 달러", "일본 옌", "태국 바트")
-
     fun loadExchangeRates(searchDate: String? = null) {
         viewModelScope.launch {
             setLoading()
             repository.getExchangeRates(searchDate).fold(
                 onSuccess = { rates ->
                     val uiList = rates.asSequence()
-                        .filter { it.curNm in targetCurNames }
+                        .filter { it.curNm in DISPLAY_NAME }
                         .map { rate ->
                             ExchangeRateUi(
                                 countryName = rate.curNm,
