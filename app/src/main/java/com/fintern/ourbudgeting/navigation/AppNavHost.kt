@@ -23,7 +23,6 @@ import com.fintern.ourbudgeting.ui.save.TransactionSaveScreen
 import com.fintern.ourbudgeting.ui.setting.SettingScreen
 import com.fintern.ourbudgeting.ui.statistics.chart.StatisticsScreen
 import com.fintern.ourbudgeting.ui.user.UserViewModel
-import kotlinx.coroutines.newSingleThreadContext
 
 @Composable
 fun AppNavHost(
@@ -38,6 +37,8 @@ fun AppNavHost(
     val uid by userViewModel.uid.collectAsState()
     val household by userViewModel.household.collectAsState()
     val householdId = household?.id ?: ""
+    val nickname by userViewModel.nickname.collectAsState()
+    val email by userViewModel.email.collectAsState()
 
     val startDestination = if (isLoggedIn) BottomNavigationItem.HOME.name else Screen.LOGIN.name
 
@@ -97,7 +98,9 @@ fun AppNavHost(
             SettingScreen(
                 onNavigateToPersonalHouseholdManagement = {
                     navController.navigate(Screen.PERSONALHOUSEHOLDMANAGEMENT.name)
-                }
+                },
+                nickname = nickname,
+                email = email
             )
         }
         composable(
