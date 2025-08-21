@@ -111,13 +111,13 @@ fun AppNavHost(
                     onNavigateToBack = { navController.popBackStack() }
                 )
             }
-            composable(Screen.PERSONALHOUSEHOLDMANAGEMENT.name) {
-                PersonalHouseholdManagementScreen(
-                    onNavigateToBack = {
-                        navController.popBackStack()
-                    }
-                )
-            }
+        }
+        composable(Screen.PERSONALHOUSEHOLDMANAGEMENT.name) {
+            PersonalHouseholdManagementScreen(
+                onNavigateToBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
