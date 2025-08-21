@@ -11,6 +11,7 @@ data class TransactionSaveUiState(
     val isSaveEnabled: Boolean = false,
     val transactionType: TransactionType = TransactionType.EXPENSE,
     val selectedDate: Long? = null,
+    val assetTypes: List<String> = emptyList(),
     val selectedAsset: String? = null,
     val selectedCategoryLabel: String? = null,
     val selectedCategoryCode: String? = null,
