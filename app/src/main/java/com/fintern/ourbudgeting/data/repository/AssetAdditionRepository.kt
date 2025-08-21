@@ -19,14 +19,12 @@ class AssetAdditionRepository @Inject constructor(
     ): Result<Unit> {
         val user =
             auth.currentUser ?: return Result.failure(AssetRepositoryException.UserNotAuthenticated)
-        val householdRef = db.collection(FirebaseConstants.COLLECTION_USERS).document(householdsId)
+        val householdRef = db.collection(FirebaseConstants.COLLECTION_HOUSEHOLDS).document(householdsId)
         return runCatching {
             val snapshot = householdRef.get().await()
             if (!snapshot.exists()) {
                 val initialData = mapOf(
                     FirebaseConstants.FIELD_ASSET_TYPE to listOf(defaultAssetType),
-                    FirebaseConstants.FIELD_CREATED_AT to System.currentTimeMillis(),
-                    FirebaseConstants.FIELD_USER_ID to user.uid
                 )
                 householdRef.set(initialData).await()
             } else {
