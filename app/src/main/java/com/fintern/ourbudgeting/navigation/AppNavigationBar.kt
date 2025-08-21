@@ -23,14 +23,17 @@ fun AppNavigationBar() {
 
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.LOGIN.name) {
+            if (currentRoute != Screen.LOGIN.name
+                && currentRoute != Screen.PERSONALHOUSEHOLDMANAGEMENT.name) {
                 NavigationBar(windowInsets = NavigationBarDefaults.windowInsets) {
                     BottomNavigationItem.entries.forEach { screen ->
                         NavigationBarItem(
                             selected = currentRoute == screen.name,
                             onClick = {
                                 navController.navigate(route = screen.name) {
-                                    popUpTo(navController.currentDestination?.route ?: screen.name) {
+                                    popUpTo(
+                                        navController.currentDestination?.route ?: screen.name
+                                    ) {
                                         inclusive = true
                                     }
                                     launchSingleTop = true
