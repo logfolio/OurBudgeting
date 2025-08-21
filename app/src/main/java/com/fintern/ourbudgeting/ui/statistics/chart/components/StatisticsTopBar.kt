@@ -35,17 +35,17 @@ fun StatisticsTopBar(
             onNextMonth = onNextMonth
         )
 
-        Spacer(modifier = modifier.weight(1f))
-
-        IconButton(onClick = onAiAnalysisClick) {
-            Icon(
-                painter = painterResource(R.drawable.ic_ai_analysis),
-                contentDescription = stringResource(R.string.ai_analysis)
-            )
-
-        }
-
-        Spacer(modifier = Modifier.padding(end = 12.dp))
+//        Spacer(modifier = modifier.weight(1f))
+//
+//        IconButton(onClick = onAiAnalysisClick) {
+//            Icon(
+//                painter = painterResource(R.drawable.ic_ai_analysis),
+//                contentDescription = stringResource(R.string.ai_analysis)
+//            )
+//
+//        }
+//
+//        Spacer(modifier = Modifier.padding(end = 12.dp))
     }
 }
 
