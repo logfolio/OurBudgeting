@@ -2,6 +2,7 @@ package com.fintern.ourbudgeting.data.repository
 
 import android.net.Uri
 import com.fintern.ourbudgeting.data.model.FirebaseConstants
+import com.fintern.ourbudgeting.data.model.FirebaseConstants.FIELD_ASSET_TYPE
 import com.fintern.ourbudgeting.ui.save.TransactionSaveUiState
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
@@ -43,6 +44,19 @@ class RemoteTransactionSaveRepository @Inject constructor(
                 .await()
 
             Unit
+        }
+    }
+
+    override suspend fun getAssetTypes(householdId: String): Result<List<String>> {
+        return runCatching {
+            val snapshot = firestore
+                .collection(FirebaseConstants.COLLECTION_HOUSEHOLDS)
+                .document(householdId)
+                .get()
+                .await()
+                .get(FIELD_ASSET_TYPE)
+
+            (snapshot as? List<*>)?.filterIsInstance<String>() ?: emptyList()
         }
     }
 
