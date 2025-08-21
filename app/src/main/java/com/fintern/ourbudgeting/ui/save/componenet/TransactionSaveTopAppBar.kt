@@ -2,6 +2,7 @@ package com.fintern.ourbudgeting.ui.save.componenet
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.R
 import com.fintern.ourbudgeting.ui.save.TransactionSaveUiState
 
@@ -46,7 +48,8 @@ fun TransactionTopAppBar(
             Icon(
                 painter = painterResource(R.drawable.ic_camera),
                 contentDescription = stringResource(R.string.add_image),
-                tint = Color(0xFF964BFF)
+                modifier = Modifier.padding(end = 8.dp),
+                tint = Color(0xFF964BFF),
             )
         }
 
