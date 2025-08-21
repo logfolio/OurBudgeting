@@ -54,10 +54,10 @@ fun CalendarScreen(
     }
 
     val household by userViewModel.household.collectAsStateWithLifecycle()
-    val nickname by userViewModel.nickname.collectAsState()
+    val nickname by userViewModel.nickname.collectAsStateWithLifecycle()
 
     val selectedAccount = household?.name ?: ""
-    val selectedUser = remember { mutableStateOf(nickname) }
+    val selectedUser = nickname
 
     var currentMonth by remember { mutableStateOf(LocalDate.now()) }
     var selectedDate: LocalDate? by remember { mutableStateOf(null) }
@@ -171,7 +171,7 @@ fun CalendarScreen(
             ) {
                 CalendarAccountAndUser(
                     selectedAccount = selectedAccount,
-                    selectedUser = selectedUser.value,
+                    selectedUser = selectedUser,
                     onAccountClick = { },
                     onUserClick = { }
                 )
@@ -218,7 +218,7 @@ fun CalendarScreen(
                     onDateClick = { newDate -> selectedDate = newDate }
                 )
                 CalendarFilterControls(
-                    nickname = nickname.toString(),
+                    nickname = nickname,
                     filterType = currentFilterType,
                     onFilterTypeSelected = { newFilterType ->
                         currentFilterType = newFilterType
