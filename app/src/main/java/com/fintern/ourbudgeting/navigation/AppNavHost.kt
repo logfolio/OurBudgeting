@@ -65,8 +65,8 @@ fun AppNavHost(
         composable(BottomNavigationItem.CALENDAR.name) { CalendarScreen() }
         composable(BottomNavigationItem.STATISTICS.name) {
             StatisticsScreen(
-                uid = "",
-                householdId = ""
+                uid = uid,
+                householdId = householdId,
             )
         }
         composable(BottomNavigationItem.ASSETMANAGEMENT.name) {
