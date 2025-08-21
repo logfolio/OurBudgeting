@@ -61,11 +61,11 @@ fun TransactionSaveScreen(
     householdId: String,
     onNavigateToBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: TransactionSaveViewModel = hiltViewModel(),
+    transactionViewModel: TransactionSaveViewModel = hiltViewModel(),
     userViewModel: UserViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by transactionViewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
     val uid by userViewModel.uid.collectAsState()
@@ -74,7 +74,7 @@ fun TransactionSaveScreen(
     val imageOnlyLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             uri?.let {
-                viewModel.setPhotoUri(it)
+                transactionViewModel.setPhotoUri(it)
             }
         }
 
@@ -83,13 +83,13 @@ fun TransactionSaveScreen(
         rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             uri?.let {
                 processReceiptImage(context, it) { result ->
-                    viewModel.applyScannedReceipt(result)
+                    transactionViewModel.applyScannedReceipt(result)
                 }
             }
         }
 
     LaunchedEffect(Unit) {
-        viewModel.eventFlow.collect { event ->
+        transactionViewModel.eventFlow.collect { event ->
             when (event) {
                 is TransactionUiEvent.ShowSnackbar -> {
                     snackbarHostState.showSnackbar(
@@ -107,7 +107,7 @@ fun TransactionSaveScreen(
     }
 
     LaunchedEffect(initialTransactionType) {
-        viewModel.setTransactionType(initialTransactionType)
+        transactionViewModel.setTransactionType(initialTransactionType)
     }
 
     Scaffold(
@@ -160,14 +160,14 @@ fun TransactionSaveScreen(
             TransactionToggle(
                 transactionType = uiState.transactionType,
                 onTransactionTypeChange = {
-                    viewModel.setTransactionType(it)
+                    transactionViewModel.setTransactionType(it)
                 }
             )
 
             DatePickerField(
                 label = stringResource(R.string.select_date_label),
                 onDateSelected = { transactionDate ->
-                    viewModel.setSelectedDate(transactionDate)
+                    transactionViewModel.setSelectedDate(transactionDate)
                 },
                 modifier = modifier
             )
@@ -178,7 +178,7 @@ fun TransactionSaveScreen(
                 options = listOf("은행 계좌", "현금", "카드"),
                 // TODO: Firestore에서 데이터 불러와서 표시
                 onOptionSelected = { selected ->
-                    viewModel.setSelectedAsset(selected)
+                    transactionViewModel.setSelectedAsset(selected)
                 },
             )
 
@@ -189,7 +189,7 @@ fun TransactionSaveScreen(
                 onOptionSelected = { selectedLabel ->
                     val label = categoryLabels.indexOf(selectedLabel)
                     val code = categoryEnums[label].name
-                    viewModel.setCategory(selectedLabel, code)
+                    transactionViewModel.setCategory(selectedLabel, code)
                 },
             )
 
@@ -197,7 +197,7 @@ fun TransactionSaveScreen(
             CommonOutlinedTextField(
                 value = uiState.amountTextFieldValue,
                 onValueChange = { newValue ->
-                    viewModel.setAmountTextFieldValue(newValue)
+                    transactionViewModel.setAmountTextFieldValue(newValue)
                 },
                 label = stringResource(R.string.amount),
                 keyboardType = KeyboardType.Number,
@@ -208,7 +208,7 @@ fun TransactionSaveScreen(
             CommonOutlinedTextField(
                 value = uiState.content,
                 onValueChange = { newContent ->
-                    viewModel.setContent(newContent)
+                    transactionViewModel.setContent(newContent)
                 },
                 label = stringResource(R.string.content),
                 trailingIcon = {
@@ -233,7 +233,7 @@ fun TransactionSaveScreen(
             // 선택한 이미지 미리보기
             ImagePreview(
                 photoUri = uiState.photoUri,
-                onRemove = { viewModel.clearPhotoUri() },
+                onRemove = { transactionViewModel.clearPhotoUri() },
                 modifier = modifier
                     .padding(top = 8.dp)
             )
@@ -258,7 +258,7 @@ fun TransactionSaveScreen(
             // 저장 버튼
             Button(
                 onClick = {
-                    viewModel.saveTransaction(householdId, uid)
+                    transactionViewModel.saveTransaction(householdId, uid)
                 },
                 enabled = uiState.isSaveEnabled,
                 modifier = modifier
