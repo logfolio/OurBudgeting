@@ -41,9 +41,8 @@ fun HomeScreen(
 
     val uid by viewModel.uid.collectAsState()
 
-    // 사용자가 화면에 들어왔을 때 household 초기화
     LaunchedEffect(uid) {
-        if (uid.isNotEmpty()) {
+        if (uid.isNotEmpty() && viewModel.household.value == null) {
             viewModel.initializeUserHousehold()
         }
     }
