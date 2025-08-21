@@ -151,9 +151,17 @@
     <string name="description_close">닫기</string>
     <string name="description_open_menu">메뉴 열기</string>
 
+    <!--  Household Management  -->
+    <string name="label_edit">수정하기</string>
+    <string name="label_household_management">가계부 관리</string>
+    <string name="description_back_button">뒤로가기</string>
+    <string name="label_reset">초기화</string>
+    <string name="label_personal_household">개인 가계부</string>
+
     <!--  Setting  -->
     <string name="move_action">이동</string>
     <string name="top_bar_label_setting">설정</string>
     <string name="title_householde_management">가계부 관리</string>
     <string name="subtitle_household_management">가계부 관리</string>
+
 </resources>

@@ -4,4 +4,5 @@ enum class Screen {
     LOGIN,
     HOME,
     TRANSACTIONSAVE,
+    PERSONALHOUSEHOLDMANAGEMENT,
 }

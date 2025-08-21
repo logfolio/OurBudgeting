@@ -29,6 +29,7 @@ import com.fintern.ourbudgeting.ui.user.UserViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingScreen(
+    onNavigateToPersonalHouseholdManagement: () -> Unit,
     viewModel: UserViewModel = hiltViewModel()
 ) {
     val nickname by viewModel.nickname.collectAsState()
@@ -71,7 +72,9 @@ fun SettingScreen(
             SettingCategory(title = stringResource(R.string.title_householde_management))
             SettingMenuItem(
                 text = stringResource(R.string.subtitle_household_management),
-                onClick = { }
+                onClick = {
+                    onNavigateToPersonalHouseholdManagement()
+                }
             )
         }
     }

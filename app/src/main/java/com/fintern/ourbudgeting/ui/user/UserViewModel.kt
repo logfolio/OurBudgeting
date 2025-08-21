@@ -90,4 +90,16 @@ class UserViewModel @Inject constructor(
             }
         )
     }
+
+    fun updateHouseholdName(ownerId: String, newName: String) {
+        viewModelScope.launch {
+            householdRepository.updateHouseholdName(ownerId, newName)
+                .onSuccess { updatedName ->
+                    initializeUserHousehold()
+                }
+                .onFailure { exception ->
+
+                }
+        }
+    }
 }

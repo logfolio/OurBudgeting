@@ -47,4 +47,14 @@ class HouseholdRepository @Inject constructor(
             Result.failure(e)
         }
     }
+
+    suspend fun updateHouseholdName(ownerId: String, newName: String): Result<String> {
+        return try {
+            val householdRef = householdsCollection.document(ownerId)
+            householdRef.update(FirebaseConstants.FIELD_NAME, newName).await()
+            Result.success(newName)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }
