@@ -28,7 +28,7 @@ class RemoteTransactionSaveRepository @Inject constructor(
                 FirebaseConstants.FIELD_TYPE to uiState.transactionType.name,
                 FirebaseConstants.FIELD_DATE to uiState.selectedDate?.let { Timestamp(Date(it)) },
                 FirebaseConstants.FIELD_ASSET_ID to uiState.selectedAsset,
-                FirebaseConstants.FIELD_CATEGORY to uiState.selectedCategory,
+                FirebaseConstants.FIELD_CATEGORY to uiState.selectedCategoryCode,
                 FirebaseConstants.FIELD_AMOUNT to uiState.amount,
                 FirebaseConstants.FIELD_DESCRIPTION to uiState.content,
                 FirebaseConstants.FIELD_PHOTO_URL to photoUrl,
