@@ -50,12 +50,12 @@ fun TransactionTopAppBar(
             )
         }
 
-        IconButton(onClick = { }) {
-            Icon(
-                painter = painterResource(R.drawable.ic_mic),
-                contentDescription = stringResource(R.string.transaction_save_voice),
-                tint = Color(0xFF964BFF)
-            )
-        }
+//        IconButton(onClick = { }) {
+//            Icon(
+//                painter = painterResource(R.drawable.ic_mic),
+//                contentDescription = stringResource(R.string.transaction_save_voice),
+//                tint = Color(0xFF964BFF)
+//            )
+//        }
     }
 }
