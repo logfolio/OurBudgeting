@@ -45,7 +45,7 @@ fun TransactionTopAppBar(
         IconButton(onClick = onCameraClick) {
             Icon(
                 painter = painterResource(R.drawable.ic_camera),
-                contentDescription = stringResource(R.string.action_back),
+                contentDescription = stringResource(R.string.add_image),
                 tint = Color(0xFF964BFF)
             )
         }
@@ -53,7 +53,7 @@ fun TransactionTopAppBar(
         IconButton(onClick = { }) {
             Icon(
                 painter = painterResource(R.drawable.ic_mic),
-                contentDescription = stringResource(R.string.action_back),
+                contentDescription = stringResource(R.string.transaction_save_voice),
                 tint = Color(0xFF964BFF)
             )
         }

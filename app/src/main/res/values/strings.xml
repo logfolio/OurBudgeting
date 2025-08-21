@@ -150,6 +150,7 @@
     <string name="error_image_upload">이미지 업로드에 실패했습니다. 다시 시도해 주세요!</string>
     <string name="description_close">닫기</string>
     <string name="description_open_menu">메뉴 열기</string>
+    <string name="transaction_save_voice">음성으로 입력</string>
 
     <!--  Household Management  -->
     <string name="label_edit">수정하기</string>
