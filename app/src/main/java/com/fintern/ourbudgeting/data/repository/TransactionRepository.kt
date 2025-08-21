@@ -25,4 +25,6 @@ interface TransactionSaveRepository {
         uid: String,
         uiState: TransactionSaveUiState
     ): Result<Unit>
+
+    suspend fun getAssetTypes(householdId: String): Result<List<String>>
 }
