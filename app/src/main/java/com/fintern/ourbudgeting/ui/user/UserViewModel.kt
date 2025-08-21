@@ -1,5 +1,6 @@
 package com.fintern.ourbudgeting.ui.user
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fintern.ourbudgeting.data.repository.HouseholdRepository
@@ -50,11 +51,18 @@ class UserViewModel @Inject constructor(
     private val _isHouseholdLoading = MutableStateFlow(false)
     val isHouseholdLoading: StateFlow<Boolean> = _isHouseholdLoading.asStateFlow()
 
+    private val _isInitializing = MutableStateFlow(false) // 추가
+
     fun initializeUserHousehold() {
         viewModelScope.launch {
             val currentUid = uid.value
-            if (currentUid.isNotEmpty()) {
-                _isHouseholdLoading.value = true
+            if (_isInitializing.value || _household.value != null || currentUid.isEmpty()) {
+                return@launch
+            }
+            _isInitializing.value = true
+            _isHouseholdLoading.value = true
+
+            try {
                 val existingHousehold = householdRepository.getUserHousehold(currentUid)
                 existingHousehold.fold(
                     onSuccess = { household ->
@@ -64,14 +72,17 @@ class UserViewModel @Inject constructor(
                             createNewHousehold(currentUid)
                         }
                     },
-                    onFailure = {
+                    onFailure = { error ->
                         createNewHousehold(currentUid)
                     }
                 )
+            } finally {
+                _isInitializing.value = false
                 _isHouseholdLoading.value = false
             }
         }
     }
+
 
     private suspend fun createNewHousehold(userId: String) {
         householdRepository.createInitialHousehold(userId).fold(

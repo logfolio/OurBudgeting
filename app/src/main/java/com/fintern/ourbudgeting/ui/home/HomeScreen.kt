@@ -1,5 +1,6 @@
 package com.fintern.ourbudgeting.ui.home
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -42,7 +43,7 @@ fun HomeScreen(
     val uid by viewModel.uid.collectAsState()
 
     LaunchedEffect(uid) {
-        if (uid.isNotEmpty() && viewModel.household.value == null) {
+        if (uid.isNotEmpty()) {
             viewModel.initializeUserHousehold()
         }
     }

@@ -1,5 +1,6 @@
 package com.fintern.ourbudgeting.data.repository
 
+import android.util.Log
 import com.fintern.ourbudgeting.data.model.FirebaseConstants
 import com.fintern.ourbudgeting.ui.common.model.Household
 import com.google.firebase.firestore.FirebaseFirestore
