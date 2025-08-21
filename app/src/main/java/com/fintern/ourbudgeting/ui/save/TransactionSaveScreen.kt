@@ -106,6 +106,10 @@ fun TransactionSaveScreen(
         }
     }
 
+    LaunchedEffect(householdId) {
+        transactionViewModel.loadAssetTypes(householdId)
+    }
+
     LaunchedEffect(initialTransactionType) {
         transactionViewModel.setTransactionType(initialTransactionType)
     }
@@ -175,8 +179,7 @@ fun TransactionSaveScreen(
             // 자산 선택
             DropDownField(
                 label = stringResource(R.string.asset),
-                options = listOf("은행 계좌", "현금", "카드"),
-                // TODO: Firestore에서 데이터 불러와서 표시
+                options = uiState.assetTypes.ifEmpty { listOf(stringResource(R.string.cash)) }, // fallback
                 onOptionSelected = { selected ->
                     transactionViewModel.setSelectedAsset(selected)
                 },
