@@ -105,7 +105,7 @@ class StatisticsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val categorySums = repository.fetchMonthlyCategoryTotals(
-                    type = type.name.lowercase(),
+                    type = type.name,
                     year = year,
                     month = month,
                     uid = uid,
