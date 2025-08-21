@@ -11,6 +11,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.AssetDisplayScreen
+import com.fintern.ourbudgeting.ui.assetmanagement.assetedition.AssetEditScreen
+import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.AssetAdditionScreen
 import com.fintern.ourbudgeting.ui.calendar.CalendarScreen
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
 import com.fintern.ourbudgeting.ui.home.HomeScreen
@@ -21,6 +23,7 @@ import com.fintern.ourbudgeting.ui.save.TransactionSaveScreen
 import com.fintern.ourbudgeting.ui.setting.SettingScreen
 import com.fintern.ourbudgeting.ui.statistics.chart.StatisticsScreen
 import com.fintern.ourbudgeting.ui.user.UserViewModel
+import kotlinx.coroutines.newSingleThreadContext
 
 @Composable
 fun AppNavHost(
@@ -74,8 +77,20 @@ fun AppNavHost(
         composable(BottomNavigationItem.ASSETMANAGEMENT.name) {
             AssetDisplayScreen(
                 householdId = householdId,
-                onEditAssetTypeClick = { navController.navigate("edit_asset") },
-                onAddAssetTypeClick = { navController.navigate("add_asset") }
+                onEditAssetTypeClick = { navController.navigate(Screen.ASSETEDIT.name) },
+                onAddAssetTypeClick = { navController.navigate(Screen.ASSETADDITION.name) }
+            )
+        }
+        composable(Screen.ASSETEDIT.name) {
+            AssetEditScreen(
+                householdId = householdId,
+                onNavigateBack = { navController.navigateUp() }
+            )
+        }
+        composable(Screen.ASSETADDITION.name) {
+            AssetAdditionScreen(
+                householdId = householdId,
+                onNavigateBack = { navController.navigateUp() }
             )
         }
         composable(BottomNavigationItem.SETTING.name) {
