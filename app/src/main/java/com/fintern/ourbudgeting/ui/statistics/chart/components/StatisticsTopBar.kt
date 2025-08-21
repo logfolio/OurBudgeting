@@ -1,17 +1,20 @@
 package com.fintern.ourbudgeting.ui.statistics.chart.components
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import com.fintern.ourbudgeting.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -21,26 +24,29 @@ fun StatisticsTopBar(
     month: Int,
     onPreviousMonth: () -> Unit,
     onNextMonth: () -> Unit,
-    onAiAnalysisClick: () -> Unit
+    onAiAnalysisClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    TopAppBar(
-        title = {
-            MonthSelector(
-                year = year,
-                month = month,
-                onPreviousMonth = onPreviousMonth,
-                onNextMonth = onNextMonth
+    Row {
+        MonthSelector(
+            year = year,
+            month = month,
+            onPreviousMonth = onPreviousMonth,
+            onNextMonth = onNextMonth
+        )
+
+        Spacer(modifier = modifier.weight(1f))
+
+        IconButton(onClick = onAiAnalysisClick) {
+            Icon(
+                painter = painterResource(R.drawable.ic_ai_analysis),
+                contentDescription = stringResource(R.string.ai_analysis)
             )
-        },
-        actions = {
-            IconButton(onClick = onAiAnalysisClick) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_ai_analysis),
-                    contentDescription = stringResource(R.string.ai_analysis)
-                )
-            }
+
         }
-    )
+
+        Spacer(modifier = Modifier.padding(end = 12.dp))
+    }
 }
 
 @Composable
