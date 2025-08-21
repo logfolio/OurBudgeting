@@ -80,7 +80,8 @@ class TransactionSaveViewModel @Inject constructor(
         val state = _uiState.value
         val isValid = state.selectedDate != null &&
                 !state.selectedAsset.isNullOrBlank() &&
-                !state.selectedCategory.isNullOrBlank() &&
+                state.selectedCategoryCode != null &&
+                state.selectedCategoryLabel != null &&
                 state.amountTextFieldValue.text.isNotBlank() &&
                 state.content.isNotBlank()
 
@@ -102,9 +103,13 @@ class TransactionSaveViewModel @Inject constructor(
         updateSaveEnabledState()
     }
 
-    fun setCategory(category: String) {
-        _uiState.update { it.copy(selectedCategory = category) }
-        updateSaveEnabledState()
+    fun setCategory(label: String, code: String) {
+        _uiState.update {
+            it.copy(
+                selectedCategoryLabel = label,
+                selectedCategoryCode = code
+            )
+        }
     }
 
     fun setAmountTextFieldValue(textFieldValue: TextFieldValue) {

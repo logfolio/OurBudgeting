@@ -126,12 +126,16 @@ fun TransactionSaveScreen(
             SnackbarHost(hostState = snackbarHostState)
         },
     ) { innerPadding ->
-        val categoryOptions = when (uiState.transactionType) {
-            TransactionType.EXPENSE -> ExpenseCategoryType.entries
-                .map { stringResource(id = it.labelRes) }
+        val (categoryEnums, categoryLabels) = when (uiState.transactionType) {
+            TransactionType.EXPENSE -> {
+                val enums = ExpenseCategoryType.entries
+                enums to enums.map { stringResource(id = it.labelRes) }
+            }
 
-            TransactionType.INCOME -> IncomeCategoryType.entries
-                .map { stringResource(id = it.labelRes) }
+            TransactionType.INCOME -> {
+                val enums = IncomeCategoryType.entries
+                enums to enums.map { stringResource(id = it.labelRes) }
+            }
         }
 
         if (uiState.isLoading) {
@@ -181,9 +185,11 @@ fun TransactionSaveScreen(
             // 카테고리 선택
             DropDownField(
                 label = stringResource(R.string.category),
-                options = categoryOptions,
-                onOptionSelected = { selected ->
-                    viewModel.setCategory(selected)
+                options = categoryLabels,
+                onOptionSelected = { selectedLabel ->
+                    val label = categoryLabels.indexOf(selectedLabel)
+                    val code = categoryEnums[label].name
+                    viewModel.setCategory(selectedLabel, code)
                 },
             )
 
