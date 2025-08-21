@@ -1,5 +1,6 @@
 package com.fintern.ourbudgeting.ui.assetmanagement.assetedition.component
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,7 +36,8 @@ fun AssetEditTopAppBar(
                     contentDescription = stringResource(R.string.graph)
                 )
             }
-        }
+        },
+        windowInsets = WindowInsets(0)
     )
 }
 
