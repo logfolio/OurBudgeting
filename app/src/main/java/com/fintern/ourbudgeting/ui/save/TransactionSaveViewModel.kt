@@ -76,6 +76,24 @@ class TransactionSaveViewModel @Inject constructor(
         }
     }
 
+    fun loadAssetTypes(householdId: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            val result = repository.getAssetTypes(householdId)
+            result.onSuccess { types ->
+                _uiState.update { state ->
+                    state.copy(
+                        isLoading = false,
+                        assetTypes = types,
+                        selectedAsset = state.selectedAsset ?: types.firstOrNull()
+                    )
+                }
+            }.onFailure {
+                _uiState.update { it.copy(isLoading = false, assetTypes = emptyList()) }
+            }
+        }
+    }
+
     private fun updateSaveEnabledState() {
         val state = _uiState.value
         val isValid = state.selectedDate != null &&
