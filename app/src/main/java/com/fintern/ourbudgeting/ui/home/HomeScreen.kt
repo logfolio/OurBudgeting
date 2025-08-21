@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +30,7 @@ import com.fintern.ourbudgeting.ui.user.UserViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    householdId: String,
     onAddIncomeClick: () -> Unit,
     onAddExpenseClick: () -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
@@ -36,14 +39,20 @@ fun HomeScreen(
     val uiState by homeViewModel.uiState.collectAsState()
 
     val uid by viewModel.uid.collectAsState()
-    val nickname by viewModel.nickname.collectAsState()
-    val household by viewModel.household.collectAsState()
-    val isHouseholdLoading by viewModel.isHouseholdLoading.collectAsState()
 
     // 사용자가 화면에 들어왔을 때 household 초기화
     LaunchedEffect(uid) {
         if (uid.isNotEmpty()) {
             viewModel.initializeUserHousehold()
+        }
+    }
+
+    LaunchedEffect(householdId) {
+        val hid = householdId
+        if (hid.isNotEmpty()) {
+            homeViewModel.getLatestTransactions(
+                householdId = hid,
+            )
         }
     }
 
@@ -72,12 +81,17 @@ fun HomeScreen(
             style = MaterialTheme.typography.titleMedium,
         )
 
-        uiState.latestTransaction.forEach { transaction ->
-            LatestTransactionCard(
-                content = transaction.content,
-                amount = transaction.amountText,
-                imageUri = transaction.imageUri
-            )
+        LazyRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(uiState.latestTransaction) { transaction ->
+                LatestTransactionCard(
+                    content = transaction.content,
+                    amount = transaction.amountText,
+                    imageUri = transaction.imageUri,
+                )
+            }
         }
 
         Spacer(modifier = Modifier.padding(vertical = 8.dp))

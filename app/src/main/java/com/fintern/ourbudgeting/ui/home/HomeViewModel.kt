@@ -1,13 +1,19 @@
 package com.fintern.ourbudgeting.ui.home
 
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fintern.ourbudgeting.data.repository.ExchangeRateRepository
+import com.fintern.ourbudgeting.data.repository.LatestTransactionRepository
 import com.fintern.ourbudgeting.util.CurrencyDisplay.DISPLAY_NAME
+import com.fintern.ourbudgeting.util.NumberUtils.formatAmount
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -15,7 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: ExchangeRateRepository
+    private val repository: ExchangeRateRepository,
+    private val latestTransactionRepository: LatestTransactionRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -52,6 +59,31 @@ class HomeViewModel @Inject constructor(
                     )
                 }
             )
+        }
+    }
+
+    fun getLatestTransactions(
+        householdId: String,
+    ) {
+        viewModelScope.launch {
+            latestTransactionRepository.getLatestTransactions(householdId)
+                .map { list ->
+                    list.map { transactionsWithId ->
+                        val transaction = transactionsWithId.transaction
+
+                        LatestTransactionUi(
+                            content = transaction.description,
+                            amountText = formatAmount(transaction.amount),
+                            imageUri = transaction.photoUrl?.toUri()
+                        )
+                    }
+                }
+                .catch {
+                    _uiState.update { it.copy(error = HomeError.Unknown) }
+                }
+                .collectLatest { transactionList ->
+                    _uiState.update { it.copy(latestTransaction = transactionList) }
+                }
         }
     }
 

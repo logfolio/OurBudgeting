@@ -12,6 +12,7 @@ data class Transaction(
     val createdBy: String = "",
     val createdAt: Timestamp = Timestamp.now(),
     val type: String? = null,
+    val photoUrl: String? =  null,
 )
 
 data class CategoryList(

@@ -100,6 +100,7 @@ dependencies {
 
     // Image
     implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
     // ML Kit
     implementation(libs.text.recognition.korean)
