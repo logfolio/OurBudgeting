@@ -13,8 +13,8 @@ import androidx.navigation.navArgument
 import com.fintern.ourbudgeting.ui.assetmanagement.assetdisplay.AssetDisplayScreen
 import com.fintern.ourbudgeting.ui.calendar.CalendarScreen
 import com.fintern.ourbudgeting.ui.common.model.TransactionType
-import com.fintern.ourbudgeting.ui.household.PersonalHouseholdManagementScreen
 import com.fintern.ourbudgeting.ui.home.HomeScreen
+import com.fintern.ourbudgeting.ui.household.PersonalHouseholdManagementScreen
 import com.fintern.ourbudgeting.ui.login.LoginScreen
 import com.fintern.ourbudgeting.ui.login.LoginViewModel
 import com.fintern.ourbudgeting.ui.save.TransactionSaveScreen
@@ -86,37 +86,38 @@ fun AppNavHost(
             )
         }
         composable(Screen.TRANSACTIONSAVE.name) {
-        composable(
-            route = "${Screen.TRANSACTIONSAVE.name}?type={type}&householdId={householdId}",
-            arguments = listOf(
-                navArgument("type") {
-                    type = NavType.StringType
-                    defaultValue = TransactionType.EXPENSE.name
-                },
-                navArgument("householdId") {
-                    type = NavType.StringType
-                    defaultValue = ""
-                }
-            )
-        ) { backStackEntry ->
-            val typeArg = backStackEntry.arguments?.getString("type")
-            val initialType = runCatching { TransactionType.valueOf(typeArg ?: "") }
-                .getOrDefault(TransactionType.EXPENSE)
+            composable(
+                route = "${Screen.TRANSACTIONSAVE.name}?type={type}&householdId={householdId}",
+                arguments = listOf(
+                    navArgument("type") {
+                        type = NavType.StringType
+                        defaultValue = TransactionType.EXPENSE.name
+                    },
+                    navArgument("householdId") {
+                        type = NavType.StringType
+                        defaultValue = ""
+                    }
+                )
+            ) { backStackEntry ->
+                val typeArg = backStackEntry.arguments?.getString("type")
+                val initialType = runCatching { TransactionType.valueOf(typeArg ?: "") }
+                    .getOrDefault(TransactionType.EXPENSE)
 
-            val householdId = backStackEntry.arguments?.getString("householdId").orEmpty()
+                val householdId = backStackEntry.arguments?.getString("householdId").orEmpty()
 
-            TransactionSaveScreen(
-                initialTransactionType = initialType,
-                householdId = householdId,
-                onNavigateToBack = { navController.popBackStack() }
-            )
-        }
-        composable(Screen.PERSONALHOUSEHOLDMANAGEMENT.name) {
-            PersonalHouseholdManagementScreen(
-                onNavigateToBack = {
-                    navController.popBackStack()
-                }
-            )
+                TransactionSaveScreen(
+                    initialTransactionType = initialType,
+                    householdId = householdId,
+                    onNavigateToBack = { navController.popBackStack() }
+                )
+            }
+            composable(Screen.PERSONALHOUSEHOLDMANAGEMENT.name) {
+                PersonalHouseholdManagementScreen(
+                    onNavigateToBack = {
+                        navController.popBackStack()
+                    }
+                )
+            }
         }
     }
 }
