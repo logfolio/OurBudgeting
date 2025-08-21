@@ -16,8 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -246,19 +244,19 @@ fun TransactionSaveScreen(
             )
 
             // 위치 입력
-            CommonOutlinedTextField(
-                value = uiState.location,
-                onValueChange = {},
-                label = stringResource(R.string.location),
-                readOnly = true,
-                trailingIcon = {
-                    Icon(
-                        imageVector = Icons.Outlined.LocationOn,
-                        contentDescription = stringResource(R.string.location),
-                        tint = Color(0xFF964BFF)
-                    )
-                },
-            )
+//            CommonOutlinedTextField(
+//                value = uiState.location,
+//                onValueChange = {},
+//                label = stringResource(R.string.location),
+//                readOnly = true,
+//                trailingIcon = {
+//                    Icon(
+//                        imageVector = Icons.Outlined.LocationOn,
+//                        contentDescription = stringResource(R.string.location),
+//                        tint = Color(0xFF964BFF)
+//                    )
+//                },
+//            )
 
             Spacer(modifier = Modifier.height(8.dp))
 
