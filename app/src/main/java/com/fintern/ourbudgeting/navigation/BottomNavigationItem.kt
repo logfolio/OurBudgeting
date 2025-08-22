@@ -5,9 +5,9 @@ import androidx.annotation.StringRes
 import com.fintern.ourbudgeting.R
 
 enum class BottomNavigationItem(
-    @StringRes val label: Int,
-    @DrawableRes val icon: Int,
-    @StringRes val contentDescription: Int
+    @param:StringRes val label: Int,
+    @param:DrawableRes val icon: Int,
+    @param:StringRes val contentDescription: Int
 ) {
     HOME(R.string.home, R.drawable.ic_home, R.string.home),
     CALENDAR(R.string.calendar, R.drawable.ic_calendar, R.string.calendar),
