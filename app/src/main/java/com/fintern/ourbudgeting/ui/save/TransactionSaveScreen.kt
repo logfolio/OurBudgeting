@@ -13,9 +13,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.LocationOn
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -69,6 +69,7 @@ fun TransactionSaveScreen(
     val snackbarHostState = remember { SnackbarHostState() }
 
     val uid by userViewModel.uid.collectAsState()
+    val scrollState = rememberScrollState()
 
     // 이미지 업데이트용
     val imageOnlyLauncher =
@@ -158,6 +159,7 @@ fun TransactionSaveScreen(
             modifier = modifier
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp)
+                .verticalScroll(scrollState)
                 .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
@@ -242,19 +244,19 @@ fun TransactionSaveScreen(
             )
 
             // 위치 입력
-            CommonOutlinedTextField(
-                value = uiState.location,
-                onValueChange = {},
-                label = stringResource(R.string.location),
-                readOnly = true,
-                trailingIcon = {
-                    Icon(
-                        imageVector = Icons.Outlined.LocationOn,
-                        contentDescription = stringResource(R.string.location),
-                        tint = Color(0xFF964BFF)
-                    )
-                },
-            )
+//            CommonOutlinedTextField(
+//                value = uiState.location,
+//                onValueChange = {},
+//                label = stringResource(R.string.location),
+//                readOnly = true,
+//                trailingIcon = {
+//                    Icon(
+//                        imageVector = Icons.Outlined.LocationOn,
+//                        contentDescription = stringResource(R.string.location),
+//                        tint = Color(0xFF964BFF)
+//                    )
+//                },
+//            )
 
             Spacer(modifier = Modifier.height(8.dp))
 
