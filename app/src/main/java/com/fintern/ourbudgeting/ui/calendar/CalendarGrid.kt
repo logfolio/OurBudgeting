@@ -1,10 +1,9 @@
 package com.fintern.ourbudgeting.ui.calendar
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,22 +25,28 @@ fun CalendarGrid(
     val displayDates = dates()
     val displayDayOfWeek = dayOfWeek()
 
-    LazyVerticalGrid(
-        modifier = modifier,
-        columns = GridCells.Fixed(7),
-        horizontalArrangement = Arrangement.Center,
-        content = {
-            items(displayDayOfWeek) { dayOfWeek ->
+    Column(modifier = modifier) {
+        Row {
+            displayDayOfWeek.forEach { day ->
                 Text(
-                    text = dayOfWeek.toKoreanString(),
-                    modifier = Modifier.size(48.dp),
-                    color = if (dayOfWeek == DayOfWeek.SUNDAY) Color.Red else Color.Black,
+                    text = day.toKoreanString(),
+                    modifier = Modifier
+                        .weight(1f)
+                        .size(48.dp),
+                    color = if (day == DayOfWeek.SUNDAY) Color.Red else Color.Black,
                     style = calendarDayLabelConfig.textStyle
                 )
             }
-            items(items = displayDates) { date ->
-                content(date)
+        }
+
+        displayDates.chunked(7).forEach { week ->
+            Row {
+                week.forEach { date ->
+                    Box(modifier = Modifier.weight(1f)) {
+                        content(date)
+                    }
+                }
             }
         }
-    )
+    }
 }

@@ -1,19 +1,21 @@
 package com.fintern.ourbudgeting.ui.calendar
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,8 +34,7 @@ import com.fintern.ourbudgeting.data.calendar.TransactionWithId
 import com.fintern.ourbudgeting.ui.calendar.component.Calendar
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarAccountAndUser
 import com.fintern.ourbudgeting.ui.calendar.component.CalendarFilterControls
-import com.fintern.ourbudgeting.ui.calendar.component.CalendarTopAppbar
-import com.fintern.ourbudgeting.ui.calendar.component.CategoryListSection
+import com.fintern.ourbudgeting.ui.calendar.component.CategoryListSectionItem
 import com.fintern.ourbudgeting.ui.calendar.component.FilterType
 import com.fintern.ourbudgeting.ui.calendar.component.LabeledAmount
 import com.fintern.ourbudgeting.ui.calendar.extensions.toLocalDate
@@ -156,29 +157,32 @@ fun CalendarScreen(
 
     Scaffold(
         topBar = {
-            CalendarTopAppbar(
-                title = stringResource(R.string.calendar_label_app_name),
-                modifier = Modifier
-                    .fillMaxWidth()
+            TopAppBar(
+                title = {
+                    Text(text = stringResource(R.string.title_calendar))
+                },
+                windowInsets = WindowInsets(0),
             )
-        },
-        content = { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .background(Color.White)
-            ) {
+        }
+    ) { innerPadding ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            item {
                 CalendarAccountAndUser(
                     selectedAccount = selectedAccount,
                     selectedUser = selectedUser,
                     onAccountClick = { },
                     onUserClick = { }
                 )
+            }
+            item {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                        .padding(vertical = 8.dp, horizontal = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -198,7 +202,9 @@ fun CalendarScreen(
                         amountBoxWidth = 120.dp
                     )
                 }
+            }
 
+            item {
                 Calendar(
                     startDayOfWeek = DayOfWeek.SUNDAY,
                     selectedDate = selectedDate,
@@ -217,6 +223,8 @@ fun CalendarScreen(
                     },
                     onDateClick = { newDate -> selectedDate = newDate }
                 )
+            }
+            item {
                 CalendarFilterControls(
                     nickname = nickname,
                     filterType = currentFilterType,
@@ -224,11 +232,10 @@ fun CalendarScreen(
                         currentFilterType = newFilterType
                     },
                 )
-
-                CategoryListSection(
-                    categories = selectedDayCategoryLists
-                )
+            }
+            items(selectedDayCategoryLists) { categoryList ->
+                CategoryListSectionItem(categoryList)
             }
         }
-    )
+    }
 }
