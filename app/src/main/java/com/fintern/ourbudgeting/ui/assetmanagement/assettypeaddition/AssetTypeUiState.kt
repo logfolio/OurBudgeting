@@ -12,8 +12,6 @@ data class AssetTypeUiState(
 sealed class AssetRepositoryException(@param:StringRes val messageResId: Int) :
     Exception() {
     object UserNotAuthenticated : AssetRepositoryException(R.string.login_is_not_success)
-    class DatabaseError(cause: Throwable) :
-        AssetRepositoryException(R.string.database_error_occurred)
 }
 
 sealed class AssetViewModelMessage(@param:StringRes val messageResId: Int) {
