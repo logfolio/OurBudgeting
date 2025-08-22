@@ -28,6 +28,7 @@
     <string name="error_exchange_no_data">오늘의 환율 데이터가 없어요!</string>
 
     <!--  Calendar  -->
+    <string name="title_calendar">달력</string>
     <string name="item_amount">%1$s %2$s원</string>
     <string name="calendar_year_month_format">%1$s년%2$s월</string>
     <string name="description_next_button">다음 버튼</string>

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,6 +13,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -153,78 +158,91 @@ fun CalendarScreen(
             }
     }
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ) {
-        item { Spacer(modifier = Modifier.height(16.dp)) }
-
-        item {
-            CalendarAccountAndUser(
-                selectedAccount = selectedAccount,
-                selectedUser = selectedUser,
-                onAccountClick = { },
-                onUserClick = { }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = stringResource(R.string.title_calendar))
+                },
+                windowInsets = WindowInsets(0),
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White
+                )
             )
         }
-        item {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp, horizontal = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                LabeledAmount(
-                    label = stringResource(R.string.label_income),
-                    labelColor = Color.Red,
-                    amount = totalIncome,
-                    amountBoxWidth = 120.dp
-                )
-
-                Spacer(modifier = Modifier.width(28.dp))
-
-                LabeledAmount(
-                    label = stringResource(R.string.label_expense),
-                    labelColor = Color.Blue,
-                    amount = totalExpense,
-                    amountBoxWidth = 120.dp
+    ) { innerPadding ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .background(Color.White)
+        ) {
+            item {
+                CalendarAccountAndUser(
+                    selectedAccount = selectedAccount,
+                    selectedUser = selectedUser,
+                    onAccountClick = { },
+                    onUserClick = { }
                 )
             }
-        }
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp, horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    LabeledAmount(
+                        label = stringResource(R.string.label_income),
+                        labelColor = Color.Red,
+                        amount = totalIncome,
+                        amountBoxWidth = 120.dp
+                    )
 
-        item {
-            Calendar(
-                startDayOfWeek = DayOfWeek.SUNDAY,
-                selectedDate = selectedDate,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp),
-                categoryLists = categoryListsForUi,
-                currentMonth = currentMonth,
-                onPreviousClick = {
-                    currentMonth = currentMonth.minusMonths(1)
-                    selectedDate = null
-                },
-                onNextClick = {
-                    currentMonth = currentMonth.plusMonths(1)
-                    selectedDate = null
-                },
-                onDateClick = { newDate -> selectedDate = newDate }
-            )
-        }
-        item {
-            CalendarFilterControls(
-                nickname = nickname,
-                filterType = currentFilterType,
-                onFilterTypeSelected = { newFilterType ->
-                    currentFilterType = newFilterType
-                },
-            )
-        }
-        items(selectedDayCategoryLists) { categoryList ->
-            CategoryListSectionItem(categoryList)
+                    Spacer(modifier = Modifier.width(28.dp))
+
+                    LabeledAmount(
+                        label = stringResource(R.string.label_expense),
+                        labelColor = Color.Blue,
+                        amount = totalExpense,
+                        amountBoxWidth = 120.dp
+                    )
+                }
+            }
+
+            item {
+                Calendar(
+                    startDayOfWeek = DayOfWeek.SUNDAY,
+                    selectedDate = selectedDate,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp),
+                    categoryLists = categoryListsForUi,
+                    currentMonth = currentMonth,
+                    onPreviousClick = {
+                        currentMonth = currentMonth.minusMonths(1)
+                        selectedDate = null
+                    },
+                    onNextClick = {
+                        currentMonth = currentMonth.plusMonths(1)
+                        selectedDate = null
+                    },
+                    onDateClick = { newDate -> selectedDate = newDate }
+                )
+            }
+            item {
+                CalendarFilterControls(
+                    nickname = nickname,
+                    filterType = currentFilterType,
+                    onFilterTypeSelected = { newFilterType ->
+                        currentFilterType = newFilterType
+                    },
+                )
+            }
+            items(selectedDayCategoryLists) { categoryList ->
+                CategoryListSectionItem(categoryList)
+            }
         }
     }
 }
