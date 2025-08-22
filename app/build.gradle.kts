@@ -40,11 +40,17 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isDebuggable = false
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        debug {
+            isMinifyEnabled = false
+            isDebuggable = true
         }
     }
     compileOptions {
@@ -119,6 +125,6 @@ dependencies {
     // Network
     implementation(libs.retrofit)
     implementation(libs.kotlinx.serialization.json)
-    implementation (libs.retrofit2.kotlinx.serialization.converter)
-    implementation (libs.logging.interceptor)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
+    implementation(libs.logging.interceptor)
 }
