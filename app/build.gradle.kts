@@ -17,11 +17,30 @@ val localProperties = Properties().apply {
         load(localPropertiesFile.inputStream())
     }
 }
+val keyStoreProperties = Properties().apply {
+    val keyStorePropertiesFile = rootProject.file("keystore.properties")
+    if (keyStorePropertiesFile.exists()) {
+        load(keyStorePropertiesFile.inputStream())
+    }
+}
 
 val googleClientId: String = localProperties.getProperty("GOOGLE_CLIENT_ID") ?: "\"\""
 val exchangeRateApiKey: String = localProperties.getProperty("EXCHANGE_RATE_API_KEY") ?: "\"\""
 
+val storeFilePath: String = keyStoreProperties.getProperty("STORE_FILE_PATH")
+val storePassword: String = keyStoreProperties.getProperty("STORE_PASSWORD")
+val keyAlias: String = keyStoreProperties.getProperty("KEY_ALIAS")
+val keyPassword: String = keyStoreProperties.getProperty("KEY_PASSWORD")
+
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file(storeFilePath)
+            storePassword = storePassword
+            keyAlias = keyAlias
+            keyPassword = keyPassword
+        }
+    }
     namespace = "com.fintern.ourbudgeting"
     compileSdk = 35
 
@@ -47,6 +66,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
         debug {
             isMinifyEnabled = false
