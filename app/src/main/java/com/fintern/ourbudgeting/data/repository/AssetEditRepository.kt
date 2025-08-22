@@ -23,7 +23,10 @@ class AssetEditRepository @Inject constructor(
                     }
 
                     if (snapshot != null && snapshot.exists()) {
-                        val assetTypes = snapshot.get(FirebaseConstants.FIELD_ASSET_TYPE) as? List<String> ?: emptyList()
+                        val assetTypes =
+                            (snapshot.get(FirebaseConstants.FIELD_ASSET_TYPE) as? List<*>)?.filterIsInstance<String>()
+                                ?: emptyList()
+
                         trySend(assetTypes)
                     } else {
                         trySend(emptyList())
@@ -46,8 +49,9 @@ class AssetEditRepository @Inject constructor(
 
             db.runTransaction { transaction ->
                 val snapshot = transaction.get(documentRef)
-                val currentAssetTypes = snapshot.get(FirebaseConstants.FIELD_ASSET_TYPE) as? List<String> ?: emptyList()
-
+                val currentAssetTypes =
+                    (snapshot.get(FirebaseConstants.FIELD_ASSET_TYPE) as? List<*>)?.filterIsInstance<String>()
+                        ?: emptyList()
                 if (currentAssetTypes.contains(newAssetType) && oldAssetType != newAssetType) {
                     throw Exception()
                 }

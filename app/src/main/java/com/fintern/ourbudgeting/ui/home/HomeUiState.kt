@@ -25,7 +25,7 @@ data class ExchangeRateUi(
 )
 
 sealed class HomeError(
-    @StringRes val messageResId: Int,
+    @param:StringRes val messageResId: Int,
 ) {
     object Network : HomeError(R.string.error_network)
     object NoData : HomeError(R.string.error_exchange_no_data)

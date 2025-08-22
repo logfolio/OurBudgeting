@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,7 +63,7 @@ fun CalendarTransactionFilter(
     }
 }
 
-enum class FilterType(@StringRes val label: Int) {
+enum class FilterType(@param:StringRes val label: Int) {
     ALL(R.string.label_filter_all),
     INCOME(R.string.label_filter_income),
     EXPENSE(R.string.label_filter_expense)

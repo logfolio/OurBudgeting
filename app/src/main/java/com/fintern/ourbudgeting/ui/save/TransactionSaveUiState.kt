@@ -23,10 +23,10 @@ data class TransactionSaveUiState(
     val isLoading: Boolean = false,
     val isSuccess: Boolean = false,
     val error: FirebaseError? = null,
-    @StringRes val successMessageResId: Int = R.string.save_success,
+    @param:StringRes val successMessageResId: Int = R.string.save_success,
 )
 
 sealed class TransactionUiEvent {
-    data class ShowSnackbar(@StringRes val messageResId: Int) : TransactionUiEvent()
+    data class ShowSnackbar(@param:StringRes val messageResId: Int) : TransactionUiEvent()
     object Success : TransactionUiEvent()
 }
