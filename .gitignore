@@ -11,3 +11,5 @@ local.properties
 
 # Google Services
 google-services.json
+/keystore.properties
+/app/release
