@@ -9,14 +9,14 @@ data class AssetTypeUiState(
     val isLoading: Boolean = false
 )
 
-sealed class AssetRepositoryException(@StringRes val messageResId: Int) :
+sealed class AssetRepositoryException(@param:StringRes val messageResId: Int) :
     Exception() {
     object UserNotAuthenticated : AssetRepositoryException(R.string.login_is_not_success)
     class DatabaseError(cause: Throwable) :
         AssetRepositoryException(R.string.database_error_occurred)
 }
 
-sealed class AssetViewModelMessage(@StringRes val messageResId: Int) {
+sealed class AssetViewModelMessage(@param:StringRes val messageResId: Int) {
     object EmptyInput : AssetViewModelMessage(R.string.empty_input_message)
     object AssetTypeAdded : AssetViewModelMessage(R.string.asset_type_added)
     object SaveFailed : AssetViewModelMessage(R.string.failed_to_save)

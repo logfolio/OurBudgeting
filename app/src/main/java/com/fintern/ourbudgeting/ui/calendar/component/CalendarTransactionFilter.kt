@@ -64,7 +64,7 @@ fun CalendarTransactionFilter(
     }
 }
 
-enum class FilterType(@StringRes val label: Int) {
+enum class FilterType(@param:StringRes val label: Int) {
     ALL(R.string.label_filter_all),
     INCOME(R.string.label_filter_income),
     EXPENSE(R.string.label_filter_expense)
