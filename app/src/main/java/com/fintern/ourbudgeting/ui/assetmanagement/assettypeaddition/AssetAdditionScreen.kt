@@ -23,7 +23,7 @@ import com.fintern.ourbudgeting.ui.assetmanagement.assettypeaddition.component.A
 @Composable
 fun AssetAdditionScreen(
     viewModel: AssetAdditionViewModel = hiltViewModel(),
-    householdId:String,
+    householdId: String,
     onNavigateBack: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -41,7 +41,7 @@ fun AssetAdditionScreen(
     }
     val defaultAssetType = stringResource(id = R.string.cash)
     LaunchedEffect(Unit) {
-        viewModel.initializeUserHousehold(defaultAssetType,householdId)
+        viewModel.initializeUserHousehold(defaultAssetType, householdId)
     }
     Scaffold(
         modifier = Modifier.background(Color.White),
@@ -65,6 +65,7 @@ fun AssetAdditionScreen(
                 title = stringResource(R.string.add),
                 onClick = {
                     viewModel.submitAssetType(householdId)
+                    onNavigateBack()
                 })
         }
     }

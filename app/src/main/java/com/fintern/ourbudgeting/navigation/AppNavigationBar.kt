@@ -24,7 +24,10 @@ fun AppNavigationBar() {
     Scaffold(
         bottomBar = {
             if (currentRoute != Screen.LOGIN.name
-                && currentRoute != Screen.PERSONALHOUSEHOLDMANAGEMENT.name) {
+                && currentRoute != Screen.PERSONALHOUSEHOLDMANAGEMENT.name
+                && currentRoute != Screen.ASSETADDITION.name
+                && currentRoute != Screen.ASSETEDIT.name
+            ) {
                 NavigationBar(windowInsets = NavigationBarDefaults.windowInsets) {
                     BottomNavigationItem.entries.forEach { screen ->
                         NavigationBarItem(
