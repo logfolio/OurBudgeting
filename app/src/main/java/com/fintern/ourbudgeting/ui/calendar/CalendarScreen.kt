@@ -153,81 +153,76 @@ fun CalendarScreen(
             }
     }
 
-    Scaffold(
-        content = { innerPadding ->
-            LazyColumn(
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ) {
+        item {
+            CalendarAccountAndUser(
+                selectedAccount = selectedAccount,
+                selectedUser = selectedUser,
+                onAccountClick = { },
+                onUserClick = { }
+            )
+        }
+        item {
+            Row(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .background(Color.White)
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp, horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                item {
-                    CalendarAccountAndUser(
-                        selectedAccount = selectedAccount,
-                        selectedUser = selectedUser,
-                        onAccountClick = { },
-                        onUserClick = { }
-                    )
-                }
-                item {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 16.dp, bottom = 8.dp, start = 16.dp, end = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        LabeledAmount(
-                            label = stringResource(R.string.label_income),
-                            labelColor = Color.Red,
-                            amount = totalIncome,
-                            amountBoxWidth = 120.dp
-                        )
+                LabeledAmount(
+                    label = stringResource(R.string.label_income),
+                    labelColor = Color.Red,
+                    amount = totalIncome,
+                    amountBoxWidth = 120.dp
+                )
 
-                        Spacer(modifier = Modifier.width(28.dp))
+                Spacer(modifier = Modifier.width(28.dp))
 
-                        LabeledAmount(
-                            label = stringResource(R.string.label_expense),
-                            labelColor = Color.Blue,
-                            amount = totalExpense,
-                            amountBoxWidth = 120.dp
-                        )
-                    }
-                }
-
-                item {
-                    Calendar(
-                        startDayOfWeek = DayOfWeek.SUNDAY,
-                        selectedDate = selectedDate,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 24.dp),
-                        categoryLists = categoryListsForUi,
-                        currentMonth = currentMonth,
-                        onPreviousClick = {
-                            currentMonth = currentMonth.minusMonths(1)
-                            selectedDate = null
-                        },
-                        onNextClick = {
-                            currentMonth = currentMonth.plusMonths(1)
-                            selectedDate = null
-                        },
-                        onDateClick = { newDate -> selectedDate = newDate }
-                    )
-                }
-                item {
-                    CalendarFilterControls(
-                        nickname = nickname,
-                        filterType = currentFilterType,
-                        onFilterTypeSelected = { newFilterType ->
-                            currentFilterType = newFilterType
-                        },
-                    )
-                }
-                items(selectedDayCategoryLists) { categoryList ->
-                    CategoryListSectionItem(categoryList)
-                }
+                LabeledAmount(
+                    label = stringResource(R.string.label_expense),
+                    labelColor = Color.Blue,
+                    amount = totalExpense,
+                    amountBoxWidth = 120.dp
+                )
             }
         }
-    )
+
+        item {
+            Calendar(
+                startDayOfWeek = DayOfWeek.SUNDAY,
+                selectedDate = selectedDate,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp),
+                categoryLists = categoryListsForUi,
+                currentMonth = currentMonth,
+                onPreviousClick = {
+                    currentMonth = currentMonth.minusMonths(1)
+                    selectedDate = null
+                },
+                onNextClick = {
+                    currentMonth = currentMonth.plusMonths(1)
+                    selectedDate = null
+                },
+                onDateClick = { newDate -> selectedDate = newDate }
+            )
+        }
+        item {
+            CalendarFilterControls(
+                nickname = nickname,
+                filterType = currentFilterType,
+                onFilterTypeSelected = { newFilterType ->
+                    currentFilterType = newFilterType
+                },
+            )
+        }
+        items(selectedDayCategoryLists) { categoryList ->
+            CategoryListSectionItem(categoryList)
+        }
+    }
 }
